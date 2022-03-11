@@ -13,6 +13,8 @@
     justify-content: start;
     margin-left: 20px;
     cursor: pointer;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 700;
 }
 
 .fa-react {
@@ -41,11 +43,13 @@
     color: white;
     text-decoration: none;
     padding: 0.5rem 1rem;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
 
 }
 
 .nav-links:hover{
-    background-color: #B8854C;
+    background-color: rgb(184, 133, 76);
     border-radius: 4px;
     transition: all 0.2s ease-out;
 }
@@ -63,7 +67,7 @@
     display: none;
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 976px) {
     .NavbarItems{
         position:relative;
     }
@@ -108,6 +112,7 @@
         top: 0;
         left:0;
         transform: translate(25%, 50%);
+        padding: 7px;
     }
 
     .menu-icon {
