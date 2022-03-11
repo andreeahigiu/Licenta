@@ -5,13 +5,15 @@ import{ BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Restaurants from './components/Restaurants/Restaurants';
 import About from './components/About/About';
 import Contact from './components/Contact/Contact';
+import Signup from './components/Signup/Signup';
+import Login from './components/Login/Login';
 
 function App() {
   return (
     <Router> 
       <div className="App">
         <Navbar />
-        
+
         <Switch>
           <Route exact path='/'>
             <Home />
@@ -24,6 +26,12 @@ function App() {
           </Route>
           <Route exact path='/contact'>
             <Contact />
+          </Route>
+          <Route exact path='/signup'>
+            <Signup />
+          </Route>
+          <Route exact path='/login'>
+            <Login />
           </Route>
         </Switch>
 

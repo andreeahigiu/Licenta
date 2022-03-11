@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
 import { MenuItems} from "./MenuItems"
 import './Navbar.css'
-import {Button} from "../Button"
+// import {Button} from "../Button"
+import { useHistory } from 'react-router-dom';
+import { withRouter } from "react-router";
+import { Link } from 'react-router-dom';
 
 class Navbar extends Component {
+
     state = { clicked: false}
 
     handleClick = () => {
         this.setState({clicked: !this.state.clicked})
     }
 
+    signupRoute = () => {
+        const { history } = this.props;
+    
+        history.push("/signup");
+      };
+
+    // const picture = new URL("./utils/background.jpg", import.meta.url)
 
     render() {
         return(
@@ -31,7 +42,9 @@ class Navbar extends Component {
                     })}
 
                 </ul>
-                <Button> Sign Up</Button>
+                <Link to="signup">
+                    <button className="signup_nav" onClick={this.signupRoute}> Sign up</button>
+                </Link>
 
             </nav>
         )
@@ -39,3 +52,6 @@ class Navbar extends Component {
 }
 
 export default Navbar
+
+
+

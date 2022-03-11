@@ -8,6 +8,28 @@
     font-size: 1.2rem;
 }
 
+
+.signup_nav {
+    padding: 8px 20px;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background-color:#B8854C;
+    /* width: 13vw; */
+
+}
+
+.signup_nav:hover {
+    padding: 8px 20px;
+    transition: all 0.3s ease-out;
+    color:rgb(0, 0, 0);
+    background: #fff;
+    transition:250ms;
+}
+
+
 .navbar-logo{
     color: #fff;
     justify-content: start;
@@ -68,6 +90,11 @@
 }
 
 @media screen and (max-width: 976px) {
+
+
+}
+
+@media screen and (max-width: 976px) {
     .NavbarItems{
         position:relative;
     }
@@ -113,6 +140,7 @@
         left:0;
         transform: translate(25%, 50%);
         padding: 7px;
+        margin-left: 0px;
     }
 
     .menu-icon {
@@ -140,7 +168,7 @@
         background: rgb(184, 133, 76, 0.9);
         text-decoration: none;
         color: white;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
 
     }
 
@@ -150,7 +178,11 @@
         transition: 250ms;
     }
 
-    Button{
+    .signup_nav{
         display:none;
     }
+
+    /* Button{
+        display:none;
+    } */
 }
