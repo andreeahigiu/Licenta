@@ -1,0 +1,44 @@
+.grid-display{
+    display: grid;
+    justify-content: center;
+    padding-top: 30vh;
+
+}
+
+.buyer-seller {
+    display:grid;
+    grid-column-start: 1;
+    grid-column-end: 1;
+    width: 30vw;
+  }
+
+.switch-btn {
+    grid-column-start: 2;
+    grid-column-end: 2;
+    padding-left:7vw;
+    
+  }
+
+.form{
+    grid-column-start: 1;
+    grid-column-end: span 2;
+    align-self: center;
+    align-self: stretch;
+    padding-top: 5vh;
+}
+
+
+.input-signup{
+    /* width:35vw; */
+    align-self: stretch;
+    width:100%;
+}
+
+.label1{
+    width: 100%;
+}
+
+.signup-btn{
+ width: 100%;
+ margin-top: 5vh ;
+}

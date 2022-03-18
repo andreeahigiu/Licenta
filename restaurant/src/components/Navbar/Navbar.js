@@ -14,10 +14,10 @@ class Navbar extends Component {
         this.setState({clicked: !this.state.clicked})
     }
 
-    signupRoute = () => {
+    loginRoute = () => {
         const { history } = this.props;
     
-        history.push("/signup");
+        history.push("/login");
       };
 
     // const picture = new URL("./utils/background.jpg", import.meta.url)
@@ -42,8 +42,8 @@ class Navbar extends Component {
                     })}
 
                 </ul>
-                <Link to="signup">
-                    <button className="signup_nav" onClick={this.signupRoute}> Sign up</button>
+                <Link to="login">
+                    <button className="signup_nav" onClick={this.loginRoute}> Log In</button>
                 </Link>
 
             </nav>

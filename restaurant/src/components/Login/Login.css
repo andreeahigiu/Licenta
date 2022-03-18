@@ -1,0 +1,55 @@
+
+.login-page{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 20px;
+    padding-top: 20px;
+    align-self: center;
+    padding-top:30vh;
+}
+
+.title{
+    width: 60vw;
+    display: flex;
+    justify-content: left;
+    font-size: large;
+    
+}
+
+.text-above{
+    display: flex;
+    justify-content: space-between;
+    width: 60vw;
+}
+
+
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    width: 30vw;
+
+}
+
+.login-btn{
+    width:60vw;
+    margin-top: 20px;
+}
+
+input {
+    display: flex;
+    align-self: center;
+    width:60vw;
+
+
+}
