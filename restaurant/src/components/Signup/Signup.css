@@ -18,27 +18,33 @@
     padding-left:7vw;
     
   }
-
+/* 
 .form{
     grid-column-start: 1;
     grid-column-end: span 2;
     align-self: center;
     align-self: stretch;
     padding-top: 5vh;
-}
+} */
 
 
 .input-signup{
     /* width:35vw; */
     align-self: stretch;
     width:100%;
+
 }
 
 .label1{
     width: 100%;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    padding-top: 10px;
 }
 
 .signup-btn{
  width: 100%;
  margin-top: 5vh ;
+ grid-column-start: 1;
+ grid-column-end: 3;
 }
