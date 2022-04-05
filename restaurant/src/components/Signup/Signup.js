@@ -1,10 +1,10 @@
 import React, { useRef, useState, useCallback } from 'react'
-import { useHistory } from "react-router-dom";
-import { Switch } from "@material-ui/core";
+import { Link, useHistory } from "react-router-dom"
+import { Switch } from "@material-ui/core"
 import './Signup.css'
-import { makeStyles } from "@material-ui/core/styles";
-import { useAuth } from '../../contexts/AuthContext';
-import { Alert } from "react-bootstrap"
+import { makeStyles } from "@material-ui/core/styles"
+import { useAuth } from '../../contexts/AuthContext'
+import { Form, Button, Card, Alert } from 'react-bootstrap';
 
 
 const useStyles = makeStyles({
@@ -60,58 +60,54 @@ const useStyles = makeStyles({
 });
 
 export default function Signup() {
-  let history = useHistory();
 
   const emailRef = useRef()
   const passwordRef = useRef()
   const passwordConfirmRef = useRef()
-  const { signup, currentUser } =  useAuth()
-  const [error, setError] = useState('')
+  const { signup } = useAuth()
+  const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+  const history = useHistory()
+
   const classes = useStyles();
 
-  const [state, setState] = React.useState({
-    checkedA: false
-  });
-
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
-
-  
   async function handleSubmit(e) {
-    e.preventDefault() //to prevent form from refreshing
+    e.preventDefault()
 
-    if (passwordRef.current.value !== passwordConfirmRef.current.value){
-      return setError("The passwords do not match!")
+    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+      return setError("Passwords do not match")
     }
 
     try {
       setError("")
-      setLoading(true) //disabling the submit button so that the user does not create multiple accounts by mistake
+      setLoading(true)
       await signup(emailRef.current.value, passwordRef.current.value)
       history.push("/")
-    }catch {
-      setError("Could not create an account")
+    } catch {
+      setError("Failed to create an account")
     }
 
     setLoading(false)
   }
 
+  const [state, setState] = React.useState({
+    checkedA: false
+  });
+
+    const handleChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+  };
+
   return (
-    <div>
-      <button onClick={() => history.goBack()}>Back</button>
+    <>
+      <div className="signup-layout">
+         <div className="grid-display">
+         <p className="buyer-seller"> Register as  
+        <span className="buyer-seller-word"> {state.checkedA ? ' vanzator' : ' cumparator'} </span>
+         </p>
 
-      {/* {currentUser.email} */}
-      {error && <Alert variant="danger">{error}</Alert>}
-      <form className="form" onSubmit={handleSubmit}>
-
-      <div className="grid-display">
-        <div className="buyer-seller"> Register as {state.checkedA ? 'vanzator' : 'cumparator'}
-        </div>
-
-    <div className="switch-btn">
-      <Switch
+         <div className="switch-btn">
+       <Switch
         classes={{
           root: classes.root,
           switchBase: classes.switchBase,
@@ -124,30 +120,133 @@ export default function Signup() {
         name="checkedA"
         inputProps={{ "aria-label": "secondary checkbox" }}
       />
-    </div>
+        </div>
 
-      {/* <form className="form"> */}
-        {/* Labels and inputs for form data */}
-        <label className="label1">
-        <input className="input-signup" name="email" type="email" ref={emailRef} placeholder="Email"/>
-        </label>
+        </div>
+         
 
-        <label className="label1">
-        <input className="input-signup" name="password" type="password" ref={passwordRef} placeholder="Password"/>
-        </label>
+          {error && <Alert variant="danger">{error}</Alert>}
+          <form className="form" onSubmit={handleSubmit}>
+            <div className="form-fields">
+            
+            <label className="label1">
+            <input className="input-signup" name="email" type="email" ref={emailRef} placeholder="Email"/>
+            </label>
 
-        <label className="label1">
-        <input className="input-signup" name="password" type="password" ref={passwordConfirmRef} placeholder="Confirm Password"/>
-        </label>
+            <label className="label1">
+            <input className="input-signup" name="password" type="password" ref={passwordRef} placeholder="Password"/>
+            </label>
 
-        <button disabled={loading} className="signup-btn" type="submit" > Sign up </button>
+            <label className="label1">
+            <input className="input-signup" name="password" type="password" ref={passwordConfirmRef} placeholder="Confirm Password"/>
+            </label>
 
+            <button className="signup-btn" disabled={loading}  type="submit">
+              Sign Up
+            </button>
 
+            </div>
+          </form>
+          
+          <div className="already-an-account">
+          Ai deja un cont? 
+          <p>
+          <Link className="link-button" to="/login">Log In</Link>
+          </p>
+          </div>
       </div>
-      </form>
 
-    </div>
+    </>
   )
+
+  // let history = useHistory();
+
+  // const emailRef = useRef()
+  // const passwordRef = useRef()
+  // const passwordConfirmRef = useRef()
+  // const { signup, currentUser } =  useAuth()
+  // const [error, setError] = useState('')
+  // const [loading, setLoading] = useState(false)
+  // const classes = useStyles();
+
+  // const [state, setState] = React.useState({
+  //   checkedA: false
+  // });
+
+  // const handleChange = (event) => {
+  //   setState({ ...state, [event.target.name]: event.target.checked });
+  // };
+
+  
+  // async function handleSubmit(e) {
+  //   e.preventDefault() //to prevent form from refreshing
+
+  //   if (passwordRef.current.value !== passwordConfirmRef.current.value){
+  //     return setError("The passwords do not match!")
+  //   }
+
+  //   try {
+  //     setError("")
+  //     setLoading(true) //disabling the submit button so that the user does not create multiple accounts by mistake
+  //     await signup(emailRef.current.value, passwordRef.current.value)
+  //     history.push("/")
+  //   }catch {
+  //     setError("Could not create an account")
+  //   }
+
+  //   setLoading(false)
+  // }
+
+  // return (
+  //   <div>
+  //     {/* <button onClick={() => history.goBack()}>Back</button> */}
+
+  //     {currentUser.email}
+  //     {error && <Alert variant="danger">{error}</Alert>}
+  //     <form className="form" onSubmit={handleSubmit}>
+
+  //     <div className="grid-display">
+  //       <div className="buyer-seller"> Register as {state.checkedA ? 'vanzator' : 'cumparator'}
+  //       </div>
+
+  //   <div className="switch-btn">
+  //     <Switch
+  //       classes={{
+  //         root: classes.root,
+  //         switchBase: classes.switchBase,
+  //         thumb: classes.thumb,
+  //         track: classes.track,
+  //         checked: classes.checked
+  //       }}
+  //       checked={state.checkedA}
+  //       onChange={handleChange}
+  //       name="checkedA"
+  //       inputProps={{ "aria-label": "secondary checkbox" }}
+  //     />
+  //   </div>
+
+  //     {/* <form className="form"> */}
+  //       {/* Labels and inputs for form data */}
+        // <label className="label1">
+        // <input className="input-signup" name="email" type="email" ref={emailRef} placeholder="Email"/>
+        // </label>
+
+        // <label className="label1">
+        // <input className="input-signup" name="password" type="password" ref={passwordRef} placeholder="Password"/>
+        // </label>
+
+        // <label className="label1">
+        // <input className="input-signup" name="password" type="password" ref={passwordConfirmRef} placeholder="Confirm Password"/>
+        // </label>
+
+  //       <button disabled={loading} className="signup-btn" type="submit" > Sign up </button>
+
+
+  //     </div>
+  //     </form>
+
+  //   </div>
+  //)
 }
 
 

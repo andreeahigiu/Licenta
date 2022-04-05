@@ -9,12 +9,15 @@ import Signup from './components/Signup/Signup';
 import Login from './components/Login/Login';
 import { AuthProvider } from './contexts/AuthContext';
 import { useState } from 'react';
+import DashboardClient from './components/DashboardClient/DashboardClient';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
   return (
-    <AuthProvider>
     <Router> 
+    <AuthProvider>
+
       <div className="App">
         <Navbar element={<Navbar isAuth={isAuth}/>}/>
 
@@ -34,14 +37,18 @@ function App() {
           <Route exact path='/signup'>
             <Signup />
           </Route>
-          <Route exact path='/login' element={<Login setIsAuth={setIsAuth}/>}>
+          <PrivateRoute exact path='/dashboardclient' component={DashboardClient} />
+          <Route exact path='/login'>
+          {/* <Route exact path='/login' element={<Login setIsAuth={setIsAuth}/>}> */}
             <Login />
           </Route>
+          
         </Switch>
 
       </div>
+      </AuthProvider>
     </Router>
-    </AuthProvider>
+
   );
 }
 
