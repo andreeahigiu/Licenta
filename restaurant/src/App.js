@@ -13,13 +13,13 @@ import DashboardClient from './components/DashboardClient/DashboardClient';
 import PrivateRoute from './components/PrivateRoute';
 
 function App() {
-  const [isAuth, setIsAuth] = useState(false);
+  // const [isAuth, setIsAuth] = useState(false);
   return (
     <Router> 
     <AuthProvider>
 
       <div className="App">
-        <Navbar element={<Navbar isAuth={isAuth}/>}/>
+        <Navbar/>
 
         <Switch>
           <Route exact path='/'>
@@ -39,9 +39,9 @@ function App() {
           </Route>
           <PrivateRoute exact path='/dashboardclient' component={DashboardClient} />
           <Route exact path='/login'>
-          {/* <Route exact path='/login' element={<Login setIsAuth={setIsAuth}/>}> */}
             <Login />
           </Route>
+          {/* <Route exact path='/login' element={<Login setIsAuth={setIsAuth}/>} /> */}
           
         </Switch>
 

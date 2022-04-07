@@ -5,11 +5,13 @@ import './Navbar.css'
 import { useHistory } from 'react-router-dom';
 import { withRouter } from "react-router";
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 
 export default function Navbar({isAuth}) {
     // state = { clicked: false}
     const [clicked, setClicked] = useState(false)
+    const { currentUser } = useAuth()
 
     let history = useHistory();
     //   const handleChange = (event) => {
@@ -22,29 +24,17 @@ export default function Navbar({isAuth}) {
 
     function loginRoute() {
         // const { history } = this.props;
-        console.log("hello", isAuth)
-        if(isAuth){
-            history.push("/about")
-        }else{
-            history.push("/about")
-        }
 
+        history.push("/login");
+      }
 
-        // isAuth ? history.push("/about") : history.push("/login");
-      };
-
-    const logoutRoute = () => {
-        const { history } = this.props;
-    
-        history.push("/");
-      };
-
-    // const picture = new URL("./utils/background.jpg", import.meta.url)
+    function dashboardRoute() {
+        history.push("/dashboardClient");
+      }
 
     return(
         
                     <nav className="NavbarItems">
-                        {/* <h1 className="navbar-logo">Eat Out<i className="fa-solid fa-plate-utensils"></i></h1> */}
                         <h1 className="navbar-logo">Eat Out <i className="fa-solid fa-utensils"></i></h1>
                         <div className="menu-icon" onClick={() => setClicked(!clicked)}>
                            <i className={clicked ? 'fas fa-times' : 'fas fa-bars'}> </i> 
@@ -62,10 +52,13 @@ export default function Navbar({isAuth}) {
         
                          </ul>
 
-                         <Link to="login"> 
-                         <button className="signup_nav" onClick={loginRoute}> Log In </button>
-                            {/* <button className="signup_nav" onClick={loginRoute}>  {isAuth ? 'Log Out' : 'Log In'}</button> */}
+                        {currentUser==null ?                           
+                        <Link to="login"> 
+                         <button className="signup_nav" > Log In </button>
                          </Link> 
+                         :
+                         <button className="signup_nav" onClick={dashboardRoute}> Profile </button>    
+                        }
                             {/* <div>
                          {isAuth ?             
                         <Link to="login">

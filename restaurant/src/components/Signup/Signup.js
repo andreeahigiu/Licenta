@@ -102,7 +102,7 @@ export default function Signup() {
     <>
       <div className="signup-layout">
          <div className="grid-display">
-         <p className="buyer-seller"> Register as  
+         <p className="buyer-seller"> Inregistrare  
         <span className="buyer-seller-word"> {state.checkedA ? ' vanzator' : ' cumparator'} </span>
          </p>
 
@@ -134,11 +134,11 @@ export default function Signup() {
             </label>
 
             <label className="label1">
-            <input className="input-signup" name="password" type="password" ref={passwordRef} placeholder="Password"/>
+            <input className="input-signup" name="password" type="password" ref={passwordRef} placeholder="Parola"/>
             </label>
 
             <label className="label1">
-            <input className="input-signup" name="password" type="password" ref={passwordConfirmRef} placeholder="Confirm Password"/>
+            <input className="input-signup" name="password" type="password" ref={passwordConfirmRef} placeholder="Confirma Parola"/>
             </label>
 
             <button className="signup-btn" disabled={loading}  type="submit">

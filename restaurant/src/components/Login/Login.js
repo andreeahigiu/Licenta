@@ -7,12 +7,14 @@ import './Login.css'
 export default function Login() {
   const emailRef = useRef()
   const passwordRef = useRef()
-  const { login } = useAuth()
+  const { login, currentUser } = useAuth()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
 
   const handleClick = () => history.push('/signup');
+
+  console.log(currentUser)
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -21,6 +23,9 @@ export default function Login() {
       setError("")
       setLoading(true)
       await login(emailRef.current.value, passwordRef.current.value)
+
+      // setIsAuth(true)
+      // localStorage.setItem("isAuth", true)
       history.push("/dashboardclient")
     } catch {
       setError("Failed to log in")
@@ -38,6 +43,7 @@ export default function Login() {
           </div> 
 
           {error && <Alert variant="danger">{error}</Alert>}
+          {/* {currentUser.email} */}
 
           <form className="form" onSubmit={handleSubmit}>
             <label className="label">
@@ -45,7 +51,7 @@ export default function Login() {
             </label>
 
             <label className="label">
-            <input className="input-login" name="password" type="password" ref={passwordRef} required placeholder="Password"/>
+            <input className="input-login" name="password" type="password" ref={passwordRef} required placeholder="Parola"/>
             </label>
 
             <button disabled={loading} className="login-btn" type="submit">
