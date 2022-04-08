@@ -1,18 +1,19 @@
 import React, { useRef, useState, useEffect } from "react"
 import { Card, Button, Alert } from "react-bootstrap"
-import { useAuth } from '../../contexts/AuthContext'
+import { useAuth } from '../contexts/AuthContext'
 import { Link, useHistory } from "react-router-dom"
-import { db } from "../../firebase"
-import { onSnapshot, collection, setDoc, doc, getDoc } from "firebase/firestore"
+import { db } from "../firebase"
+import { onSnapshot, collection, setDoc, doc, getDoc, updateDoc, set } from "firebase/firestore"
 
-export default function DashboardClient() {
+export default function DashboardRestaurant() {
     const [error, setError] = useState("")
     const [data, setData] = useState([])
     const [oneData, setOneData] = useState([])
     const { currentUser, logout } = useAuth()
     const history = useHistory()
     const nameRef = useRef()
-    const surnameRef = useRef()
+    const locationRef = useRef()
+    const placesRef = useRef()
     const phoneRef = useRef()
 
     async function handleLogout() {
@@ -27,16 +28,18 @@ export default function DashboardClient() {
       }
 
       console.log(data)
-      useEffect(() =>  onSnapshot(collection(db, "ProfileCustomer"), (snapshot) => {
+      useEffect(() =>  onSnapshot(collection(db, "ProfileRestaurant"), (snapshot) => {
           setData(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }) ))
         }), 
         []);
 
     async function handleSubmit(e) {
 
-        const docRef = doc(db, "ProfileCustomer", currentUser.uid )
-        const newEl = {name: nameRef.current.value, surname: surnameRef.current.value, phone: phoneRef.current.value}
+        const docRef = doc(db, "ProfileRestaurant", currentUser.uid )
+        const newEl = {name: nameRef.current.value, location: locationRef.current.value, places: placesRef.current.value, phone: phoneRef.current.value}
         await setDoc(docRef, newEl)
+        // await updateDoc(docRef, newEl)
+        // docRef.set(newEl)
 
 
       }
@@ -50,6 +53,7 @@ export default function DashboardClient() {
       const el = await getDoc(docRef)
 
       console.log("oneData:", el.data())
+
     }
   
 
@@ -64,15 +68,19 @@ export default function DashboardClient() {
 
       <form className="form" onSubmit={handleSubmit}>
         <label className="label">
-        <input className="name" ref={nameRef} placeholder="Prenume"/>
+        <input className="name" ref={nameRef} placeholder="Nume Restaurant"/>
         </label>
 
         <label className="label">
-        <input className="surname"  ref={surnameRef} placeholder="Nume"/>
+        <input className="surname"  ref={locationRef} placeholder="Locatie"/>
         </label>
 
         <label className="label">
-        <input className="phone"  ref={phoneRef} placeholder="Telefon"/>
+        <input className="phone"  ref={placesRef} placeholder="Numar de locuri"/>
+        </label>
+
+        <label className="label">
+        <input className="phone"  ref={phoneRef} placeholder="Contact"/>
         </label>
 
         <button className="update-profile-btn" type="submit">
@@ -87,7 +95,8 @@ export default function DashboardClient() {
         {data.map((element) => (
           <li key={element.id}>
             <div> {element.name} </div>
-            <div> {element.surname} </div>
+            <div> {element.location} </div>
+            <div> {element.places} </div>
             <div> {element.phone} </div>
           </li>
 

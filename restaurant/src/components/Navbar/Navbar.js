@@ -6,6 +6,8 @@ import { useHistory } from 'react-router-dom';
 import { withRouter } from "react-router";
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { db } from "../../firebase"
+import { doc, getDoc } from "firebase/firestore"
 
 
 export default function Navbar({isAuth}) {
@@ -28,8 +30,30 @@ export default function Navbar({isAuth}) {
         history.push("/login");
       }
 
-    function dashboardRoute() {
-        history.push("/dashboardClient");
+      async function getOneElement() {
+        // db.collection('ProfileCustomer').doc(currentUser.uid).get()
+        // .then(snapshot => setOneData(snapshot.data()))
+
+      }
+
+    async function dashboardRoute() {
+
+        const customerdocRef = doc(db, "ProfileCustomer", currentUser.uid )
+        const customerEl = await getDoc(customerdocRef)
+
+        const restaurantdocRef = doc(db, "ProfileRestaurant", currentUser.uid )
+        const restaurantEl = await getDoc(restaurantdocRef)
+        console.log(customerEl.exists())
+        console.log(restaurantEl)
+
+        if(customerEl.exists())
+        {
+            history.push("/dashboardClient");
+        }
+        if(restaurantEl.exists()){
+            history.push("/dashboardRestaurant");
+        }
+
       }
 
     return(

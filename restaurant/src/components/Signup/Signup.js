@@ -1,10 +1,12 @@
-import React, { useRef, useState, useCallback } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link, useHistory } from "react-router-dom"
 import { Switch } from "@material-ui/core"
 import './Signup.css'
 import { makeStyles } from "@material-ui/core/styles"
 import { useAuth } from '../../contexts/AuthContext'
-import { Form, Button, Card, Alert } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
+import { db } from "../../firebase"
+import { setDoc, doc } from "firebase/firestore"
 
 
 const useStyles = makeStyles({
@@ -64,12 +66,19 @@ export default function Signup() {
   const emailRef = useRef()
   const passwordRef = useRef()
   const passwordConfirmRef = useRef()
-  const { signup } = useAuth()
+  const { signup, currentUser } = useAuth()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
 
   const classes = useStyles();
+  const [state, setState] = React.useState({
+    checkedA: false
+  });
+  const handleChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+  };
+
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -81,22 +90,42 @@ export default function Signup() {
     try {
       setError("")
       setLoading(true)
-      await signup(emailRef.current.value, passwordRef.current.value)
+      const cred = await signup(emailRef.current.value, passwordRef.current.value)
+
+      if (cred) {
+        console.log({ cred });
+        const userId = cred.user.uid;
+    
+        var docName = " "
+        state.checkedA ? docName="ProfileRestaurant" : docName="ProfileCustomer"
+        console.log("checkedA: ", state.checkedA)
+        const docRef = doc(db, docName, userId )
+        const newEl = {name: "", location: "", places: "", phone: null}
+        await setDoc(docRef, newEl)
+        }
       history.push("/")
     } catch {
       setError("Failed to create an account")
     }
 
+
     setLoading(false)
+
   }
 
-  const [state, setState] = React.useState({
-    checkedA: false
-  });
 
-    const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
+  async function addToProfile() {
+
+    console.log("I am in the function", currentUser.uid)
+    var docName = " "
+    state.checkedA ? docName="ProfileRestaurant" : docName="ProfileCustomer"
+    console.log("checkedA: ", state.checkedA)
+    const docRef = doc(db, docName, currentUser.uid )
+    const newEl = {}
+    await setDoc(docRef, newEl)
+
+  }
+
 
   return (
     <>

@@ -10,6 +10,7 @@ import Login from './components/Login/Login';
 import { AuthProvider } from './contexts/AuthContext';
 import { useState } from 'react';
 import DashboardClient from './components/DashboardClient/DashboardClient';
+import DashboardRestaurant from './DashboardRestaurant/DashboardRestaurant';
 import PrivateRoute from './components/PrivateRoute';
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
             <Signup />
           </Route>
           <PrivateRoute exact path='/dashboardclient' component={DashboardClient} />
+          <PrivateRoute exact path='/dashboardrestaurant' component={DashboardRestaurant} />
           <Route exact path='/login'>
             <Login />
           </Route>
