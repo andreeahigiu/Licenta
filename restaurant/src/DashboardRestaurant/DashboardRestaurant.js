@@ -3,7 +3,8 @@ import { Card, Button, Alert } from "react-bootstrap"
 import { useAuth } from '../contexts/AuthContext'
 import { Link, useHistory } from "react-router-dom"
 import { db } from "../firebase"
-import { onSnapshot, collection, setDoc, doc, getDoc, updateDoc, set } from "firebase/firestore"
+import { onSnapshot, collection, setDoc, doc, getDoc, updateDoc, runTransaction } from "firebase/firestore"
+
 
 export default function DashboardRestaurant() {
     const [error, setError] = useState("")
@@ -15,6 +16,7 @@ export default function DashboardRestaurant() {
     const locationRef = useRef()
     const placesRef = useRef()
     const phoneRef = useRef()
+    var assignedTable = false;
 
     async function handleLogout() {
         setError("")
@@ -37,24 +39,97 @@ export default function DashboardRestaurant() {
 
         const docRef = doc(db, "ProfileRestaurant", currentUser.uid )
         const newEl = {name: nameRef.current.value, location: locationRef.current.value, places: placesRef.current.value, phone: phoneRef.current.value}
-        await setDoc(docRef, newEl)
+        await updateDoc(docRef, newEl)
         // await updateDoc(docRef, newEl)
         // docRef.set(newEl)
 
-
       }
 
-      //function to get an element by id
-    async function getOneElement() {
-      // db.collection('ProfileCustomer').doc(currentUser.uid).get()
-      // .then(snapshot => setOneData(snapshot.data()))
 
-      const docRef = doc(db, "ProfileCustomer", currentUser.uid )
-      const el = await getDoc(docRef)
+    // //function to get an element by id
+    // async function getOneElement() {
+    //   // db.collection('ProfileCustomer').doc(currentUser.uid).get()
+    //   // .then(snapshot => setOneData(snapshot.data()))
 
-      console.log("oneData:", el.data())
+    //   const docRef = doc(db, "ProfileCustomer", currentUser.uid )
+    //   const el = await getDoc(docRef)
 
-    }
+    //   console.log("oneData:", el.data())
+
+
+    // }
+
+    // function intToChar(int) {
+    //   // 👇️ for Uppercase letters, replace `a` with `A`
+    //   const code = 'a'.charCodeAt(0);
+    
+    //   return String.fromCharCode(code + int);
+    // }
+
+
+    // async function createTable(name){
+    //   var tablesIDS = [];
+    //   var tablesNumber;
+    //   console.log("in update");
+    //   // const tableRef = db.collection('AllRestaurants').doc(new1)
+    //   //   .collection('Tables').doc('tabeID1234');
+
+    //   if( transaction() != null){
+    //     tablesNumber = await transaction()
+    //   }
+
+    //   console.log("this is teh number", tablesNumber)
+
+    //   const tableRef = db.collection('AllRestaurants').doc(name)
+    //     .collection('Tables')
+        
+    //   const newTable = {occupied: false, places: 0, positionX:0, positionY: 0}
+
+    //   for (var i=0; i<tablesNumber; i++){
+    //     await setDoc(tableRef.doc(intToChar(i)), newTable)
+    //   }
+
+    // }
+
+
+    // async function transaction(){
+
+    //   var tablesNumber = null
+    //   try {
+    //     const docRef = db.collection('ProfileRestaurant').doc(currentUser.uid)
+    //     await runTransaction(db, async (transaction) => {
+    //       const sfDoc = await transaction.get(docRef);
+    //       if (!sfDoc.exists()) {
+    //         throw "Document does not exist!";
+    //       }
+      
+    //       tablesNumber = sfDoc.data().places;
+
+    //     });
+
+    //   } catch (e) {
+    //     console.log("Transaction failed: ", e);
+    //   }
+    //   console.log("Transaction successfully committed!", tablesNumber);
+    //   return tablesNumber
+    // }
+
+    
+
+    // function writeUserData(id1, id2, id3) {
+    //   db.collection("users").doc(currentUser.uid).set({
+    //     name: "Restaurant Name",
+    //     tables: {
+    //       table1ID: id1,
+    //       table2ID: id2,
+    //       table3ID: id3
+    //     }
+    //   }).then(function() {
+    //     console.log("Restaurant created");
+    //   });
+    // }
+
+
   
 
 
@@ -89,7 +164,7 @@ export default function DashboardRestaurant() {
       </form>
 
       <button onClick={handleLogout} > Log out </button>
-      <button onClick={getOneElement} > get element by id </button>
+      {/* <button onClick={createTable} > get element by id </button> */}
 
       {/* <ul>
         {data.map((element) => (

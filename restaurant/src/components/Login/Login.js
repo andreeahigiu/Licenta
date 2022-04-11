@@ -26,7 +26,7 @@ export default function Login() {
 
       // setIsAuth(true)
       // localStorage.setItem("isAuth", true)
-      history.push("/dashboardclient")
+      history.push("/")
     } catch {
       setError("Failed to log in")
     }

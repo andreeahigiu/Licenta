@@ -100,7 +100,7 @@ export default function Signup() {
         state.checkedA ? docName="ProfileRestaurant" : docName="ProfileCustomer"
         console.log("checkedA: ", state.checkedA)
         const docRef = doc(db, docName, userId )
-        const newEl = {name: "", location: "", places: "", phone: null}
+        const newEl = {name: "", location: "", places: null, phone: null}
         await setDoc(docRef, newEl)
         }
       history.push("/")
