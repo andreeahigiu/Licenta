@@ -6,6 +6,11 @@
     justify-content: center;
     align-items: center;
     font-size: 1.2rem;
+    position: sticky;
+    z-index:1;
+    top: 0;
+    left: 0;
+    width: 100%;
 }
 
 
@@ -27,6 +32,11 @@
     color:rgb(0, 0, 0);
     background: #fff;
     transition:250ms;
+}
+
+.signup_nav_responsive{
+    display:none;
+
 }
 
 
@@ -89,15 +99,11 @@
     display: none;
 }
 
-@media screen and (max-width: 976px) {
-
-
-}
 
 @media screen and (max-width: 976px) {
-    .NavbarItems{
+    /* .NavbarItems{
         position:relative;
-    }
+    } */
 
     .nav-menu {
         display: flex;
@@ -181,6 +187,45 @@
     .signup_nav{
         display:none;
     }
+    /* .signup_nav_responsive{
+        display:block;
+        padding: 8px 20px;
+        border-radius: 4px;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        color: #fff;
+        background-color:#B8854C;
+    }
+
+    .signup_nav_responsive:hover {
+        padding: 8px 20px;
+        transition: all 0.3s ease-out;
+        color:rgb(0, 0, 0);
+        background: #fff;
+        transition:250ms;
+    } */
+
+    .signup_nav_responsive {
+        display: block;
+        text-align: center;
+        padding: 1.5rem;
+        margin: auto;
+        border-radius: 4px;
+        width: 80%;
+        background: rgb(184, 133, 76, 0.9);
+        text-decoration: none;
+        color: white;
+        font-size: 1.2rem;
+
+    }
+
+    .signup_nav_responsive:hover {
+        background: #fff;
+        color: #000000;
+        transition: 250ms;
+    }
+
 
     /* Button{
         display:none;

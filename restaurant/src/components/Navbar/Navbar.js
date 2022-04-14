@@ -8,12 +8,14 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { db } from "../../firebase"
 import { doc, getDoc } from "firebase/firestore"
+import DashboardClient from '../DashboardClient/DashboardClient';
 
 
 export default function Navbar({isAuth}) {
     // state = { clicked: false}
     const [clicked, setClicked] = useState(false)
     const { currentUser } = useAuth()
+    var route;
 
     let history = useHistory();
     //   const handleChange = (event) => {
@@ -37,6 +39,9 @@ export default function Navbar({isAuth}) {
       }
 
     async function dashboardRoute() {
+        console.log("clicked before ", clicked)
+        setClicked(false)
+        console.log("clicked after ", clicked)
 
         const customerdocRef = doc(db, "ProfileCustomer", currentUser.uid )
         const customerEl = await getDoc(customerdocRef)
@@ -56,6 +61,15 @@ export default function Navbar({isAuth}) {
 
       }
 
+      async function loginRoute() {
+        console.log("clicked before ", clicked)
+        setClicked(false)
+        console.log("clicked after ", clicked)
+
+        history.push("/login");
+      }
+
+
     return(
         
                     <nav className="NavbarItems">
@@ -72,7 +86,17 @@ export default function Navbar({isAuth}) {
                                         </a> 
                                     </li>
                                 )
-                            })}
+                            })} 
+                            
+                            <li>
+                        {currentUser==null ?                           
+                        <button className="signup_nav_responsive" onClick={loginRoute}> Log In </button>
+                         :
+                         <button className="signup_nav_responsive" onClick={dashboardRoute}> Profile </button>    
+                        }
+   
+                            </li>
+                        
         
                          </ul>
 

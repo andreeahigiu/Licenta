@@ -19,9 +19,9 @@ export const MenuItems = [
         url: '/contact',
         cName: 'nav-links'
     },
-    {
-        title: 'LogIn',
-        url: '/login',
-        cName: 'nav-links-mobile'
-    },
+    // {
+    //     title: 'LogIn',
+    //     url: '/login',
+    //     cName: 'nav-links-mobile'
+    // },
 ]

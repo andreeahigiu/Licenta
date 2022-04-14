@@ -28,7 +28,7 @@ export const auth = app.auth()
 
 // export const db = getFirestore(app)
 
-export const db = firebase.firestore();
+export const db = app.firestore();
 
 firebase.firestore().settings({ timestampsInSnapshots: true})
 

@@ -12,6 +12,7 @@ import { useState } from 'react';
 import DashboardClient from './components/DashboardClient/DashboardClient';
 import DashboardRestaurant from './DashboardRestaurant/DashboardRestaurant';
 import PrivateRoute from './components/PrivateRoute';
+import DashRestaurant from './components/Dashboards/DashboardRestaurant/DashRestaurant';
 
 function App() {
   // const [isAuth, setIsAuth] = useState(false);
@@ -42,6 +43,10 @@ function App() {
           <PrivateRoute exact path='/dashboardrestaurant' component={DashboardRestaurant} />
           <Route exact path='/login'>
             <Login />
+          </Route>
+
+          <Route exact path='/DashRestaurant'>
+            <DashRestaurant />
           </Route>
           {/* <Route exact path='/login' element={<Login setIsAuth={setIsAuth}/>} /> */}
           

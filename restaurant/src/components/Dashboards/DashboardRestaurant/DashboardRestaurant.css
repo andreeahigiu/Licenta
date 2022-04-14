@@ -1,0 +1,58 @@
+.dash-container{
+    display: inline-grid;
+    grid-template-columns: auto auto auto;
+    padding: 10px;
+
+}
+
+.dash-content{
+    display: grid;
+    margin-top: 5vh;
+    margin-left: 5vw;
+    height: 200vh;
+}
+
+.menu-image{
+    width:60vw;
+}
+
+.scena{
+    width: 60vw;
+}
+
+.paper-container{
+    position: sticky;
+}
+ 
+
+@media screen and (max-width: 976px) {
+    .dash-container{
+        grid-template-columns: auto;
+
+    }
+
+    .DashRestaurant-paper-1{
+        position: static !important;
+        align-self: center;
+        margin-right: 10px !important;
+        /* margin-left: 5vw !important; */
+        width: 90vw !important;
+    }
+    .paper-container{
+        align-items: center;
+        width:100%;
+    }
+
+   .restaurant-container{
+       display: grid;
+
+       justify-content: center;
+
+    }
+    .dash-content{
+
+        margin-left: 0vw;
+
+    }
+}
+
