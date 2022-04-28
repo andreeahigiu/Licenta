@@ -18,6 +18,7 @@ import Cloud from '@mui/icons-material/Cloud';
 import './DashboardRestaurant.css' 
 import { connect } from 'react-redux';
 import { useAuth } from '../../../contexts/AuthContext';
+import { auth } from '../../../firebase';
 
 
 const styles = theme =>  ({
@@ -43,12 +44,6 @@ const styles = theme =>  ({
 
 
 class DashRestaurant extends Component {
-    static contextType = useAuth
-    componentDidMount() {
-        const user = this.context
-    
-        console.log("the context: ", user) // { name: 'Tania', loggedIn: true }
-      }
 
     constructor(props) {
         super(props);
@@ -56,9 +51,7 @@ class DashRestaurant extends Component {
         this.state = {
             menuSelection: "restaurant"
         }
-        // const { currentUser } = useAuth()
         
-
     }
 
     handleClick(selection) {
@@ -66,7 +59,7 @@ class DashRestaurant extends Component {
         // this.state.menuSelection = selection;
         console.log("selection is: "+ this.state.menuSelection);
 
-        // this.RenderElement();
+
     }
 
     // RenderElement() {
@@ -86,7 +79,9 @@ class DashRestaurant extends Component {
         const { classes } = this.props;
         //console.log(this.props.updatedData);
         const { updatedData } = this.props;
-        console.log("Here are the props: " , this.props.state);
+        //console.log("Here are the props: " , this.props.state);
+        let user = auth.currentUser.uid
+        //console.log("user: ", user)
 
         return(
             <div className="dash-container">
@@ -106,6 +101,7 @@ class DashRestaurant extends Component {
           <ListItemText>Update Scene</ListItemText>
         </MenuItem>
       </MenuList>
+
     </Paper>
     </div>
 

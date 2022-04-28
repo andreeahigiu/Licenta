@@ -1,36 +1,31 @@
 import { db } from "../../firebase";
 import { useAuth } from '../../contexts/AuthContext';
 import { setDoc } from "firebase/firestore";
+import { auth } from "../../firebase";
 
 export const updateRestaurant = (restaurant) => {
     return (dispatch, getState) => {
         const id = 'hei'
-        //make async call to db
-        // const { currentUser } = useAuth()
-        // console.log("current User: ", currentUser )
+        let currentUser = auth.currentUser
 
-        // const docRef = doc(db, 'ProfileRestaurant', 'test2')
-        // const newEl = {
-        //         ...restaurant,
-        //         otherField : 'something',
-        //         createdAt: new Date()
-        //     }
-        // setDoc(docRef, newEl)
-
-        db.collection('ProfileRestaurant').doc("miau").update({
+        db.collection('ProfileRestaurant').doc(currentUser.uid).update({
             ...restaurant,
             otherField : 'otherthing',
             createdAt: new Date(),
-            hello: 'nope',
         }).then( () => {
             dispatch({type: 'UPDATE_RESTAURANT', restaurant})
 
             // db.collection('AllRestaurants').doc("miau").collection('Tables').doc("newTable1").set({ 
             //     places: restaurant.places,
             // })
-            db.collection('AllRestaurants').doc("miau").collection('Tables').add({ 
-                places: restaurant.places,
-            })
+
+            //todo
+            if(restaurant.places){
+                db.collection('AllRestaurants').doc(currentUser.uid).collection('Tables').add({ 
+                    places: restaurant.places,
+                })
+            }
+
 
         }).catch( (err) => {
             dispatch({type: 'UPDATE_RESTAURANT_ERROR', err})

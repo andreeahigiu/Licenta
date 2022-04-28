@@ -33,12 +33,12 @@ class UpdateDetails extends Component {
 
 
     this.state = {
-      name: '',
-      location: '',
-      places: '',
-      phone: '',
-      menuImage: '',
-      menuURL: '',
+      // name: '',
+      // location: '',
+      // places: '',
+      // phone: '',
+      // menuImage: '',
+      // menuURL: '',
   
     }
 
@@ -52,7 +52,7 @@ class UpdateDetails extends Component {
 
   
   handleChange(e) {
-
+    console.log("target Val:", e.target.value)
     if(e.target.value != ''){
       this.setState({
         [e.target.id]: e.target.value
@@ -69,7 +69,7 @@ class UpdateDetails extends Component {
   render() {
     return (
       <div className="deails-wrap">
-        {console.log("props:", this.props.updatedData)}
+        {/* {console.log("props:", this.props.updatedData)} */}
       <div className="update-details-title">Modificare detalii</div>
       <Box
       onSubmit={this.handleSubmit}
