@@ -9,6 +9,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { db } from "../../firebase"
 import { doc, getDoc } from "firebase/firestore"
 import DashboardClient from '../DashboardClient/DashboardClient';
+import DashRestaurant from '../Dashboards/DashboardRestaurant/DashRestaurant';
 
 
 export default function Navbar({isAuth}) {
@@ -39,24 +40,31 @@ export default function Navbar({isAuth}) {
       }
 
     async function dashboardRoute() {
-        console.log("clicked before ", clicked)
+        //console.log("clicked before ", clicked)
         setClicked(false)
-        console.log("clicked after ", clicked)
+        //console.log("clicked after ", clicked)
 
         const customerdocRef = doc(db, "ProfileCustomer", currentUser.uid )
         const customerEl = await getDoc(customerdocRef)
 
+        console.log("currentUser id:", currentUser.uid)
         const restaurantdocRef = doc(db, "ProfileRestaurant", currentUser.uid )
         const restaurantEl = await getDoc(restaurantdocRef)
+
         console.log(customerEl.exists())
-        console.log(restaurantEl)
+        console.log("restaurantEl: ", restaurantEl)
 
         if(customerEl.exists())
         {
             history.push("/dashboardClient");
         }
         if(restaurantEl.exists()){
-            history.push("/dashboardRestaurant");
+            history.push("/dashRestaurant");
+            //return <DashRestaurant />
+            // history.push({
+            //     pathname: '/dashRestaurant',
+            //     state: { state: "test" }
+            // });
         }
 
       }

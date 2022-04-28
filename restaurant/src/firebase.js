@@ -28,11 +28,12 @@ export const auth = app.auth()
 
 // export const db = getFirestore(app)
 
-export const db = app.firestore();
+export const db = firebase.firestore();
 
-firebase.firestore().settings({ timestampsInSnapshots: true})
+firebase.firestore().settings({ timestampsInSnapshots: true })
 
 export default app
+
 
 // export default getFirestore()
 

@@ -16,7 +16,9 @@ import ContentCopy from '@mui/icons-material/ContentCopy';
 import ContentPaste from '@mui/icons-material/ContentPaste';
 import Cloud from '@mui/icons-material/Cloud';
 import './DashboardRestaurant.css' 
-import { GpsFixed } from '@mui/icons-material';
+import { connect } from 'react-redux';
+import { useAuth } from '../../../contexts/AuthContext';
+
 
 const styles = theme =>  ({
     paper:{
@@ -39,16 +41,23 @@ const styles = theme =>  ({
 });
 
 
-class DashRestaurant extends Component {
 
-   
+class DashRestaurant extends Component {
+    static contextType = useAuth
+    componentDidMount() {
+        const user = this.context
+    
+        console.log("the context: ", user) // { name: 'Tania', loggedIn: true }
+      }
+
     constructor(props) {
         super(props);
 
         this.state = {
             menuSelection: "restaurant"
         }
-
+        // const { currentUser } = useAuth()
+        
 
     }
 
@@ -57,24 +66,27 @@ class DashRestaurant extends Component {
         // this.state.menuSelection = selection;
         console.log("selection is: "+ this.state.menuSelection);
 
-        this.RenderElement();
+        // this.RenderElement();
     }
 
-    RenderElement() {
-        if(this.state.menuSelection === "details"){
-            return <UpdateDetails />;
-        }
-        else 
-            if(this.state.menuSelection === "scene"){
-                return <UpdateScene />;
-            }
-        return <Restaurant />;
+    // RenderElement() {
+    //     if(this.state.menuSelection === "details"){
+    //         return <UpdateDetails />;
+    //     }
+    //     else 
+    //         if(this.state.menuSelection === "scene"){
+    //             return <UpdateScene />;
+    //         }
+    //     return <Restaurant />;
 
 
-    }
+    // }
 
     render(){
         const { classes } = this.props;
+        //console.log(this.props.updatedData);
+        const { updatedData } = this.props;
+        console.log("Here are the props: " , this.props.state);
 
         return(
             <div className="dash-container">
@@ -83,24 +95,24 @@ class DashRestaurant extends Component {
                     <Paper sx={{ width: 250, height: '70vh', maxWidth: '100%', m: '10px', mt: '60px'}} className={classes.paper}>
       <MenuList>
         <MenuItem onClick={  () => this.handleClick("restaurant") } >
-          <ListItemText>Restaurant</ListItemText>
+          <ListItemText>Restaurant </ListItemText>
         </MenuItem>
 
         <MenuItem sx={{mt: 4}} onClick={  () => this.handleClick("details")}>
-          <ListItemText>Update Scene</ListItemText>
+          <ListItemText>Update Details</ListItemText>
         </MenuItem>
 
         <MenuItem sx={{mt: 4}} onClick={  () => this.handleClick("scene") }>
-          <ListItemText>Update Details</ListItemText>
+          <ListItemText>Update Scene</ListItemText>
         </MenuItem>
       </MenuList>
     </Paper>
     </div>
 
                 <div className="dash-content">
-                {this.state.menuSelection == "details" && (<UpdateDetails />)}
+                {this.state.menuSelection == "details" && (<UpdateDetails updatedData={updatedData} />)}
                 {this.state.menuSelection == "scene" && (<UpdateScene />)}
-                {this.state.menuSelection == "restaurant" && (<Restaurant />)}
+                {this.state.menuSelection == "restaurant" && (<Restaurant updatedData={updatedData}/>)}
 
                 </div>
 
@@ -110,4 +122,11 @@ class DashRestaurant extends Component {
         )
     }
 }
-export default withStyles(styles)(DashRestaurant);
+
+const mapStatToProps = (state) => {
+    return {
+        updatedData: state.updatedData.restaurantDetails
+    }
+}
+
+export default connect(mapStatToProps)(withStyles(styles)(DashRestaurant));
