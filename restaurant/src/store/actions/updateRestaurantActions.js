@@ -15,9 +15,6 @@ export const updateRestaurant = (restaurant) => {
         }).then( () => {
             dispatch({type: 'UPDATE_RESTAURANT', restaurant})
 
-            // db.collection('AllRestaurants').doc("miau").collection('Tables').doc("newTable1").set({ 
-            //     places: restaurant.places,
-            // })
 
             //todo
             if(restaurant.places){

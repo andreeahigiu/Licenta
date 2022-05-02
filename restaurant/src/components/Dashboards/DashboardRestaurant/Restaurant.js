@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useRef, useState, useEffect  } from 'react'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import { Carousel } from 'react-carousel-minimal';
+// import { Carousel } from 'react-carousel-minimal';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import { doc, onSnapshot, getDoc } from "firebase/firestore";
+import { useAuth } from '../../../contexts/AuthContext';
+import { db } from '../../../firebase';
+import Carousel from 'react-material-ui-carousel'
 
 
 const captionStyle = {
@@ -28,38 +32,99 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+function Gallery(props)
+{
+    return (
+        <Paper>
+            <h2>{props.item.caption}</h2>
+            {/* <p>{props.item.description}</p> */}
+            <img src={props.item.image} width="500" height="600"></img>
+
+        </Paper>
+    )
+}
 
 export default function Restaurant({updatedData}) {
+
+  
+// const docRef = doc(db, "cities", "SF");
+// const docSnap = await getDoc(docRef);
+
+// if (docSnap.exists()) {
+//   console.log("Document data:", docSnap.data());
+// } else {
+//   // doc.data() will be undefined in this case
+//   console.log("No such document!");
+// }
+
+const { currentUser } = useAuth()
+const [currentRestaurant, setCurrentRestaurants] = useState("")
+
+const unsub = onSnapshot(doc(db, "ProfileRestaurant", currentUser.uid), (doc) => {
+  //console.log("Current data: ", doc.data());
+  //currentRestaurant.push(doc.data());
+  setCurrentRestaurants(doc.data())
+});
+// console.log("Data in state:", currentRestaurant);
+
+//let pics = currentRestaurant.gallery
+//console.log("gallery:", pics)
+
+
   return (
     <div className='restaurant-container'>
-      {console.log(updatedData)}
+      {/* {console.log(updatedData)} */}
 
             <List>
                 <ListItem>
                   <ListItemText>
-                    Nume restaurant: {updatedData.name}
+                    Nume restaurant: {currentRestaurant.name}
                   </ListItemText>
                 </ListItem>
 
                 <ListItem>
                   <ListItemText>
-                    Locatie: {updatedData.location}
+                    Locatie: {currentRestaurant.location}
                   </ListItemText>
                 </ListItem>
 
                 <ListItem>
                   <ListItemText>
-                    Numar locuri: {updatedData.places}
+                    Numar locuri: {currentRestaurant.places}
                   </ListItemText>
                 </ListItem>
 
                 <ListItem>
                   <ListItemText>
-                    Telefon: {updatedData.phone}
+                    Telefon: {currentRestaurant.phone}
                   </ListItemText>
                 </ListItem>
+{/* {console.log("gallery: ", currentRestaurant.gallery)} */}
+{/* {console.log("gallery2: ", updatedData.photos)} */}
+             {/* {currentRestaurant.gallery?.map((item, index) => (
+             <div>  
+            {index}
+             <img src={item.image}/> 
+            </div>)) }  */}
+            <ListItem
+            sx={{
+              zIndex: 0,
+            }}>
+                  <ListItemText>
+                  <p> Galerie foto: </p>
+                  <Carousel 
+                  //next={ (next, active) => console.log(`we left ${active}, and are now at ${next}`) }
+                  //prev={ (prev, active) => console.log(`we left ${active}, and are now at ${prev}`) }
+                  >
+                  {
+                    currentRestaurant.gallery?.map( (item, index) => <Gallery key={index} item={item} /> )
+                  }
+                  </Carousel>
 
-                <ListItem>
+                  </ListItemText>
+            </ListItem>
+
+                  {/* <ListItem> 
                   <ListItemText>
                     Galerie: 
                     <Carousel
@@ -88,14 +153,15 @@ export default function Restaurant({updatedData}) {
                       }}
                       />
                   </ListItemText>
-                </ListItem>
+                </ListItem> */}
 
                 <ListItem>
                   <ListItemText>
                     <p> Meniu: </p>
-                    <img className="menu-image" src={updatedData.menu} alt="Menu Image" /> 
+                    <img className="menu-image" src={currentRestaurant.menuImage} alt="Menu Image" /> 
                   </ListItemText>
-                </ListItem>
+                </ListItem> 
+                {/* {console.log("well nopw:", currentRestaurant.menuImage)} */}
 
                 <ListItem>
                   <ListItemText>

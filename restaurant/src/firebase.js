@@ -2,10 +2,12 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 import firebase from "firebase/compat/app";
 import "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import "firebase/compat/storage";
 
 
 const app = firebase.initializeApp ({
@@ -29,6 +31,10 @@ export const auth = app.auth()
 // export const db = getFirestore(app)
 
 export const db = firebase.firestore();
+
+export const projectStorage = firebase.storage();
+
+export const storage = getStorage(app);
 
 firebase.firestore().settings({ timestampsInSnapshots: true })
 

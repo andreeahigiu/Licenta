@@ -9,6 +9,13 @@ import { styled } from '@mui/material/styles';
 import {connect} from 'react-redux'
 import { updateRestaurant } from '../../../store/actions/updateRestaurantActions';
 // import updateRestaurant from '../../../store/actions/updateRestaurantActions';
+import { auth } from '../../../firebase';
+import { PictureAsPdfSharp } from '@mui/icons-material';
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import { projectStorage } from '../../../firebase';
+import { storage } from '../../../firebase';
+import { useAuth } from '../../../contexts/AuthContext';
+
 
 const Input = styled('input')({
   display: 'none',
@@ -18,18 +25,10 @@ const Input = styled('input')({
 
 class UpdateDetails extends Component {
 
-  // state = {
-  //   name: '',
-  //   location: '',
-  //   places: '',
-  //   menuImage: '',
-  //   menuURL: '',
-
-  // }
-
   constructor(props) {
     super(props);
     //const updatedData = props;
+    //console.log("data in UpdateDetails:", updatedData)
 
 
     this.state = {
@@ -44,10 +43,71 @@ class UpdateDetails extends Component {
 
 }
 
-  handleImageFieldChange(e) {
-
-    this.setState( {menuImage: e.target.files[0]}, () => { this.setState({menuURL: URL.createObjectURL(this.state.menuImage)}) } )
+  async handleImageFieldChange(e) {
+  
+    // this.setState( {menuImage: e.target.files[0]}, () => { this.setState({menuImage: URL.createObjectURL(this.state.menuImage)}) } )
     //this.setState({menuURL: URL.createObjectURL(this.state.menuImage)});
+
+    let file = e.target.files[0];
+
+    console.log("uploaded file: ",file);
+
+    const storageRef = ref(storage, `/files/${file.name}`);//second param is the location in the firebase storage where we wanna save the files
+    const uploadTask = uploadBytesResumable(storageRef, file)
+
+    uploadTask.on("state_changed", (snapshot) => {
+      const prog = Math.round( (snapshot.bytesTransferred / snapshot.totalBytes) *100 );
+    }, (err) => console.log(err),
+    () => {
+      getDownloadURL(uploadTask.snapshot.ref)
+      .then(url => this.setState( {menuImage: url}))
+    }
+    )
+
+  }
+
+  handleGalleryFieldChange(e) {
+    // Loop through files
+    const files = e.target.files
+    let galleryImages =[]
+    for (let i = 0; i < files.length; i++) {
+      let file = files.item(i);
+      console.log("in handle function", file)
+
+      // let picObj = {"image": URL.createObjectURL(file)}
+      // console.log("galleryy: ", picObj)
+
+      // galleryImages.push(picObj)
+
+
+      const storageRef = ref(storage, `/files/${file.name}`);//second param is the location in the firebase storage where we wanna save the files
+      const uploadTask = uploadBytesResumable(storageRef, file)
+
+      uploadTask.on("state_changed", (snapshot) => {
+        const prog = Math.round( (snapshot.bytesTransferred / snapshot.totalBytes) *100 );
+      }, (err) => console.log(err),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref)
+        .then((url) => {
+          let picObj = {"image": url, "caption": file.name};
+          galleryImages.push(picObj)
+        })
+      }
+      )
+    
+    }
+
+    console.log("array: ", galleryImages);
+    this.setState({"gallery": galleryImages})
+    // console.log("Images1: ", e.target.files)
+    // console.log("Images2: ", e.target.files[e.target.files.length])
+    // this.setState( {menuImage: e.target.files[0]}, () => { this.setState({menuImage: URL.createObjectURL(this.state.menuImage)}) } )
+    //this.setState({menuURL: URL.createObjectURL(this.state.menuImage)});
+
+
+
+    
+
   }
 
   
@@ -66,10 +126,15 @@ class UpdateDetails extends Component {
     //console.log(this.state);
     this.props.updateRestaurant(this.state)
   }
+
   render() {
+    let user = auth.currentUser.uid
+    console.log("this state:", this.state)
+
     return (
       <div className="deails-wrap">
         {/* {console.log("props:", this.props.updatedData)} */}
+        {    console.log("pics in state:", this.state.gallery)}
       <div className="update-details-title">Modificare detalii</div>
       <Box
       onSubmit={this.handleSubmit}
@@ -116,25 +181,46 @@ class UpdateDetails extends Component {
 
         <TextField
           disabled
-          id="standard-name"
+          id="menuImageContainer"
+          // onChange={e => this.handleChange(e)}
           label="Meniu"
           value="Adaugati o imagine"
           InputProps={{endAdornment:         
-                          <label htmlFor="contained-button-file">
-                          <Input accept="image/*" id="contained-button-file" multiple type="file" onChange={e => this.handleImageFieldChange(e)}/>
+                          <label htmlFor="menuImage">
+                          <Input accept="image/*" id="menuImage" multiple type="file" onChange={e => this.handleImageFieldChange(e)}/>
+                          {/* <Input accept="image/*" id="contained-button-file" multiple type="file" onChange={e => this.handleImageFieldChange(e)}/> */}
                           <Button variant="outlined" component="span">
                             Upload
                           </Button>
-                          </label>}}
+                          </label>
+                          }}
+        />
+
+        <TextField
+          disabled
+          id="galleryContainer"
+          // onChange={e => this.handleChange(e)}
+          label="Galerie"
+          value="Adaugati imaginile dorite"
+          InputProps={{endAdornment:         
+                          <label htmlFor="galleryImages">
+                          <Input accept="image/*" id="galleryImages" multiple type="file" onChange={e => this.handleGalleryFieldChange(e)}/>
+                          {/* <Input accept="image/*" id="contained-button-file" multiple type="file" onChange={e => this.handleImageFieldChange(e)}/> */}
+                          <Button variant="outlined" component="span">
+                            Upload
+                          </Button>
+                          </label>
+                          }}
         />
 {/* 
             {console.log("image: ", this.state.menuImage)}
             {console.log("image url: ", this.state.menuURL)} */}
 
-        {this.state.menuURL && this.state.menuImage && (
+{console.log("menu img: ", this.state.menuImage)}
+        {this.state.menuImage && (
         <Box>
         <div>Image Preview:</div>
-        <img src={this.state.menuURL} alt="Image" height="100px" />
+        <img src={this.state.menuImage} alt="Image" height="100px" />
         </Box>
         )}
 
@@ -163,6 +249,12 @@ const mapDispatchToProps = (dispatch) => {
     updateRestaurant: (restaurant) => dispatch(updateRestaurant(restaurant))
   }
 }
+
+const userHook = Component => props => {
+  const userhook = useAuth();
+  console.log("in function hook: ", userhook.currentUser)
+  return <Component {...props} userhook={userhook} />;
+};
 
 export default connect(null, mapDispatchToProps)(UpdateDetails);
 

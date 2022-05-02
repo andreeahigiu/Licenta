@@ -19,6 +19,8 @@ import './DashboardRestaurant.css'
 import { connect } from 'react-redux';
 import { useAuth } from '../../../contexts/AuthContext';
 import { auth } from '../../../firebase';
+import { Link } from 'react-router-dom'
+
 
 
 const styles = theme =>  ({
@@ -43,6 +45,7 @@ const styles = theme =>  ({
 
 
 
+
 class DashRestaurant extends Component {
 
     constructor(props) {
@@ -56,24 +59,18 @@ class DashRestaurant extends Component {
 
     handleClick(selection) {
         this.setState({menuSelection : selection})
-        // this.state.menuSelection = selection;
-        console.log("selection is: "+ this.state.menuSelection);
-
 
     }
 
-    // RenderElement() {
-    //     if(this.state.menuSelection === "details"){
-    //         return <UpdateDetails />;
-    //     }
-    //     else 
-    //         if(this.state.menuSelection === "scene"){
-    //             return <UpdateScene />;
-    //         }
-    //     return <Restaurant />;
+    async handleLogout(){
+        try {
+            await auth.signOut()
+            //navigate('/')
+          } catch {
+            console.log('Failed to log out')
+          }
+    }
 
-
-    // }
 
     render(){
         const { classes } = this.props;
@@ -81,7 +78,7 @@ class DashRestaurant extends Component {
         const { updatedData } = this.props;
         //console.log("Here are the props: " , this.props.state);
         let user = auth.currentUser.uid
-        //console.log("user: ", user)
+        console.log("user: ", user)
 
         return(
             <div className="dash-container">
@@ -99,6 +96,12 @@ class DashRestaurant extends Component {
 
         <MenuItem sx={{mt: 4}} onClick={  () => this.handleClick("scene") }>
           <ListItemText>Update Scene</ListItemText>
+        </MenuItem>
+
+      <MenuItem  sx={{mt: 4}} onClick={  () => this.handleLogout() }>
+      <Link to={'/'}>
+          <ListItemText>Logout</ListItemText>
+      </Link>
         </MenuItem>
       </MenuList>
 
@@ -119,10 +122,10 @@ class DashRestaurant extends Component {
     }
 }
 
-const mapStatToProps = (state) => {
+const mapStateToProps = (state) => {
     return {
         updatedData: state.updatedData.restaurantDetails
     }
 }
 
-export default connect(mapStatToProps)(withStyles(styles)(DashRestaurant));
+export default connect(mapStateToProps)(withStyles(styles)(DashRestaurant));

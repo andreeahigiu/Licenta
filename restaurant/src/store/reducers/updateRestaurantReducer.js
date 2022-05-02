@@ -6,15 +6,12 @@ const initState = {
         phone: '0735644931',
         photos: [{
             image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/1200px-GoldenGateBridge-001.jpg",
-            caption: "San Francisco"
           },
           {
             image: "https://cdn.britannica.com/s:800x450,c:crop/35/204435-138-2F2B745A/Time-lapse-hyper-lapse-Isle-Skye-Scotland.jpg",
-            caption: "Scotland"
           },
           {
             image: "https://static2.tripoto.com/media/filter/tst/img/735873/TripDocument/1537686560_1537686557954.jpg",
-            caption: "Darjeeling"
           },
           {
             image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Palace_of_Fine_Arts_%2816794p%29.jpg/1200px-Palace_of_Fine_Arts_%2816794p%29.jpg",
@@ -41,7 +38,7 @@ const initState = {
             caption: "Darjeeling"
           }
         ],
-        menu : "https://i.pinimg.com/originals/f0/77/a5/f077a520ee8627ecce1eb3d50edb16c2.jpg",
+
 
     }
 }
