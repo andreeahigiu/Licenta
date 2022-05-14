@@ -9,10 +9,12 @@ import Signup from './components/Signup/Signup';
 import Login from './components/Login/Login';
 import { AuthProvider } from './contexts/AuthContext';
 import { useState } from 'react';
-import DashboardClient from './components/DashboardClient/DashboardClient';
+// import DashboardClient from './components/DashboardClient/DashboardClient';
 import DashboardRestaurant from './DashboardRestaurant/DashboardRestaurant';
 import PrivateRoute from './components/PrivateRoute';
+import RestaurantDetails from './components/Restaurants/RestaurantDetails';
 import DashRestaurant from './components/Dashboards/DashboardRestaurant/DashRestaurant';
+import DashboardClient from './components/Dashboards/DashboardClient/DashboardClient';
 
 function App() {
   // const [isAuth, setIsAuth] = useState(false);
@@ -39,16 +41,21 @@ function App() {
           <Route exact path='/signup'>
             <Signup />
           </Route>
-          <PrivateRoute exact path='/dashboardclient' component={DashboardClient} />
-          <PrivateRoute exact path='/dashboardrestaurant' component={DashboardRestaurant} />
+          {/* <PrivateRoute exact path='/dashboardClient' component={DashboardClient} /> */}
+          <PrivateRoute exact path='/dashboardClient' >
+            <DashboardClient />
+            </PrivateRoute>
+
+          <PrivateRoute exact path='/dashboardRestaurant' >
+            <DashRestaurant />
+          </PrivateRoute>
+          {/* <PrivateRoute exact path='/dashbboardRestaurant' component={ DashRestaurant } /> */}
           <Route exact path='/login'>
             <Login />
           </Route>
-
-          <Route exact path='/DashRestaurant'>
-            <DashRestaurant />
+          <Route exact path='/restaurante/:id'>
+            <RestaurantDetails />
           </Route>
-          {/* <Route exact path='/login' element={<Login setIsAuth={setIsAuth}/>} /> */}
           
         </Switch>
 

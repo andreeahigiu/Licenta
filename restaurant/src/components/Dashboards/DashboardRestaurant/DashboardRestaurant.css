@@ -12,8 +12,8 @@
     height: 200vh;
 }
 
-.menu-image{
-    width:60vw;
+.menu-image-dash{
+    width:50vw;
 }
 
 .scena{
@@ -73,3 +73,25 @@
     }
 }
 
+
+.scene-container{
+    height:500px; 
+    width: 500px; 
+    border-style: dotted; 
+}
+
+.table-btn{
+    border-radius: 60%;
+    height:60px;
+    width: 60px;
+    border-color: rgb(214, 81, 4);
+    border-width: 4px;
+    background-color: rgb(204, 117, 4);
+}
+
+.table-btn:focus{
+    background-color: rgb(242, 197, 137);
+}
+/* a { color: #00c; }
+a:visited { #ccc; }
+a:focus { #cc0; } */

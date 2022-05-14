@@ -59,7 +59,7 @@ export default function Navbar({isAuth}) {
             history.push("/dashboardClient");
         }
         if(restaurantEl.exists()){
-            history.push("/dashRestaurant");
+            history.push("/dashboardRestaurant");
             //return <DashRestaurant />
             // history.push({
             //     pathname: '/dashRestaurant',

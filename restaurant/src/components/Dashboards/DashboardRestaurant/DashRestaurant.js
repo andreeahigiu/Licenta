@@ -57,8 +57,18 @@ class DashRestaurant extends Component {
         
     }
 
+    scrollToTop = () =>{
+      window.scrollTo({
+        top: 0, 
+        behavior: 'smooth'
+        /* you can also use 'auto' behaviour
+           in place of 'smooth' */
+      });
+    };
+
     handleClick(selection) {
         this.setState({menuSelection : selection})
+        this.scrollToTop()
 
     }
 
@@ -74,11 +84,13 @@ class DashRestaurant extends Component {
 
     render(){
         const { classes } = this.props;
-        //console.log(this.props.updatedData);
+
         const { updatedData } = this.props;
+        console.log("datele actualizate:", updatedData);
         //console.log("Here are the props: " , this.props.state);
         let user = auth.currentUser.uid
         console.log("user: ", user)
+        console.log("data:", updatedData);
 
         return(
             <div className="dash-container">

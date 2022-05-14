@@ -10,16 +10,20 @@ import RestaurantCard from './RestaurantCard';
 
 let items=['Item 1','Item 2','Item 3','Item 4','Item 5'];
 
-
-
-
+// export function checkLoading(){
+//   return [isLoading, handleLoading]
+// }
 
 function Restaurants({updatedData}) {
   const [restaurants, setRestaurants] = useState("")
+  const [isLoading, setIsLoading] = useState(true);
+
 
   const unsub = onSnapshot(doc(db, "ProfileRestaurant", "SF"), (doc) => {
     console.log("Current data: ", doc.data());
 });
+
+
 
   useEffect(() => {
   console.log("mounted")
@@ -32,6 +36,7 @@ function Restaurants({updatedData}) {
         restaurants.push(data)
       })
       setRestaurants(restaurants)
+      setIsLoading(false)
       
     })
   }, []);
@@ -41,6 +46,7 @@ function Restaurants({updatedData}) {
         {/* {items.map((item,index)=>{
             return <li key={index}>{item}</li>
         })} */}
+      {isLoading && <div>Loading...</div>}
        <RestaurantCard restaurants={restaurants} />
 
     </div>

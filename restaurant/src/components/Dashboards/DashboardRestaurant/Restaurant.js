@@ -158,7 +158,7 @@ const unsub = onSnapshot(doc(db, "ProfileRestaurant", currentUser.uid), (doc) =>
                 <ListItem>
                   <ListItemText>
                     <p> Meniu: </p>
-                    <img className="menu-image" src={currentRestaurant.menuImage} alt="Menu Image" /> 
+                    <img className="menu-image-dash" src={currentRestaurant.menuImage} alt="Menu Image"/> 
                   </ListItemText>
                 </ListItem> 
                 {/* {console.log("well nopw:", currentRestaurant.menuImage)} */}
