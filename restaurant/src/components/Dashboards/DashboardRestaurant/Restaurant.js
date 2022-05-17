@@ -11,6 +11,7 @@ import { doc, onSnapshot, getDoc } from "firebase/firestore";
 import { useAuth } from '../../../contexts/AuthContext';
 import { db } from '../../../firebase';
 import Carousel from 'react-material-ui-carousel'
+import './DashboardRestaurant.css'
 
 
 const captionStyle = {
@@ -44,6 +45,8 @@ function Gallery(props)
     )
 }
 
+
+
 export default function Restaurant({updatedData}) {
 
   
@@ -59,17 +62,67 @@ export default function Restaurant({updatedData}) {
 
 const { currentUser } = useAuth()
 const [currentRestaurant, setCurrentRestaurants] = useState("")
+const [restaurantDataOnce, setRestaurantDataOnce] = useState("")
+const [style, setStyle] = useState([]); 
+const [tables, setTables] = useState()
 
 const unsub = onSnapshot(doc(db, "ProfileRestaurant", currentUser.uid), (doc) => {
   //console.log("Current data: ", doc.data());
   //currentRestaurant.push(doc.data());
   setCurrentRestaurants(doc.data())
+  // setStyle(doc.data().style)
+  // setTables(doc.data().tables)
 });
 // console.log("Data in state:", currentRestaurant);
 
 //let pics = currentRestaurant.gallery
 //console.log("gallery:", pics)
 
+//--------------------------------scene display----------------------------------//
+
+async function getOneElement() {
+  await db.collection('ProfileRestaurant').doc(currentUser.uid).get()
+  .then(snapshot => {setRestaurantDataOnce(snapshot.data())
+                      console.log("heii")
+                      setStyle(snapshot.data().style)
+                      setTables(snapshot.data().tables)
+  })
+}
+
+
+ useEffect(() => {
+
+   getOneElement()
+
+
+}, []);
+
+function placeDiv(e){
+  console.log("x si y:", e.clientX, e.clientY)
+
+}
+
+
+function tableList(){
+  let styleArr = style
+  //console.log("Style array", styleArr)
+  if(tables){
+    return tables.map((item,index) => {
+      //console.log("table style:", styleArr[index])
+      // setStyle( styles=> [...styles, newStyle] )
+      return(
+        <div id={index} className="table-btn" style={styleArr[index]} > Masa noua{index} </div>
+      )
+    })
+  }
+
+
+}
+// let elem = document.querySelector('#sceneContainer');
+// let rect = elem.getBoundingClientRect();
+const newStyle = {position:"relative", left: 80+"px", top:40 +"px"}
+//console.log("newstyle:", newStyle)
+//console.log("container coordinates: ",rect.top, rect.right, rect.bottom, rect.left);
 
   return (
     <div className='restaurant-container'>
@@ -166,39 +219,20 @@ const unsub = onSnapshot(doc(db, "ProfileRestaurant", currentUser.uid), (doc) =>
                 <ListItem>
                   <ListItemText>
                     <p> Scena: </p>
-                    <div className="scena"> 
+                    <div id="sceneContainer" className='scene-container' onClick = { e => placeDiv(e) }> 
 
-                    <Grid container spacing={2}>
-                    {items.map((item,index)=>{
-                      return ( <Grid item xs={4}>
-                              <Item>{item}</Item>
-                              </Grid> )
-                    })}
-{/* 
-                      <Grid item xs={8}>
-                      <Item>xs=8</Item>
-                      </Grid>
-
-                      <Grid item xs={4}>
-                      <Item>xs=4</Item>
-                      </Grid>
-
-                      <Grid item xs={4}>
-                      <Item>xs=4</Item>
-                      </Grid>
-
-                      <Grid item xs={8}>
-                      <Item>xs=8</Item>
-                      </Grid> */}
-                      </Grid>
-
-                      
+                    {tableList()}
+                    {/* <div style={newStyle} className="test-div">test</div> */}
+                    
                     </div>
+
+
                   </ListItemText>
                 </ListItem>
-
+                
             </List>
-      
+
+            {/* <div className="test-div">test</div> */}
     </div>
   )
 }
