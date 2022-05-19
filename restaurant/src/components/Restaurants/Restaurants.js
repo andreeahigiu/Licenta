@@ -17,6 +17,7 @@ let items=['Item 1','Item 2','Item 3','Item 4','Item 5'];
 function Restaurants({updatedData}) {
   const [restaurants, setRestaurants] = useState("")
   const [isLoading, setIsLoading] = useState(true);
+  const [ids, setIds] = useState([])
 
 
   const unsub = onSnapshot(doc(db, "ProfileRestaurant", "SF"), (doc) => {
@@ -32,15 +33,21 @@ function Restaurants({updatedData}) {
     .then( snapshot => {
       const restaurants = []
       snapshot.forEach( doc => {
-        const data = doc.data()
+        let data = doc.data()
+        data.id = doc.id
         restaurants.push(data)
+
+        ids.push( doc.id )
       })
       setRestaurants(restaurants)
+      setIds(ids)
       setIsLoading(false)
       
     })
   }, []);
 
+  console.log("restaurante:", restaurants)
+  console.log("ids:", ids)
   return (
     <div className='restaurant'>
         {/* {items.map((item,index)=>{

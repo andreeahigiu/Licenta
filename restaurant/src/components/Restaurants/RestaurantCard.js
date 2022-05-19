@@ -51,7 +51,7 @@ export default function RestaurantCard({restaurants}) {
         <Card sx={{ display: 'flex', width: '80vw', height: '25vh', marginLeft:'8vw', marginTop:'5vh' }}>
           {/* {setIsLoading(false)} */}
           {/* <Link to={`/restaurante/${restaurant.name}`}> */}
-          <CardActionArea to={`/restaurante/${restaurant.name}`} component={Link} sx={{ display: 'flex'}} >
+          <CardActionArea to={`/restaurante/${restaurant.id}`} component={Link} sx={{ display: 'flex'}} >
             {/* <CardMedia
         component="img"
         sx={{ width: 151, marginRight:'15vw', margin:'15px', maxHeight:'100%', maxWidth:'100%', objectFit: 'contain'}}
