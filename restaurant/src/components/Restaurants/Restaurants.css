@@ -13,14 +13,135 @@
     object-fit: cover;
     padding: 10px;
     /* border: 2px solid #000000; */
-    border-radius: 20px;
+    border-radius: 15px;
 }
 
 .menu-container{
     display: flex;
     height:25vh;
-    width: 25vh;
+    width: 30vh;
     margin-right: 5vw;
-    margin-left: -25vw;
+    margin-left: -20vw;
     align-self: flex-start;
 }
+
+.name-stars{
+    display: inline-flex;
+    width:100%;
+}
+
+.stars{
+    display: inline-flex;
+    margin-left: auto;
+}
+
+.rating{
+    margin-top: 10px;
+    margin-right: 1rem;
+}
+
+.small-star{
+    width: 1.5rem;
+    margin-right: 10px;
+    align-self:flex-start;
+    margin-top: 0.5rem;
+}
+
+.vertical-bar{
+    border-left: 2px solid rgb(175, 177, 175);
+    height: 15px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.descrieri{
+    display: inline-flex;
+    margin-top: 5vh;
+    align-items:center;
+    color: rgb(175, 177, 175);
+
+}
+
+.small-icon{
+    width: 1.5rem;
+    margin-right: 10px;
+
+}
+
+.search-container{
+    display: flex;
+    width: 80vw;
+    /* height: 25vh; */
+    margin-left:8vw;
+    margin-top:10vh ;
+    margin-bottom: 7vh;
+}
+
+.search-img:hover{
+    background-color: rgb(175, 177, 175);
+}
+
+.search-img{
+    width:2rem;
+    align-self: center;
+    margin-left: 1rem;
+}
+
+.search-btn {
+    border-radius: 4px;
+    background-color: #ca931d;
+    border: none;
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
+    padding: 16px;
+    width: 220px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin-left: 2rem;
+
+    box-shadow: 0 5px 20px -10px rgba(0, 0, 0,.7);
+  }
+  
+  .search-btn{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  .search-btn:after {
+    content: '»';
+    position: absolute;
+    opacity: 0;  
+    top: 14px;
+    right: -20px;
+    transition: 0.5s;
+  }
+  
+  .search-btn:hover{
+    padding-right: 24px;
+    padding-left:8px;
+  }
+  
+  .search-btn:hover:after {
+    opacity: 1;
+    right: 10px;
+  }
+
+  #search-field{
+    width:60vw;
+  }
+
+  .filters-container{
+      display: inline-flex;
+      width: 83vw;
+      margin-left:5vw;
+      margin-bottom: 20vh;
+  }
+
+  .filters{
+      display: flex;
+      width: 20vw;
+      margin-left: 3vw !important;
+  }
