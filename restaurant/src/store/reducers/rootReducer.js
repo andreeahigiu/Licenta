@@ -5,6 +5,7 @@ import { firestoreReducer } from "redux-firestore";
 import { firebaseReducer } from "react-redux-firebase";
 import updateClientReducer from "./updateClientReducer";
 import DisplaySceneReducer from "./DisplaySceneReducer";
+import bookTableReducer from "./bookTableReducer";
 
 const rootReducer = combineReducers( {
     auth: authReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers( {
     firestore: firestoreReducer,
     firebase: firebaseReducer,
     scene: DisplaySceneReducer,
+    booking: bookTableReducer,
 });
 
 export default rootReducer;

@@ -118,3 +118,32 @@ a:focus { #cc0; } */
 .form-styles{
     position: relative;
 }
+
+.lat-long{
+    display: inline-flex;
+    width: 32vw;
+}
+
+.form-container{
+    display: inline-flex;
+    width: 63vw;
+}
+
+.first-col{
+    margin-right: 5vw;
+    width:30vw;
+}
+
+.second-col{
+    width:30vw;
+}
+
+.field{
+    /* width: 30vw; */
+    width:30.5vw;
+    margin-left: 13px;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+
+
+}

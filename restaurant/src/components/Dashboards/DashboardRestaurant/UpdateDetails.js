@@ -16,6 +16,11 @@ import { projectStorage } from '../../../firebase';
 import { storage } from '../../../firebase';
 import { useAuth } from '../../../contexts/AuthContext';
 
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+
 
 const Input = styled('input')({
   display: 'none',
@@ -110,13 +115,20 @@ class UpdateDetails extends Component {
 
   }
 
-  
   handleChange(e) {
-    console.log("target Val:", e.target.value)
+    console.log("target Val:", e.target)
     if(e.target.value != ''){
-      this.setState({
-        [e.target.id]: e.target.value
-      })
+      if(e.target.id == undefined){
+        this.setState({
+          [e.target.name]: e.target.value
+        })
+      }
+      else {
+        this.setState({
+          [e.target.id]: e.target.value
+        })
+      }
+
     }
 
   }
@@ -148,36 +160,62 @@ class UpdateDetails extends Component {
         gap: 2,
         '& .MuiTextField-root': { m: 2, width: '100%' },
       }}
-      noValidate
+      // noValidate
+      // validate={values => {
+      //   const errors = {};
+      //   if (values.location) {
+      //     errors.latitude = "Required";
+      //     errors.longitude = "Required";
+      //   }
+
+      // }}
+
       autoComplete="off"
     >
-      <div>
+      <div className="form-and-btn">
+      <div className="form-container">
+      <div className="first-col">
       <TextField id="name" label="Nume" variant="outlined" onChange={e => this.handleChange(e)}/>
       <TextField
           id="location"
+          name="location"
           onChange={e => this.handleChange(e)}
-          label="Locatie"
+          label="Adresa"
           defaultValue=""
-          helperText="Mentionati adresa completa"
+          // helperText="Mentionati adresa completa"
         />
-        <TextField
-          id="places"
-          label="Numar locuri"
-          type="number"
+        <div className="lat-long"> 
+              <TextField
+          id="longitude"
+          name="longitude"
           onChange={e => this.handleChange(e)}
-          InputLabelProps={{
-            shrink: true,
-          }}
+          required={this.state.location ? true : false}
+          label="Longitudine"
+          defaultValue=""
         />
+              <TextField
+          id="latitude"
+          name="latitude"
+          onChange={e => this.handleChange(e)}
+          label="Latitudine"
+          required={this.state.location ? true : false}
+          // {... this.state.location ? required=true : required=false }
+          defaultValue=""
+        />
+        </div>
+
         <TextField
           label="Numar telefon"
           id="phone"
-          type="number"
+          type="numeric"
           onChange={e => this.handleChange(e)}
-          InputProps={{
-            startAdornment: <InputAdornment position="start">+(40)</InputAdornment>,
-          }}
+          
+          // InputProps={{
+          //   startAdornment: <InputAdornment position="start">+(40)</InputAdornment>,
+          // }}
         />
+
+        <TextField id="email" label="Email" variant="outlined" onChange={e => this.handleChange(e)}/>
 
         <TextField
           disabled
@@ -212,6 +250,63 @@ class UpdateDetails extends Component {
                           </label>
                           }}
         />
+
+      </div>
+
+      <div className="second-col">
+      <TextField id="program" label="Program" variant="outlined" onChange={e => this.handleChange(e)}/>
+
+      <TextField
+          id="places"
+          label="Numar locuri"
+          type="number"
+          onChange={e => this.handleChange(e)}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+
+      <TextField
+          id="waitingTime"
+          label="Timp mediu de asteptare"
+          type="number"
+          onChange={e => this.handleChange(e)}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+
+
+      <FormControl  >
+
+      <InputLabel className="field">Preturi</InputLabel>
+      <Select
+        className="field"
+        labelId="demo-simple-select-label"
+        id="pricing"
+        // value={filters.distance}
+        name="pricing"
+        label="Preturi"
+        onChange={e => this.handleChange(e)}
+      >
+        <MenuItem id="pricing" value={1}>Ieftin</MenuItem>
+        <MenuItem value={2}>Mediu</MenuItem>
+        <MenuItem value={3}>Scump</MenuItem>
+        <MenuItem value={4}>Delux</MenuItem>
+      </Select>
+      </FormControl>
+
+
+      <TextField id="cuisine" label="Bucatarie" variant="outlined" onChange={e => this.handleChange(e)}/>
+      <TextField id="decor" label="Decor" variant="outlined" onChange={e => this.handleChange(e)}/>
+      <TextField id="description" label="Descriere restaurant" variant="outlined" onChange={e => this.handleChange(e)}/>
+
+
+
+
+
+      </div>
+      </div>
 {/* 
             {console.log("image: ", this.state.menuImage)}
             {console.log("image url: ", this.state.menuURL)} */}
@@ -235,8 +330,8 @@ class UpdateDetails extends Component {
         }}>
           Actualizeaza date
         </Button>
+        </div>
 
-    </div>
     </Box>
 
       </div>

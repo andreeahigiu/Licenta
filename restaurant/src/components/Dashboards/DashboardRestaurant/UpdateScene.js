@@ -9,10 +9,12 @@ import { displayScene } from '../../../store/actions/displaySceneAction';
 import { doc, onSnapshot, getDoc } from "firebase/firestore";
 import { useAuth } from '../../../contexts/AuthContext';
 import { db } from '../../../firebase';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 export default function UpdateScene() {
   const [style, setStyle] = useState([]); 
-  const [clicked, setClick] = useState(true);
+  const [clicked, setClick] = useState(false);
   const [tables, setTables] = useState([])
   const [currentBtn, setCurrentBtn] = useState(null)
   const [updateScene, setUpdateScene] = useState({tables: [], styles: []})
@@ -26,6 +28,43 @@ export default function UpdateScene() {
 
   const { currentUser } = useAuth()
   const [currentRestaurant, setCurrentRestaurants] = useState("")
+
+  const [contextMenu, setContextMenu] = React.useState(null);
+
+  function handleContextMenu (event, index) {
+    event.preventDefault();
+    setContextMenu(
+      contextMenu === null
+        ? {
+            mouseX: event.clientX + 2,
+            mouseY: event.clientY - 6,
+          }
+        : // repeated contextmenu when it is already open closes it with Chrome 84 on Ubuntu
+          // Other native context menus might behave different.
+          // With this behavior we prevent contextmenu from the backdrop to re-locale existing context menus.
+          null,
+    );
+    setCurrentBtn(index)
+    setClick(false);
+  };
+
+  const handleClose = () => {
+    setContextMenu(null);
+    setClick(false);
+  };
+
+  const handleDeleteTable = () => {
+    tables.splice(currentBtn, 1);
+    style.splice(currentBtn, 1);
+
+    setContextMenu(null);
+    setTables(tables);
+    setStyle(style);
+
+
+
+    setClick(false);
+  };
 
 
 
@@ -47,9 +86,9 @@ async function getOneElement() {
 }, []);
 
 
-console.log("reading restaurant ", currentRestaurant)
-  console.log("DB tables", tables)
-  console.log("DB style", style)
+// console.log("reading restaurant ", currentRestaurant)
+//   console.log("DB tables", tables)
+//   console.log("DB style", style)
 
 
 
@@ -70,8 +109,8 @@ console.log("reading restaurant ", currentRestaurant)
       let table = {...tableStyles[currentBtn]}
 
       table.position = 'absolute'
-      table.left = e.screenX-347-20 + 'px'
-      table.top = e.screenY-257-20 + 'px'
+      table.left = e.clientX-347-30 + 'px'
+      table.top = e.clientY-180 + 'px'
 
       tableStyles[currentBtn] = table
       setStyle(tableStyles)
@@ -85,7 +124,7 @@ console.log("reading restaurant ", currentRestaurant)
   }
 
   function addTable(){
-    const newItem = { id: uuid(), places: "", specifications:"" }
+    const newItem = { id: uuid(), places: "", specifications:"", reserved: false }
     setTables([...tables, newItem])
     const newStyle = {position:"absolute", left:"200px", top:"200px"}
     setStyle([...style, newStyle])
@@ -98,9 +137,11 @@ console.log("reading restaurant ", currentRestaurant)
     console.log("STYLE:", style)
   }
 
-  function dealWithBtn(index){
+  function dealWithBtn(index, e){
     setCurrentBtn(index)
     setClick(true)
+
+
   }
 
   function tableList(){
@@ -110,7 +151,12 @@ console.log("reading restaurant ", currentRestaurant)
         //console.log("table style:", styleArr[index])
         // setStyle( styles=> [...styles, newStyle] )
         return(
-          <button id={index} className="table-btn" style={styleArr[index]} onClick={ () => dealWithBtn(index)} > Masa noua{index} </button>
+
+          <button id={index} className="table-btn" style={styleArr[index]} onClick={ (e) => dealWithBtn(index, e)} onContextMenu={ (e) => handleContextMenu(e, index)}> 
+          Masa noua{index} 
+
+          
+          </button>
         )
       })
     }
@@ -143,8 +189,24 @@ console.log("reading restaurant ", currentRestaurant)
 
       {/* {console.log("toate stilurile: ", style)} */}
       {tableList()}
-      {/* <button id="table-btn" style={style} onClick={ () => setClick(true)} > Masa1 </button> */}
 
+      { console.log("buttonclicked?---------", clicked) }
+      {/* <button id="table-btn" style={style} onClick={ () => setClick(true)} > Masa1 </button> */}
+      <Menu
+        open={contextMenu !== null}
+        onClose={handleClose}
+        anchorReference="anchorPosition"
+        anchorPosition={
+          contextMenu !== null
+            ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
+            : undefined
+        }
+      >
+        <MenuItem onClick={handleClose}>Inchide meniu</MenuItem>
+        <MenuItem onClick={handleClose}>Adauga specificatii masa</MenuItem>
+        <MenuItem onClick={handleDeleteTable}>Sterge masa</MenuItem>
+
+      </Menu>
       </div>
 
       <button type="submit"> Actualizeaza </button>
