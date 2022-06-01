@@ -11,7 +11,7 @@ export const bookTable = (booking) => {
     let dbdata=[]
     
     return (dispatch, getState) => {
-        db.collection('Bookings').doc(restaurantId).collection('BookingList').doc(booking.bookingId).update({
+        db.collection('Bookings').doc(restaurantId).collection('BookingList').doc(booking.bookingId).set({
             ...booking,
             createdAt: new Date(),
 
