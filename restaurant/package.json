@@ -19,6 +19,7 @@
     "firebase": "^9.6.9",
     "google-maps-react": "^2.0.6",
     "react": "^17.0.2",
+    "react-awesome-shapes": "^0.1.12",
     "react-bootstrap": "^2.2.3",
     "react-calendar": "^3.7.0",
     "react-carousel-minimal": "^1.4.1",

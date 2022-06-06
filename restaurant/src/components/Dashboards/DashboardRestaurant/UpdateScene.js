@@ -12,6 +12,11 @@ import { db } from '../../../firebase';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { Button } from 'bootstrap';
+
 export default function UpdateScene() {
   const [style, setStyle] = useState([]); 
   const [clicked, setClick] = useState(false);
@@ -19,6 +24,7 @@ export default function UpdateScene() {
   const [currentBtn, setCurrentBtn] = useState(null)
   const [updateScene, setUpdateScene] = useState({tables: [], styles: []})
   const [empty, setEmpty] = useState(true);
+  const [seats, setSeats] = useState(2)
   
   const dispatch = useDispatch();
   const mystate = useSelector(state => state.scene)
@@ -66,6 +72,68 @@ export default function UpdateScene() {
     setClick(false);
   };
 
+  function handleSeats(){
+    tables[currentBtn].places = seats;
+  }
+
+  function displaySeats(index){
+    let tablesCpy = structuredClone(tables)
+    if(tablesCpy[index].places == 2){
+      return <React.Fragment>
+        <div id="point2-1"/>
+        <div id="point2-2"/>
+      </React.Fragment>
+    }
+
+    if(tablesCpy[index].places == 4){
+      return   <React.Fragment>
+      <div id="point4-1"/>
+      <div id="point4-2"/>
+      <div id="point4-3"/>
+      <div id="point4-4"/>
+    </React.Fragment>
+    }
+
+    if(tablesCpy[index].places == 6){
+      return   <React.Fragment>
+      <div id="point6-1"/>
+      <div id="point6-2"/>
+      <div id="point6-3"/>
+      <div id="point6-4"/>
+      <div id="point6-5"/>
+      <div id="point6-6"/>
+    </React.Fragment>
+    }
+
+    if(tablesCpy[index].places == 8){
+      return <React.Fragment>
+      <div id="point8-1"/>
+      <div id="point8-2"/>
+      <div id="point8-3"/>
+      <div id="point8-4"/>
+      <div id="point8-5"/>
+      <div id="point8-6"/>
+      <div id="point8-7"/>
+      <div id="point8-8"/>
+    </React.Fragment>
+    }
+  }
+
+  function handleSeatsChange(e){
+    setSeats(e.target.value)
+
+    let allTables=tables
+    let table = {...allTables[currentBtn]}
+    table.places = e.target.value;
+    tables[currentBtn] = table
+    setTables(tables)
+    // console.log("event", e)
+
+    setContextMenu(null);
+    setClick(false);
+  }
+
+console.log("current table:", currentBtn,"seats:", seats)
 
 
 async function getOneElement() {
@@ -110,7 +178,7 @@ async function getOneElement() {
 
       table.position = 'absolute'
       table.left = e.clientX-347-30 + 'px'
-      table.top = e.clientY-180 + 'px'
+      table.top = e.clientY-180-23 + 'px'
 
       tableStyles[currentBtn] = table
       setStyle(tableStyles)
@@ -124,7 +192,7 @@ async function getOneElement() {
   }
 
   function addTable(){
-    const newItem = { id: uuid(), places: "", specifications:"", reserved: false }
+    const newItem = { id: uuid(), places: 2, specifications:"", reserved: false }
     setTables([...tables, newItem])
     const newStyle = {position:"absolute", left:"200px", top:"200px"}
     setStyle([...style, newStyle])
@@ -150,10 +218,12 @@ async function getOneElement() {
       return tables.map((item,index) => {
         //console.log("table style:", styleArr[index])
         // setStyle( styles=> [...styles, newStyle] )
+        console.log("Index", index, "Item:", item)
         return(
 
           <button id={index} className="table-btn" style={styleArr[index]} onClick={ (e) => dealWithBtn(index, e)} onContextMenu={ (e) => handleContextMenu(e, index)}> 
-          Masa noua{index} 
+          <p className="table-label"> Masa noua{index} </p>
+          {displaySeats(index)}
 
           
           </button>
@@ -180,7 +250,7 @@ async function getOneElement() {
   return (
     
     <form className="form-styles" onSubmit={handleSubmit}>
-            <button onClick={addTable}>+ Adauga o masa</button>
+            <button onClick={addTable} className="scene-update-btn">+ Adauga o masa</button>
       <div 
       id='parent-id'
       className='scene-container'
@@ -202,14 +272,49 @@ async function getOneElement() {
             : undefined
         }
       >
-        <MenuItem onClick={handleClose}>Inchide meniu</MenuItem>
+        <MenuItem onClick={handleClose}>Inchide meniu si salveaza</MenuItem>
         <MenuItem onClick={handleClose}>Adauga specificatii masa</MenuItem>
         <MenuItem onClick={handleDeleteTable}>Sterge masa</MenuItem>
+
+
+        <FormControl  >
+
+      <InputLabel className="places-field">Nr. locuri</InputLabel>
+      <Select
+        className="places-field"
+        labelId="seats"
+        id="seats"
+        value={seats}
+        name="seats"
+        label="Nr. locuri"
+        onChange={e => handleSeatsChange(e)}
+      >
+        <MenuItem value={2}>2</MenuItem>
+        <MenuItem value={4}>4</MenuItem>
+        <MenuItem value={6}>6</MenuItem>
+        <MenuItem value={8}>8</MenuItem>
+      </Select>
+      </FormControl>
+
 
       </Menu>
       </div>
 
-      <button type="submit"> Actualizeaza </button>
+      {/* <Button className="update-details-submit"variant="outlined" type="submit"
+        sx={{
+          boxShadow: 1,
+          borderRadius: 2,
+          width: '100%',
+          ml: "16px",
+          mt: "6vh",
+          p: 2,
+          color: "",
+
+        }}>
+          Actualizeaza
+        </Button> */}
+
+      <button type="submit" className="scene-update-btn"> Actualizeaza </button>
       {/* <div className="test-div">test</div> */}
       </form>
 

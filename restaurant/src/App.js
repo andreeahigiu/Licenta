@@ -16,6 +16,7 @@ import RestaurantDetails from './components/Restaurants/RestaurantDetails';
 import DashRestaurant from './components/Dashboards/DashboardRestaurant/DashRestaurant';
 import DashboardClient from './components/Dashboards/DashboardClient/DashboardClient';
 import MakeReservation from './components/Restaurants/MakeReservation';
+import TablesBooking from './components/Restaurants/tablesBooking';
 
 function App() {
   // const [isAuth, setIsAuth] = useState(false);
@@ -60,6 +61,10 @@ function App() {
           <Route exact path='/restaurante/:id/rezervare'>
             <MakeReservation />
           </Route>
+
+          <Route path='/restaurante/:id/rezervare/masa'>
+            <TablesBooking />
+            </Route>
           
         </Switch>
 

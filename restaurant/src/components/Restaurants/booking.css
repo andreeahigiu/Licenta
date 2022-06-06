@@ -3,18 +3,22 @@
     display:flex;
     flex-direction: column;
     /* margin-left: 5vw; */
-    margin-top: 8vh;
+    margin-top: 5vh;
     align-items: center;
-    margin-bottom: 20vh;
+    margin-bottom: 5vh;
 }
 
 .scene-booking{
-    margin-left: 0vw;
-    margin-top:8vh;
-    border-style: dotted; 
+    height:60vh;
+    width: 60vw;
+    border: 0.5px solid; 
+    border-color:rgb(180, 177, 177) ;
+    border-radius: 10px;
     position:relative;
-    height:500px; 
-    width: 500px; 
+    margin-left:0vw !important;
+    margin-top: 5vh !important;
+    /* margin-bottom: 5vh !important; */
+    box-shadow: 5px 5px 5px rgb(215, 214, 211);
 }
 
 .date-time-picker{
@@ -29,27 +33,62 @@
     background-color: rgb(242, 197, 137)!important;
 }
 
+.booking-time-container{
+    display: flex;
+    flex-direction: column;
+    margin-top:5vh;
+    margin-bottom: 5vh;
+    /* width:100%; */
+    align-content: center;
+    justify-content: center;
+    align-self: center;
+}
+
+.booking-time-p{
+    align-self: center;
+    margin-top: 2vh;
+}
+
+.booking-time-dropdown{
+    align-self: center;
+    width: 20vw;
+    margin-top: 5vh !important;
+}
 
 .table-btn-booking{
+    display:flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 60%;
 height:60px;
 width: 60px;
-border-color: rgb(214, 81, 4);
+border-color: transparent;
 border-width: 4px;
-background-color: rgb(204, 117, 4);
-border-image: none;
-border-style:solid;
+/* background-color: rgb(204, 117, 4); */
+/* background-color: transparent; */
+background:linear-gradient(135deg,#f7b55f,#cc7504);
+/* border-image: none; */
+
+
+
+}
+
+.table-nr{
+    display:flex;
+    align-self: center;
 }
 
 .table-btn-booking-unavailable{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+
     border-radius: 60%;
 height:60px;
 width: 60px;
-border-color: rgb(214, 81, 4);
 border-width: 4px;
-background-color: rgb(137, 137, 137);
-border-image: none;
-border-style:solid;
+background:linear-gradient(135deg,#c3c3c3,#888888);
+
 }
 
 .book-btn-container{
@@ -57,7 +96,6 @@ border-style:solid;
     align-items: center;
     justify-content: center;
     align-self: center;
-    padding-bottom: 20vh;
 }
 
 .book-btn{
@@ -89,3 +127,85 @@ border-style:solid;
     color:rgb(184, 133, 76);
 
 }
+
+
+.restaurant-scene-booking{
+    margin:2vh;
+}
+
+
+
+
+
+
+
+
+.table-btn-booking-trial{
+    position:relative;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 60%;
+height:60px;
+width: 60px;
+border-color: transparent;
+/* border-width: 4px; */
+/* background-color: rgb(204, 117, 4); */
+/* background-color: transparent; */
+background:linear-gradient(135deg,#f7b55f,#cc7504);
+/* border-image: none; */
+margin: 10vw;
+
+}
+
+#point-1 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 6px; height: 10px;
+    background: green;
+    margin-left: 58px;
+  }
+
+  #point-2 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 6px; height: 10px;
+    background: green;
+    margin-left: -58px;
+  }
+
+  #point-3 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 6px;
+    background: green;
+    margin-top: 58px;
+  }
+
+  #point-4 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 6px;
+    background: green;
+    margin-top: -58px;
+  }
+  
+  #point:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border: 1px solid #bada55;
+    top: -3px;
+    left: -3px;
+  }
+
+
+  #bookingBtn{
+      margin-bottom: 5vh;;
+  }

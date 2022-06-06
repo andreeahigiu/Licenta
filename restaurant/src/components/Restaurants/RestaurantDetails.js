@@ -8,6 +8,8 @@ import ReviewCard from './ReviewCard'
 import back from '../../utils/icons/back-arrow.svg' 
 import star from '../../utils/icons/star-svgrepo-com.svg' 
 import './Restaurants.css'
+//import { Firestore } from 'firebase/firestore';
+import firebase from 'firebase/compat/app';
 
 import Carousel from 'react-material-ui-carousel'
 import Paper from '@mui/material/Paper';
@@ -23,8 +25,6 @@ export default function RestaurantDetails(restaurantId) {
   const [style, setStyle] = useState([]); 
   const [tables, setTables] = useState()
   const history = useHistory();
-
-
 
   const libraries = ['places']
   const mapContainerStyle = {
@@ -53,10 +53,29 @@ export default function RestaurantDetails(restaurantId) {
     })
   }
   
+  //actualizez rezervarile; le sterg din daza de date pe acelea ale caror data si ora sunt mai vechi decat data si ora curenta 
+  function updateBookings(){
+    const currentDate = firebase.firestore.Timestamp.fromDate(new Date());
+    console.log("data curenta:", currentDate)
+
+    db.collection('Bookings').doc(id).collection('BookingList').where("date","<", currentDate)
+    .get()
+    .then( function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        console.log("DOC EXPIRAT",doc.id," => ",doc.data().date.toDate(), doc.data().bookingId);
+        doc.ref.delete();
+      });
+    })
+    .catch(function(error){
+      console.log("Error at getting documents", error)
+    })
+    console.log("Finalul cautarii de Doc Expirate:")
+  }
 
    useEffect(() => {
   
      getOneElement()
+     updateBookings()
 
       window.scrollTo({
         top: 0, 
@@ -67,11 +86,6 @@ export default function RestaurantDetails(restaurantId) {
 
 
   }, []);
-
-
-
-
-
 
 
   if(loadError) return "Error loading maps";
@@ -85,6 +99,49 @@ export default function RestaurantDetails(restaurantId) {
   function handleClick(){
     history.push(`/restaurante/${id}/rezervare`);
   }
+
+  function displaySeats(index){
+    let tablesCpy = structuredClone(tables)
+    if(tablesCpy[index].places == 2){
+      return <React.Fragment>
+        <div id="point2-1"/>
+        <div id="point2-2"/>
+      </React.Fragment>
+    }
+
+    if(tablesCpy[index].places == 4){
+      return   <React.Fragment>
+      <div id="point4-1"/>
+      <div id="point4-2"/>
+      <div id="point4-3"/>
+      <div id="point4-4"/>
+    </React.Fragment>
+    }
+
+    if(tablesCpy[index].places == 6){
+      return   <React.Fragment>
+      <div id="point6-1"/>
+      <div id="point6-2"/>
+      <div id="point6-3"/>
+      <div id="point6-4"/>
+      <div id="point6-5"/>
+      <div id="point6-6"/>
+    </React.Fragment>
+    }
+
+    if(tablesCpy[index].places == 8){
+      return <React.Fragment>
+      <div id="point8-1"/>
+      <div id="point8-2"/>
+      <div id="point8-3"/>
+      <div id="point8-4"/>
+      <div id="point8-5"/>
+      <div id="point8-6"/>
+      <div id="point8-7"/>
+      <div id="point8-8"/>
+    </React.Fragment>
+    }
+  }
   
   function tableList(){
     let styleArr = style
@@ -94,7 +151,10 @@ export default function RestaurantDetails(restaurantId) {
         //console.log("table style:", styleArr[index])
         // setStyle( styles=> [...styles, newStyle] )
         return(
-          <div id={index} className="table-btn" style={styleArr[index]} > Masa noua{index} </div>
+          <div key={index} id={index} className="table-btn" style={styleArr[index]} > 
+          Masa {index} 
+          {displaySeats(index)}
+          </div>
         )
       })
     }
@@ -115,6 +175,52 @@ export default function RestaurantDetails(restaurantId) {
 
 function makeReservation() {
   history.push(`/restaurante/${id}/rezervare`)
+}
+
+function restaurantPricing(restaurant){
+  if(restaurant.pricing == 1){
+    return "$"
+  }
+  if(restaurant.pricing == 2){
+    return "$$"
+  }
+  if(restaurant.pricing == 3){
+    return "$$$"
+  }
+  if(restaurant.pricing == 4){
+    return "$$$$"
+  }
+}
+
+function restaurantCuisine(restaurant){
+  if(restaurant.cuisine == 1){
+    return "Americana"
+  }
+  if(restaurant.cuisine == 2){
+    return "Asiatica"
+  }
+  if(restaurant.cuisine == 3){
+    return "Europeana"
+  }
+  if(restaurant.cuisine == 4){
+    return "Italiana"
+  }
+  if(restaurant.cuisine == 5){
+    return "Romaneasca"
+  }
+
+}
+
+function restaurantWaitingTime(restaurant){
+  if(restaurant.waitingTime == 1){
+    return "15-30 min"
+  }
+  if(restaurant.waitingTime == 2){
+    return "30-50 min"
+  }
+  if(restaurant.waitingTime == 3){
+    return "60 min"
+  }
 }
 
   return (
@@ -152,7 +258,7 @@ function makeReservation() {
             
           </div>
 
-          <div className="dollars"> $$$ </div>
+          <div className="dollars"> {restaurantPricing(currentRestaurant)} </div>
           </div>
 
           <button className="book-now"  onClick={makeReservation}> Rezervă acum </button>  
@@ -170,9 +276,9 @@ function makeReservation() {
 
           <div className="inline-second">
           <div className="detail-1"> {currentRestaurant.program} </div>
-          <div className="detail-2"> {currentRestaurant.cuisine} </div>
+          <div className="detail-2"> {restaurantCuisine(currentRestaurant)} </div>
           <div className="detail-3"> {currentRestaurant.decor} </div>
-          <div className="detail-4"> {currentRestaurant.waitingTime} min</div>
+          <div className="detail-4"> {restaurantWaitingTime(currentRestaurant)}</div>
           </div>
         </div>
 

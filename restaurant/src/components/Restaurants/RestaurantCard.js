@@ -28,12 +28,14 @@ import { Form } from 'react-bootstrap';
 export default function RestaurantCard({restaurants}) {
     const theme = useTheme();
     const [isLoading, setIsLoading] = useState(true);
-    const [filters, setFilters] = useState({stars: "10", distance: "10", cuisine: "10", waitingTime: "10"});
+    const [filters, setFilters] = useState({stars: "", prices: "", cuisine: "", waitingTime: ""});
+    const [search, setSearch] = useState("");
+    const [searchBtn, setSearchBtn] = useState("")
     let fieldName = ''
 
     const handleChange = (e) => {
 
-      console.log("target", e.target)
+      //console.log("target", e.target)
       if(e.target.value != ''){
         // fieldName = e.target.name
         // filters.fieldName = e.target.value
@@ -44,8 +46,57 @@ export default function RestaurantCard({restaurants}) {
 
     useEffect(() => {
       restaurants && setIsLoading(false)
-      console.log('In effect:', isLoading)
     }, [])
+
+    function handleSearch(e){
+      e.preventDefault();
+      console.log("Searched for:", e.target.value);
+      setSearch(e.target.value);
+    }
+
+    function restaurantCuisine(restaurant){
+      if(restaurant.cuisine == 1){
+        return "Americana"
+      }
+      if(restaurant.cuisine == 2){
+        return "Asiatica"
+      }
+      if(restaurant.cuisine == 3){
+        return "Europeana"
+      }
+      if(restaurant.cuisine == 4){
+        return "Italiana"
+      }
+      if(restaurant.cuisine == 5){
+        return "Romaneasca"
+      }
+
+    }
+
+    function restaurantPricing(restaurant){
+      if(restaurant.pricing == 1){
+        return "$"
+      }
+      if(restaurant.pricing == 2){
+        return "$$"
+      }
+      if(restaurant.pricing == 3){
+        return "$$$"
+      }
+      if(restaurant.pricing == 4){
+        return "$$$$"
+      }
+    }
+
+    function searchResult(){
+      console.log("Search button let's go:");
+      // searchBtn=search
+      // setSearchBtn(searchBtn)
+    }
+
+    function clearFilters(){
+      setFilters({stars:"", prices: "", cuisine:"", waitingTime:""});
+    }
 
 
   return (
@@ -60,18 +111,22 @@ export default function RestaurantCard({restaurants}) {
 
     <Grid item xs={3}>
 
-    <div className="search-container">
+    <Box
+      className="search-container">
+
         <TextField
           id="search-field"
           variant="outlined"
           label="Search"
+          onChange={e => handleSearch(e)}
           wi
         />
 
         {/* <img className="search-img" src={glass} alt="glass"/>  */}
-        <button className="search-btn"> Cauta acum!</button>
+        {/* <button className="search-btn" type="submit" > Cauta acum!</button> */}
 
-    </div>
+
+    </Box>
 
       <Box className="filters-container">
       <FormControl className="filters">
@@ -83,15 +138,17 @@ export default function RestaurantCard({restaurants}) {
           name="stars"
           value={filters.stars}
           label="Numar stele"
-          onChange={handleChange}
+          onChange={e => handleChange(e)}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          <MenuItem value={1}>1 din 5</MenuItem>
+          <MenuItem value={2}>2 din 5</MenuItem>
+          <MenuItem value={3}>3 din 5</MenuItem>
+          <MenuItem value={4}>4 din 5</MenuItem>
+          <MenuItem value={5}>5 din 5</MenuItem>
         </Select>
         </FormControl>
 
-        <FormControl className="filters">
+        {/* <FormControl className="filters">
 
         <InputLabel id="demo-simple-select-label" >Distanta centru</InputLabel>
         <Select
@@ -103,11 +160,32 @@ export default function RestaurantCard({restaurants}) {
           label="Distanta centru"
           onChange={handleChange}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          <MenuItem value={0}>Nicio selectie</MenuItem>
+          <MenuItem value={1}>Central</MenuItem>
+          <MenuItem value={2}>1-3 km fata de centru</MenuItem>
+          <MenuItem value={3}>3-5 km fata de centru</MenuItem>
         </Select>
-        </FormControl>
+        </FormControl> */}
+
+<FormControl className="filters">
+
+<InputLabel id="demo-simple-select-label" >Preturi</InputLabel>
+<Select
+
+  labelId="demo-simple-select-label"
+  id="prices"
+  value={filters.prices}
+  name="prices"
+  label="Distanta centru"
+  onChange={handleChange}
+>
+
+  <MenuItem value={1}>Ieftin</MenuItem>
+  <MenuItem value={2}>Mediu</MenuItem>
+  <MenuItem value={3}>Scump</MenuItem>
+  <MenuItem value={4}>Delux</MenuItem>
+</Select>
+</FormControl>
 
         <FormControl className="filters"> 
         <InputLabel id="demo-simple-select-label" >Bucatarie</InputLabel>
@@ -119,9 +197,12 @@ export default function RestaurantCard({restaurants}) {
           label="Bucatarie"
           onChange={handleChange}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+
+          <MenuItem value={1}>Americana</MenuItem>
+          <MenuItem value={2}>Asiatica</MenuItem>
+          <MenuItem value={3}>Europeana</MenuItem>
+          <MenuItem value={4}>Italiana</MenuItem>
+          <MenuItem value={5}>Romaneasca</MenuItem>
         </Select>
         </FormControl>
 
@@ -135,18 +216,61 @@ export default function RestaurantCard({restaurants}) {
           label="Timp de asteptare"
           onChange={handleChange}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+
+          <MenuItem value={1}>15-30 min</MenuItem>
+          <MenuItem value={2}>30-50 min</MenuItem>
+          <MenuItem value={3}>60 min</MenuItem>
         </Select>
         </FormControl>
+
+        <button onClick={clearFilters} > Sterge filtre</button>
 
     </Box>
 
       { 
         
-         restaurants && restaurants.map( restaurant => {
+         restaurants && restaurants.filter((restaurant)=> {
+           if (search == "" && (filters.prices == "" && filters.cuisine == "" && filters.stars == "" && filters.waitingTime == "")){
+             return restaurant
+           }
+          else if (search != "" && restaurant.name.toLowerCase().includes(search.toLowerCase())) {
+            return restaurant
+          }
+          else if((filters.prices =="" && filters.cuisine != "" && filters.waitingTime=="")  && filters.cuisine == restaurant.cuisine ){
+            return restaurant
+          }
+          else if((filters.prices !="" && filters.cuisine == "" && filters.waitingTime=="" )  && filters.prices == restaurant.pricing ){
+            return restaurant
+          }
+          else if((filters.prices =="" && filters.cuisine == "" && filters.waitingTime !="")  && filters.waitingTime == restaurant.waitingTime ){
+            return restaurant
+          }
+          else if((filters.prices !="" && filters.cuisine != "" && filters.waitingTime=="")  && filters.prices == restaurant.pricing && filters.cuisine == restaurant.cuisine ){
+            return restaurant
+          }
+          else if((filters.prices =="" && filters.cuisine != "" && filters.waitingTime !="") && filters.cuisine == restaurant.cuisine && filters.waitingTime == restaurant.waitingTime){
+            return restaurant
+          }
+          else if((filters.prices !="" && filters.cuisine == "" && filters.waitingTime !="") && filters.prices == restaurant.pricing && filters.waitingTime == restaurant.waitingTime){
+            return restaurant
+          }
+          else if((filters.prices !="" && filters.cuisine != "" && filters.waitingTime !="") && filters.prices == restaurant.pricing && filters.cuisine == restaurant.cuisine && filters.waitingTime == restaurant.waitingTime){
+            return restaurant
+          }
 
+
+
+        //   if (filters.stars == "0"){
+        //     return restaurant
+        //   }
+        //  else if (filters.stars == restaurant.stars) {
+        //    return restaurant
+        //  }
+
+       
+          
+         }).map( restaurant => {
+          {console.log("restaurant PPRICING:", restaurant.pricing)}
            return(
         <Card sx={{ display: 'flex', width: '80vw', height: '25vh', marginLeft:'8vw', marginTop:'5vh' }}>
 
@@ -177,14 +301,14 @@ export default function RestaurantCard({restaurants}) {
 
           <Box className="descrieri">
             <img  className="small-icon" src={clock} alt="clock" />
-            <Box> Program </Box>
+            <Box> {restaurant.program} </Box>
 
             <div className="vertical-bar"/>
             <img  className="small-icon" src={chefHat} alt="hat" />
-            <Box> Bucatarie </Box>
+            <Box> {restaurantCuisine(restaurant)} </Box>
             <div className="vertical-bar"/>
             <img  className="small-icon" src={money} alt="money" />
-            <Box> $$$ </Box>
+            <Box> {restaurantPricing(restaurant)} </Box>
           </Box>
 
         </CardContent>

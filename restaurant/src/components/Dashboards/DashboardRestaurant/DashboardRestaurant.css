@@ -79,25 +79,59 @@
 
 
 .scene-container{
-    height:500px; 
-    width: 500px; 
-    border-style: dotted; 
+    /* height:500px; 
+    width: 1000px;  */
+    height:60vh;
+    width: 60vw;
+    border: 0.5px solid; 
+    border-color:rgb(180, 177, 177) ;
+    border-radius: 10px;
     position:relative;
+    margin-left:0vw !important;
+    margin-top: 5vh !important;
+    margin-bottom: 5vh !important;
+    box-shadow: 5px 5px 5px rgb(215, 214, 211);
 }
 
 .table-btn{
+    /* position:relative;
     border-radius: 60%;
     height:60px;
     width: 60px;
-    border-color: rgb(214, 81, 4);
+    background:linear-gradient(135deg,#f7b55f,#cc7504); */
+
+    /* border-color: rgb(214, 81, 4);
     border-width: 4px;
-    background-color: rgb(204, 117, 4);
-    border-image: none;
-    border-style:solid;
+    background-color: rgb(204, 117, 4); */
+    border: none;
+
+    position:relative;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 60%;
+height:60px;
+width: 60px;
+border-color: transparent;
+/* border-width: 4px; */
+/* background-color: rgb(204, 117, 4); */
+/* background-color: transparent; */
+background:linear-gradient(135deg,#f7b55f,#cc7504);
+border-image: none;
+
+}
+
+.table-label{
+    display: flex;
+    align-self: center;
+    position:absolute;
+    font-size: small;
+
 }
 
 .table-btn:focus{
-    background-color: rgb(242, 197, 137);
+    /* background-color: rgb(242, 197, 137); */
+    background:linear-gradient(135deg,rgb(249, 211, 163),rgb(252, 193, 116));
 }
 /* a { color: #00c; }
 a:visited { #ccc; }
@@ -147,3 +181,214 @@ a:focus { #cc0; } */
 
 
 }
+
+.scene-update-btn{
+    background-color: transparent;
+    width:20vw;
+    height: 6vh;
+
+    border: 0.5px solid; 
+    border-color:rgb(180, 177, 177) ;
+    border-radius: 10px;
+
+    box-shadow: 5px 5px 5px rgb(215, 214, 211);
+}
+
+#point2-1 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 10px;
+    background: rgb(66, 138, 255);
+    margin-top: 58px;
+  }
+
+  #point2-2 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 10px;
+    background: rgb(66, 138, 255);
+    margin-top: -58px;
+  }
+
+
+#point4-1 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 10px;
+    background: rgb(15, 136, 15);
+    margin-left: 58px;
+  }
+
+  #point4-2 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 10px;
+    background: rgb(15, 136, 15);
+    margin-left: -58px;
+  }
+
+  #point4-3 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 10px;
+    background: rgb(15, 136, 15);
+    margin-top: 58px;
+  }
+
+  #point4-4 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 10px;
+    background: rgb(15, 136, 15);
+    margin-top: -58px;
+  }
+
+
+
+    
+#point6-1 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 10px;
+    background: rgb(226, 14, 103);
+    margin-left: 58px;
+  }
+
+  #point6-2 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 10px;
+    background: rgb(226, 14, 103);
+    margin-left: -58px;
+  }
+
+  #point6-3 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 10px;
+    background: rgb(226, 14, 103);
+    margin-top: 50px;
+    margin-left: 28px;
+  }
+
+  #point6-4 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 10px;
+    background: rgb(226, 14, 103);
+    margin-top: -50px;
+    margin-left: -28px;
+  }
+
+  #point6-5 {
+    border-radius: 90%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 10px;
+    background: rgb(226, 14, 103);
+    margin-top: -50px;
+    margin-left: 28px;
+  }
+
+  #point6-6 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 10px;
+    background: rgb(226, 14, 103);
+    margin-top: 50px;
+    margin-left: -28px;
+  }
+
+
+
+
+  #point8-1 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 10px;
+    background: rgb(179, 6, 222);
+    margin-top: 15px;
+    margin-left: -58px;
+  }
+
+  #point8-2 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 10px;
+    background: rgb(179, 6, 222);
+    margin-top: 15px;
+    margin-left: 58px;
+  }
+
+  #point8-3 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 10px;
+    background: rgb(179, 6, 222);
+    margin-top: -15px;
+    margin-left: 58px;
+  }
+
+  #point8-4 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 10px;
+    background: rgb(179, 6, 222);
+    margin-top: -15px;
+    margin-left: -58px;
+  }
+
+  #point8-5 {
+    border-radius: 90%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 10px;
+    background: rgb(179, 6, 222);
+    margin-top: -58px;
+    margin-left: 15px;
+  }
+
+  #point8-6 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 10px;
+    background: rgb(179, 6, 222);
+    margin-top: -58px;
+    margin-left: -15px;
+  }
+
+  #point8-7 {
+    border-radius: 90%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 10px;
+    background: rgb(179, 6, 222);
+    margin-top: 58px;
+    margin-left: 15px;
+  }
+
+  #point8-8 {
+    border-radius: 60%;
+    position: absolute;
+    /* top: 50%; left: 50%; */
+    width: 10px; height: 10px;
+    background: rgb(179, 6, 222);
+    margin-top: 58px;
+    margin-left: -15px;
+  }

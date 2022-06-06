@@ -43,6 +43,9 @@ class UpdateDetails extends Component {
       // phone: '',
       // menuImage: '',
       // menuURL: '',
+      waitingTime:"",
+      pricing:"",
+      cuisine:"",
   
     }
 
@@ -266,7 +269,7 @@ class UpdateDetails extends Component {
           }}
         />
 
-      <TextField
+      {/* <TextField
           id="waitingTime"
           label="Timp mediu de asteptare"
           type="number"
@@ -274,7 +277,7 @@ class UpdateDetails extends Component {
           InputLabelProps={{
             shrink: true,
           }}
-        />
+        /> */}
 
 
       <FormControl  >
@@ -284,12 +287,12 @@ class UpdateDetails extends Component {
         className="field"
         labelId="demo-simple-select-label"
         id="pricing"
-        // value={filters.distance}
+        value={this.state.pricing}
         name="pricing"
         label="Preturi"
         onChange={e => this.handleChange(e)}
       >
-        <MenuItem id="pricing" value={1}>Ieftin</MenuItem>
+        <MenuItem value={1}>Ieftin</MenuItem>
         <MenuItem value={2}>Mediu</MenuItem>
         <MenuItem value={3}>Scump</MenuItem>
         <MenuItem value={4}>Delux</MenuItem>
@@ -297,7 +300,46 @@ class UpdateDetails extends Component {
       </FormControl>
 
 
-      <TextField id="cuisine" label="Bucatarie" variant="outlined" onChange={e => this.handleChange(e)}/>
+        <FormControl className="filters"> 
+        <InputLabel id="demo-simple-select-label" >Bucatarie</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="cuisine"
+          name="cuisine"
+          value={this.state.cuisine}
+          label="Bucatarie"
+          onChange={e => this.handleChange(e)}
+        >
+
+          <MenuItem value={1}>Americana</MenuItem>
+          <MenuItem value={2}>Asiatica</MenuItem>
+          <MenuItem value={3}>Europeana</MenuItem>
+          <MenuItem value={4}>Italiana</MenuItem>
+          <MenuItem value={5}>Romaneasca</MenuItem>
+        </Select>
+        </FormControl>
+
+        <FormControl className="filters">
+        <InputLabel id="demo-simple-select-label" >Timp de asteptare</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="waitingTime"
+          name="waitingTime"
+          value={this.state.waitingTime}
+          label="Timp de asteptare"
+          onChange={e => this.handleChange(e)}
+        >
+
+          <MenuItem value={1}>15-30 min</MenuItem>
+          <MenuItem value={2}>30-50 min</MenuItem>
+          <MenuItem value={3}>60 min</MenuItem>
+        </Select>
+        </FormControl>
+
+
+
+
+      {/* <TextField id="cuisine" label="Bucatarie" variant="outlined" onChange={e => this.handleChange(e)}/> */}
       <TextField id="decor" label="Decor" variant="outlined" onChange={e => this.handleChange(e)}/>
       <TextField id="description" label="Descriere restaurant" variant="outlined" onChange={e => this.handleChange(e)}/>
 

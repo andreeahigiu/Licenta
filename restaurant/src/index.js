@@ -48,6 +48,12 @@ const rrfProps = {
    createFirestoreInstance // <- needed if using firestore
  }
 
+ // The Cloud Functions for Firebase SDK to create Cloud Functions and set up triggers.
+ //const functions = require('firebase-functions');
+ // The Firebase Admin SDK to access Firestore.
+//  const admin = require('firebase-admin');
+//  admin.initializeApp();
+
 //ReactDOM.render(<Provider store = {store}> <ReactReduxFirebaseProvider {...rrfProps}> <App /> </ReactReduxFirebaseProvider></Provider> , document.getElementById('root') );
 
 ReactDOM.render(<Provider store = {store}>  <App /> </Provider> , document.getElementById('root') );

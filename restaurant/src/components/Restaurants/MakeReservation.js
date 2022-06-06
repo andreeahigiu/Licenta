@@ -1,31 +1,26 @@
 import React, { useRef, useState, useEffect  } from 'react'
 import { useParams } from 'react-router-dom';
-import { doc, onSnapshot, getDoc } from "firebase/firestore";
+import { doc, onSnapshot, getDoc, deleteDoc } from "firebase/firestore";
 import { useAuth } from '../../contexts/AuthContext';
 import { db } from '../../firebase';
 import { useHistory } from 'react-router-dom';
-import ReviewCard from './ReviewCard'
 import back from '../../utils/icons/back-arrow.svg' 
-import star from '../../utils/icons/star-svgrepo-com.svg' 
 import './booking.css'
 import { useSelector, useDispatch } from 'react-redux';
 import { bookTable } from '../../store/actions/bookTableAction';
-
-import Carousel from 'react-material-ui-carousel'
-import Paper from '@mui/material/Paper';
-import { Link } from '@mui/material';
-import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { render } from 'react-dom';
 import DayTimePicker from '@mooncake-dev/react-day-time-picker';
 import {v4 as uuid} from "uuid";
 // import ClockLoader from "react-spinners/ClockLoader";
-import ClockLoader from "react-spinners/ClockLoader";
 import { css } from "@emotion/react";
-import { connectStorageEmulator } from 'firebase/storage';
-import { Data } from '@react-google-maps/api';
-import { ContentCutOutlined } from '@mui/icons-material';
 import TablesBooking from './tablesBooking';
+
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { Route } from 'react-router-dom';
 
 
 const override = css`
@@ -79,7 +74,7 @@ export default function MakeReservation() {
 
 
   const sceneSection = useRef(null);
-  const [booking, setBooking] = useState({date:"", tableId:"", userId:"", restaurantId:"", bookingId:""})   //rezervarea in decurs de desfasurare
+  const [booking, setBooking] = useState({date:new Date(), tableId:"", userId:"", restaurantId:"", bookingId:"", bookedFor:1, endOfBooking:new Date()})   //rezervarea in decurs de desfasurare
   const [tableDatePair, setTableDatePair] = useState();  //stare cu key-vlue pt data rezervare-mese rezervate
 
   const dispatch = useDispatch();
@@ -98,11 +93,19 @@ export default function MakeReservation() {
   async function getOneElement() {
     await db.collection('ProfileRestaurant').doc(id).get()
     .then(snapshot => {setCurrentRestaurant(snapshot.data())
-                        console.log("heii")
                         setStyle(snapshot.data().style)
                         setTables(snapshot.data().tables)
     })
   }
+
+  async function updateBookings(){
+    
+    const currentDate = Date().toLocaleString();
+    //await (db.collection('Bookings').doc(restaurantId).collection('BookingList').doc(booking.bookingId))
+    //await deleteDoc(doc(db, "cities", "DC"));
+    //console.log("BOOKINGS LIST:", bookingList)
+  }
+
 
 
   function timeSlotValidator(slotTime) {
@@ -122,12 +125,8 @@ export default function MakeReservation() {
       23,
       0
     );
-    // console.log("SLOT TIME:", slotTime.getTime())
-    // console.log("ELEMENT TIME:", slotTime.getTime())
-    // const isValid = slotTime.getTime() > eveningTime.getTime();
-    //const isValid = slotTime.getTime() <= usedDates[1];
+
     for (const element of usedDates){
-      // console.log("ELEMENT TIME:", element.getTime())
       //slotTime.getTime() == element.getTime()
       if (slotTime.getTime()< workingSchedule.getTime() || slotTime.getTime() > workingSchedule2.getTime())
         return false;
@@ -135,13 +134,10 @@ export default function MakeReservation() {
     return true;
   }
   
-  // useEffect(() => {
-
-  //     if(booking.date)
-  // }, [booking])
 
    useEffect(() => {
-  
+
+    const currentDate = Date().toLocaleString();
      getOneElement()
 
      booking.restaurantId=id;
@@ -155,40 +151,53 @@ export default function MakeReservation() {
        const bookings = []
        const tableDate = {}
        let convertedDate = ''
+       let convertedEndOfBooking = ''
 
        snapshot.forEach( doc => {
 
-
          let data = doc.data()
-         const bookingID = data.bookingId
 
+         const bookingID = data.bookingId
          bookings.push(data);
 
-        if(data.date != ""){
-          // console.log("converting data: ", data.date.toDate())
-          convertedDate = data.date.toDate()
+        console.log("data.date:", data.date)
+
+        if(data.date){
+          convertedDate = structuredClone(data.date.toDate())
           dates.push(convertedDate)
         }
-        tablesIds.push(data.tableId)
-        //dates.push(data.date)
 
+        if(data.endOfBooking != undefined && data.endOfBooking != ""){
+          convertedEndOfBooking = data.endOfBooking.toDate()
+          //console.log("AAAAAAAA", convertedEndOfBooking)
+        }
+
+        tablesIds.push(data.tableId)
         
         if(tableDate[convertedDate] == undefined){
           tableDate[convertedDate] = []
         }
 
+        while( convertedEndOfBooking != '' && convertedDate.getTime() < convertedEndOfBooking.getTime()){
+          tableDate[convertedDate].push(data.tableId)
+          convertedDate.setTime(convertedDate.getTime() + 0.5 * 60 * 60 * 1000)
+          tableDate[convertedDate] = []
+          //console.log("Transformarea lui convertedTime", convertedDate)
+        }
 
-        tableDate[convertedDate].push(data.tableId)
+        //console.log("ARRAYUL:", tableDate)
 
        })
        setBookingList(bookings)
        setUsedDates(dates)
        setBookedTables(tablesIds)
        setTableDatePair(tableDate)
+
+
        
      })
-
-     console.log("datele scoase din db:", usedDates)
+     updateBookings()
+     //console.log("datele scoase din db:", usedDates)
       window.scrollTo({
         top: 0, 
         behavior: 'smooth'
@@ -199,7 +208,17 @@ export default function MakeReservation() {
 
   }, []);
 
-  console.log("PAIRS----------", tableDatePair)
+  // useEffect(() => {
+  //   endOfBooking()
+  //   // const endOfBooking = new Date(booking.date.getTime() + booking.bookedFor * 60 * 60 * 1000);
+  //   // console.log("end of booking", endOfBooking)
+  //   // // booking.endOfBooking = endOfBooking
+  //   // // setBooking(booking)
+  //   // setBooking({...booking, endOfBooking: endOfBooking})
+
+  // }, [booking])
+
+  //console.log("PAIRS----------", tableDatePair)
   // useEffect(() => {
   //   // run something every time name changes
   //   console.log("in use effect, booking",booking);
@@ -213,6 +232,13 @@ export default function MakeReservation() {
   // setBooking(booking);
   
   //console.log("datele scoase din db:", usedDates)
+  function endOfBooking(){
+    const endOfBooking = new Date(booking.date.getTime() + booking.bookedFor * 60 * 60 * 1000);
+    console.log("end of booking", endOfBooking)
+    // booking.endOfBooking = endOfBooking
+    setBooking(prevState => ({...prevState, endOfBooking: endOfBooking}))
+    
+  }
 
   const handleScheduled = date => {
 
@@ -223,7 +249,20 @@ export default function MakeReservation() {
     booking.date= date;
     setBooking(booking);
 
+    const endOfBooking = new Date(booking.date.getTime() + booking.bookedFor * 60 * 60 * 1000);
+    booking.endOfBooking= endOfBooking;
+    setBooking(booking);
+
+
+    console.log("end of booking", endOfBooking)
+    const newBooking = { bookingId: uuid(), userId:currentUser.uid, date: date, endOfBooking: endOfBooking}
+
+
+
+    //endOfBooking()
+
     console.log("data:", date)
+    console.log("Table-Date pair:", tableDatePair)
 
     // window.scrollTo({
     //   top: sceneSection.current.offsetTop,
@@ -231,53 +270,53 @@ export default function MakeReservation() {
     // });
     setContinueToScene(true)
 
+    history.push(`/restaurante/${id}/rezervare/masa`, {tableDatePair:tableDatePair, booking:booking, style:style, tables:tables})
+
     }
 
-    function selectTable(selectedTable, index){
-      clickedForolor = !clickedForolor;
-      console.log("Masa aleasa:", selectedTable)
-      // setBookedTable(selectedTable.id)
-      booking.tableId= selectedTable.id;
-      setBooking(booking);
-      var col=document.getElementById(index);
-      if(clickedForolor == true){
-        col.style.backgroundColor="rgb(242, 197, 137)";
-      }else{
-        col.style.backgroundColor="rgb(204, 117, 4)";
-      }
+    // function selectTable(selectedTable, index){
+    //   clickedForolor = !clickedForolor;
+    //   console.log("Masa aleasa:", selectedTable)
+    //   // setBookedTable(selectedTable.id)
+    //   booking.tableId= selectedTable.id;
+    //   setBooking(booking);
+    //   var col=document.getElementById(index);
+    //   if(clickedForolor == true){
+    //     col.style.backgroundColor="rgb(242, 197, 137)";
+    //   }else{
+    //     col.style.backgroundColor="rgb(204, 117, 4)";
+    //   }
     
-    }
-    {console.log("SALLLLL......", booking.date)}
+    // }
      
-    //tableDatePair[booking.date] !== undefined
-    function tableList(){
-      let styleArr = style
-      if(tables){
-        return tables.map((item,index) => {
-          return(
-            <div id={index} className="table-btn-booking" style={styleArr[index]} onClick={ () => selectTable(item, index) }> 
-            Masa noua{index} 
-            {/* {console.log("HEIIIII......", tableDatePair)}
-
-            { ( tableDatePair[booking.date] !== undefined ? (tableDatePair[booking.date].includes(item.id) ? console.log("includes the id", item.id) : console.log("Does NOT include the id", item.id) ) 
-                                                          : console.log("e undefined") ) }  */}
-            </div>
-          )
-        })
-      }
+    // //tableDatePair[booking.date] !== undefined
+    // function tableList(){
+    //   let styleArr = style
+    //   if(tables){
+    //     return tables.map((item,index) => {
+    //       return(
+    //         <div id={index} className="table-btn-booking" style={styleArr[index]} onClick={ () => selectTable(item, index) }> 
+    //         Masa noua{index} 
+    //         </div>
+    //       )
+    //     })
+    //   }
   
+    // }
+
+    const handleChangeTime = (e) => {
+
+      //console.log("target", e.target)
+      if(e.target.value != ''){
+        setBooking({...booking, [e.target.name]: e.target.value})
+
+      }
     }
+    console.log("BOOKINGS:", booking)
 
     function makeReservation(e){
       e.preventDefault();
       setLoading(true);
-
-      // booking.bookingId=uuid();
-      // booking.userId=currentUser.uid;
-      // booking.date= bookedDate;
-      // booking.tableId= bookedTable;
-      // setBooking(booking);
-
   
       dispatch(bookTable(booking)) 
       console.log("dispatched")
@@ -287,15 +326,34 @@ export default function MakeReservation() {
         setConfirmMsg(true)
       }, 2000)
 
-
-      // document.getElementById("bookingBtn").innerHTML = "Rezervare efectuata cu succes!";
-      //setLoading(false)
     }
 
   return (
     <div>
+      <Box className="booking-time-container">
+        <p className="booking-time-p">Selectati pentru cate ore doriti sa faceti reervarea!</p>
+        <p className="booking-time-p">Atentie! O masa este rezervata implicit pentru o ora, daca nu selectati o alta durata!</p>
+      <FormControl className="booking-time-dropdown">
+        <InputLabel id="demo-simple-select-label" >Durata rezervare</InputLabel>
+        <Select
+         
+          labelId="bookedFor"
+          id="bookedFor"
+          name="bookedFor"
+          value={booking.bookedFor}
+          label="Durata rezervare"
+          onChange={handleChangeTime}
+        >
+          <MenuItem value={1}>O ora</MenuItem>
+          <MenuItem value={2}>Doua ore</MenuItem>
+          <MenuItem value={3}>Trei ore</MenuItem>
+          <MenuItem value={4}>Patru ore</MenuItem>
+          <MenuItem value={5}>Cinci ore</MenuItem>
+        </Select>
+        </FormControl>
 
-      {/* {console.log("booking",booking)} */}
+    </Box>
+
       <div className="date-time-picker">
       {/* <Calendar onChange={setNewDate} value={date} /> */}
       <DayTimePicker 
@@ -309,8 +367,10 @@ export default function MakeReservation() {
       />;
       </div>
 
+      
 
-      { continueToScene == true && (<TablesBooking tableDatePair={tableDatePair} booking={booking} style={style} tables={tables}/>)}
+      {/* { continueToScene == true && (<TablesBooking tableDatePair={tableDatePair} booking={booking} style={style} tables={tables}/>)} */}
+      {/* { continueToScene == true && (<Route path={`/restaurante/${id}/rezervare/masa`} element={<TablesBooking tableDatePair={tableDatePair} booking={booking} style={style} tables={tables}/>} />)} */}
 
       {/* <div className="booking-container" ref={sceneSection}>
           <h2> Asezare restaurant </h2>

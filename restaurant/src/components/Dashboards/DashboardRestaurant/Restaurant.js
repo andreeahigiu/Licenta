@@ -103,6 +103,49 @@ function placeDiv(e){
 }
 
 
+function displaySeats(index){
+  let tablesCpy = structuredClone(tables)
+  if(tablesCpy[index].places == 2){
+    return <React.Fragment>
+      <div id="point2-1"/>
+      <div id="point2-2"/>
+    </React.Fragment>
+  }
+
+  if(tablesCpy[index].places == 4){
+    return   <React.Fragment>
+    <div id="point4-1"/>
+    <div id="point4-2"/>
+    <div id="point4-3"/>
+    <div id="point4-4"/>
+  </React.Fragment>
+  }
+
+  if(tablesCpy[index].places == 6){
+    return   <React.Fragment>
+    <div id="point6-1"/>
+    <div id="point6-2"/>
+    <div id="point6-3"/>
+    <div id="point6-4"/>
+    <div id="point6-5"/>
+    <div id="point6-6"/>
+  </React.Fragment>
+  }
+
+  if(tablesCpy[index].places == 8){
+    return <React.Fragment>
+    <div id="point8-1"/>
+    <div id="point8-2"/>
+    <div id="point8-3"/>
+    <div id="point8-4"/>
+    <div id="point8-5"/>
+    <div id="point8-6"/>
+    <div id="point8-7"/>
+    <div id="point8-8"/>
+  </React.Fragment>
+  }
+}
+
 function tableList(){
   let styleArr = style
   //console.log("Style array", styleArr)
@@ -111,13 +154,19 @@ function tableList(){
       //console.log("table style:", styleArr[index])
       // setStyle( styles=> [...styles, newStyle] )
       return(
-        <div id={index} className="table-btn" style={styleArr[index]} > Masa noua{index} </div>
+        <div id={index} className="table-btn" style={styleArr[index]} > 
+        <p className="table-label"> Masa {index} </p>
+        {displaySeats(index)}
+        
+        </div>
       )
     })
   }
 
 
 }
+
+
 // let elem = document.querySelector('#sceneContainer');
 // let rect = elem.getBoundingClientRect();
 const newStyle = {position:"relative", left: 80+"px", top:40 +"px"}
