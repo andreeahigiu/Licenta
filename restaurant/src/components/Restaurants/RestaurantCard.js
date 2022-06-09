@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import TextField from "@mui/material/TextField";
@@ -22,6 +23,7 @@ import star from '../../utils/icons/star-svgrepo-com.svg'
 import glass from '../../utils/icons/magnifying-glass.svg' 
 import restaurantImg from '../../utils/images/restaurant.jpg' 
 import { Form } from 'react-bootstrap';
+import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 
 
 
@@ -223,7 +225,12 @@ export default function RestaurantCard({restaurants}) {
         </Select>
         </FormControl>
 
-        <button onClick={clearFilters} > Sterge filtre</button>
+        <Button variant="outlined" onClick={clearFilters} className="del-filters-btn" >
+          <div className="content-del-btn">
+          <DeleteSweepIcon style={{ color: "#B8854C", height: '1em' }} />
+           Sterge filtre
+           </div>
+        </Button>
 
     </Box>
 

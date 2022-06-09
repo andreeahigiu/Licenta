@@ -10,7 +10,6 @@ export const updateClient = (client) => {
 
         db.collection('ProfileCustomer').doc(currentUser.uid).update({
             ...client,
-            otherField : 'otherthing',
             createdAt: new Date(),
         }).then( () => {
             dispatch({type: 'UPDATE_CLIENT', client})

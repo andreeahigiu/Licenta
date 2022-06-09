@@ -5,6 +5,7 @@ import { compose } from 'redux';
 import { doc, onSnapshot, getDoc } from "firebase/firestore";
 import { db } from '../../firebase';
 import RestaurantCard from './RestaurantCard';
+import './Restaurants.css'
 
 
 
@@ -60,7 +61,7 @@ function Restaurants({updatedData}) {
         {/* {items.map((item,index)=>{
             return <li key={index}>{item}</li>
         })} */}
-      {isLoading && <div>Loading...</div>}
+      {isLoading && <div className="is-loading"> Loading... </div>}
        <RestaurantCard restaurants={restaurants} />
 
     </div>

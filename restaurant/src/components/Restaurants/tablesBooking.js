@@ -190,29 +190,6 @@ export default function TablesBooking(props) {
       return false
     }
 
-    // while( convertedEndOfBooking != '' && convertedDate.getTime() < convertedEndOfBooking.getTime()){
-    //   tableDate[convertedDate].push(data.tableId)
-    //   convertedDate.setTime(convertedDate.getTime() + 0.5 * 60 * 60 * 1000)
-    //   tableDate[convertedDate] = []
-    //   console.log("Transformarea lui convertedTime", convertedDate)
-    // }
-
-  //   ( tableDatePair[booking.date] !== undefined ? 
-  //     (tableDatePair[booking.date].includes(item.id) 
-  //     ? 
-  //     unavailableArr[index] = true
-  //     : 
-  //     console.log("Does NOT include the id", item.id) 
-  //     ) 
-  // : console.log("e undefined") ) 
-
-  // (checkAvailabilityForHours(item) 
-  // ? 
-  // unavailableArr[index] = true
-  // : 
-  // console.log("Does NOT include the id", item.id) 
-  // ) 
-
   {console.log("The booking details:",booking)}
   
     function tableList(){

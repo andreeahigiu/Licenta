@@ -1,3 +1,9 @@
+.is-loading{
+    margin-top: 3rem;
+    margin-left: 3rem;
+}
+
+
 .main-align{
     /* display:flex;
     justify-content: center;
@@ -74,7 +80,7 @@
     /* height: 25vh; */
     margin-left:8vw;
     margin-top:10vh ;
-    margin-bottom: 7vh;
+    margin-bottom: 5vh;
 }
 
 .search-img:hover{
@@ -130,22 +136,42 @@
   }
 
   #search-field{
-    width:60vw;
+    width: 83vw;
   }
 
   .filters-container{
       display: inline-flex;
-      width: 83vw;
-      margin-left:5vw;
-      margin-bottom: 20vh;
+      width: 80vw;
+      margin-left:8vw;
+      margin-bottom: 5vh;
+      justify-content: space-between;
   }
 
   .filters{
-      display: flex;
-      width: 20vw;
-      margin-left: 3vw !important;
+      /* display: flex; */
+      width: 15vw;
+      /* margin-left: 3vw !important; */
   }
 
+.content-del-btn{
+    margin:1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(184, 133, 76);
+
+}
+
+.del-filters-btn{
+    color: rgb(55, 40, 22);
+    border-color: rgb(184, 133, 76) !important;
+    height: 56px;
+    width:12em;
+}
+
+.del-filters-btn:hover{
+    background-color: rgba(245, 245, 245, 0.6) !important;
+}
 
   /* -----------------------------Restaurant Details---------------------------- */
   .top-part{
