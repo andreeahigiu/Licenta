@@ -121,7 +121,7 @@ export default function RestaurantCard({restaurants}) {
           variant="outlined"
           label="Search"
           onChange={e => handleSearch(e)}
-          wi
+          
         />
 
         {/* <img className="search-img" src={glass} alt="glass"/>  */}
@@ -276,10 +276,10 @@ export default function RestaurantCard({restaurants}) {
 
        
           
-         }).map( restaurant => {
+         }).map( (restaurant, index) => {
           {console.log("restaurant PPRICING:", restaurant.pricing)}
            return(
-        <Card sx={{ display: 'flex', width: '80vw', height: '25vh', marginLeft:'8vw', marginTop:'5vh' }}>
+        <Card key={index} sx={{ display: 'flex', width: '80vw', height: '25vh', marginLeft:'8vw', marginTop:'5vh' }}>
 
           <CardActionArea to={`/restaurante/${restaurant.id}`} component={Link} sx={{ display: 'flex'}} >
 

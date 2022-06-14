@@ -177,8 +177,8 @@ async function getOneElement() {
       let table = {...tableStyles[currentBtn]}
 
       table.position = 'absolute'
-      table.left = e.clientX-347-30 + 'px'
-      table.top = e.clientY-180-23 + 'px'
+      table.left = e.clientX-347-30-80 + 'px'
+      table.top = e.clientY-180-23-15 + 'px'
 
       tableStyles[currentBtn] = table
       setStyle(tableStyles)

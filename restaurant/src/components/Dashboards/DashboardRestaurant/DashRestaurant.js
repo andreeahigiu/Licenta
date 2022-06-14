@@ -20,6 +20,10 @@ import { connect } from 'react-redux';
 import { useAuth } from '../../../contexts/AuthContext';
 import { auth } from '../../../firebase';
 import { Link } from 'react-router-dom'
+import Button from '@mui/material/Button';
+import LogoutIcon from '@mui/icons-material/Logout';
+import BookingsCalendar from './BookingsCalendar';
+import { Book } from '@mui/icons-material';
 
 
 
@@ -98,23 +102,42 @@ class DashRestaurant extends Component {
                 <div className='paper-container'>
                     <Paper sx={{ width: 250, height: '70vh', maxWidth: '100%', m: '10px', mt: '60px'}} className={classes.paper}>
       <MenuList>
-        <MenuItem onClick={  () => this.handleClick("restaurant") } >
+        <MenuItem sx={{mt: 8}} onClick={  () => this.handleClick("restaurant") } >
           <ListItemText>Restaurant </ListItemText>
+        </MenuItem>
+
+        <MenuItem sx={{mt: 4}} onClick={  () => this.handleClick("rezervari") } >
+          <ListItemText>Rezervari </ListItemText>
         </MenuItem>
 
         <MenuItem sx={{mt: 4}} onClick={  () => this.handleClick("details")}>
           <ListItemText>Update Details</ListItemText>
         </MenuItem>
 
-        <MenuItem sx={{mt: 4}} onClick={  () => this.handleClick("scene") }>
+        <MenuItem  sx={{mt: 4}} onClick={  () => this.handleClick("scene") }>
           <ListItemText>Update Scene</ListItemText>
         </MenuItem>
 
-      <MenuItem  sx={{mt: 4}} onClick={  () => this.handleLogout() }>
+      {/* <MenuItem  sx={{mt: 4}} onClick={  () => this.handleLogout() }>
       <Link to={'/'}>
-          <ListItemText>Logout</ListItemText>
+      <ListItemText>
+        <LogoutIcon style={{ color: "rgb(55, 40, 22)"}}/> 
+          Logout
+      </ListItemText>
       </Link>
-        </MenuItem>
+        </MenuItem> */}
+
+      <MenuItem sx={{mt: 8}}>
+        <Button className="logout-btn" onClick={() => this.handleLogout()} style={{ color: "rgb(55, 40, 22)", '&:hover': {
+      backgroundColor: '#f59342',
+      color: '#3c52b2',
+  },}}> 
+      <LogoutIcon style={{ color: "rgb(55, 40, 22)"}}/> 
+        Logout
+      </Button>
+      </MenuItem>
+
+
       </MenuList>
 
     </Paper>
@@ -122,6 +145,7 @@ class DashRestaurant extends Component {
 
                 <div className="dash-content">
                 {this.state.menuSelection == "details" && (<UpdateDetails updatedData={updatedData} />)}
+                {this.state.menuSelection == "rezervari" && (<BookingsCalendar />)}
                 {this.state.menuSelection == "scene" && (<UpdateScene />)}
                 {this.state.menuSelection == "restaurant" && (<Restaurant updatedData={updatedData}/>)}
 

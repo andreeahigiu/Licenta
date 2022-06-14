@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { bookTable } from '../../store/actions/bookTableAction';
 import { useLocation } from 'react-router-dom';
 import { Circle } from "react-awesome-shapes";
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const btnStyleBefore = {
     borderRadius: "4px",
@@ -41,6 +42,7 @@ export default function TablesBooking(props) {
     const [makeUnavailable, setMakeUnavailable] = useState(false)
     let unavailableArr = []
     let clickedTables = []
+    const history = useHistory()
 
     //console.log("LOCATION", location.state)
 
@@ -73,8 +75,13 @@ export default function TablesBooking(props) {
         setTimeout(() => {
           setLoading(false)
           setConfirmMsg(true)
+        }, 1000)
+
+        setTimeout(() => {
+          history.push('/dashboardClient')
         }, 2000)
-  
+
+
   
         // document.getElementById("bookingBtn").innerHTML = "Rezervare efectuata cu succes!";
         //setLoading(false)
@@ -138,6 +145,7 @@ export default function TablesBooking(props) {
         console.log("Masa aleasa:", selectedTable)
         // setBookedTable(selectedTable.id)
         booking.tableId= selectedTable.id;
+        booking.tableNr = index
         setBooking(booking);
 
         const hasBeenClickedBefore = (currentValue) => document.getElementById(currentValue).style.background="linear-gradient(135deg,#f7b55f,#cc7504)";

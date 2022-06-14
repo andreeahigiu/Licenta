@@ -11,7 +11,7 @@ import { setDoc, doc } from "firebase/firestore"
 
 const useStyles = makeStyles({
   root: {
-    width: "125px",
+    width: "140px",
     height: "32px",
     padding: "0",
     alignItems: "center",
@@ -33,7 +33,7 @@ const useStyles = makeStyles({
     height: "25px",
     margin: "2px",
     borderRadius: "4px",
-    transform: "translateX(27px) !important"
+    transform: "translateX(32px) !important"
 
   },
   track: {
@@ -47,17 +47,17 @@ const useStyles = makeStyles({
       top: "9px"
     },
     "&:after": {
-      content: "'Cumpara'",
-      left: "5px"
+      content: "'Client'",
+      left: "10px"
     },
     "&:before": {
-      content: "'Vinde'",
-      right: "7px"
+      content: "'Restaurant'",
+      right: "8px"
     }
   },
   checked: {
     color: "#000000 !important",
-    transform: "translateX(-52px) !important"
+    transform: "translateX(-62px) !important"
   }
 });
 
@@ -132,7 +132,7 @@ export default function Signup() {
       <div className="signup-layout">
          <div className="grid-display">
          <p className="buyer-seller"> Inregistrare  
-        <span className="buyer-seller-word"> {state.checkedA ? ' vanzator' : ' cumparator'} </span>
+        <span className="buyer-seller-word"> {state.checkedA ? ' restaurant' : ' client'} </span>
          </p>
 
          <div className="switch-btn">

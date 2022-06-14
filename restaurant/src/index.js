@@ -27,7 +27,7 @@ import { createFirestoreInstance, firestoreReducer } from 'redux-firestore'
 //         reactReduxFirestore(db),
 //      )
 //     );
-const store = createStore(rootReducer, applyMiddleware(thunk));
+
 
 // const rrfProps = {
 //     db,
@@ -36,17 +36,17 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 //     },
 //     dispatch: store.dispatch
 //   };
-const rrfConfig = {
-    userProfile: 'users',
-    useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
-  }
+// const rrfConfig = {
+//     userProfile: 'users',
+//     useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
+//   }
 
-const rrfProps = {
-   app,
-   config: rrfConfig,
-   dispatch: store.dispatch,
-   createFirestoreInstance // <- needed if using firestore
- }
+// const rrfProps = {
+//    app,
+//    config: rrfConfig,
+//    dispatch: store.dispatch,
+//    createFirestoreInstance // <- needed if using firestore
+//  }
 
  // The Cloud Functions for Firebase SDK to create Cloud Functions and set up triggers.
  //const functions = require('firebase-functions');
@@ -56,4 +56,5 @@ const rrfProps = {
 
 //ReactDOM.render(<Provider store = {store}> <ReactReduxFirebaseProvider {...rrfProps}> <App /> </ReactReduxFirebaseProvider></Provider> , document.getElementById('root') );
 
+const store = createStore(rootReducer, applyMiddleware(thunk));
 ReactDOM.render(<Provider store = {store}>  <App /> </Provider> , document.getElementById('root') );

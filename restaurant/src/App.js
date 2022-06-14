@@ -17,6 +17,7 @@ import DashRestaurant from './components/Dashboards/DashboardRestaurant/DashRest
 import DashboardClient from './components/Dashboards/DashboardClient/DashboardClient';
 import MakeReservation from './components/Restaurants/MakeReservation';
 import TablesBooking from './components/Restaurants/tablesBooking';
+import BookingsCalendar from './components/Dashboards/DashboardRestaurant/BookingsCalendar';
 
 function App() {
   // const [isAuth, setIsAuth] = useState(false);
@@ -51,7 +52,11 @@ function App() {
           <PrivateRoute exact path='/dashboardRestaurant' >
             <DashRestaurant />
           </PrivateRoute>
-          {/* <PrivateRoute exact path='/dashbboardRestaurant' component={ DashRestaurant } /> */}
+
+          <PrivateRoute exact path='/calendarRezervari' >
+            <BookingsCalendar />
+          </PrivateRoute>
+
           <Route exact path='/login'>
             <Login />
           </Route>

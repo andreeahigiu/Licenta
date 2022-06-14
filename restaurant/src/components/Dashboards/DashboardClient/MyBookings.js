@@ -16,12 +16,12 @@ export default function MyBookings(props) {
     // }, [])
 console.log("detaliile rezervarilor:", clientDetails)
     function displayBookings(){
+//clientDetails.myBookings.slice(0).reverse().map((item,index) =>
 
-
-        if(clientDetails){
+        if(clientDetails != undefined && clientDetails.length > 1){
            return clientDetails.myBookings.slice(0).reverse().map((item,index) => { 
                 return(
-                    <Card sx={{ height: "20vh" , width: "40vw", marginBottom: "5vh"}}>
+                    <Card sx={{ height: "23vh" , width: "40vw", marginBottom: "5vh"}}>
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">
                       Rezervare din data: {item.date.toDate().toLocaleDateString()}
@@ -31,6 +31,9 @@ console.log("detaliile rezervarilor:", clientDetails)
                       </Typography>
                       <Typography variant="body1" color="text.secondary">
                       Rezervata pentru: { item.bookedFor + " " + "ore" } 
+                      </Typography>
+                      <Typography variant="body1" color="text.secondary">
+                      Nr. masa rezervata: { item.tableNr} 
                       </Typography>
                       <Typography variant="body1" color="text.secondary">
                       Id rezervare: { item.bookingId  } 
@@ -47,6 +50,22 @@ console.log("detaliile rezervarilor:", clientDetails)
               
                 )
             })}
+            else{
+              return(
+                <Card sx={{ height: "23vh" , width: "40vw", marginBottom: "5vh"}}>
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                      Nu aveti nicio rezervare
+                      </Typography>
+
+                    </CardContent>
+                    {/* <CardActions>
+                      <Button size="small">Share</Button>
+                      <Button size="small">Learn More</Button>
+                    </CardActions> */}
+                  </Card>
+              )
+            }
           }
     
 

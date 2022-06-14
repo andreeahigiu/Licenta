@@ -206,18 +206,18 @@ console.log("detaliile",clientDetails)
   <div className="name-surname">
 
   <div>
-    {clientDetails.name}
+    {clientDetails.name == "" ? "Prenume" : clientDetails.name}
   </div>
   <div style={{marginLeft: '0.5rem'}} >
-    {clientDetails.surname}
+    {clientDetails.surname === undefined ? "Nume" : clientDetails.surname}
   </div>
   </div>
 
   <div className="phone-div">
-    {clientDetails.phone}
+    {clientDetails.phone === null ? "Nr.telefon" : clientDetails.phone}
   </div>
   <div className="email-div">
-    {clientDetails.email}
+    {clientDetails.email === undefined ? "Email" : clientDetails.email}
   </div>
 </div>
 
@@ -260,7 +260,7 @@ console.log("detaliile",clientDetails)
           InputLabelProps={{ shrink: true }}
           id="standard-disabled"
           label="Prenume"
-          defaultValue= {clientDetails.name}
+          defaultValue= {clientDetails.name != "" ? clientDetails.name : "Prenume"}
           variant="standard"
           onChange={handleDetailsChange}
           name="name"
@@ -300,6 +300,7 @@ console.log("detaliile",clientDetails)
 </div>
 
 }
+{ console.log("clientDeatails surnameee here", clientDetails.surname) }
 <span className="white-space"></span>
 <div className="bottom-buttons">
     <div className="logout-btn-container">
