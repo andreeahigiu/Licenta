@@ -18,6 +18,7 @@ import DashboardClient from './components/Dashboards/DashboardClient/DashboardCl
 import MakeReservation from './components/Restaurants/MakeReservation';
 import TablesBooking from './components/Restaurants/tablesBooking';
 import BookingsCalendar from './components/Dashboards/DashboardRestaurant/BookingsCalendar';
+import Footer from './components/Footer/Footer';
 
 function App() {
   // const [isAuth, setIsAuth] = useState(false);
@@ -72,7 +73,7 @@ function App() {
             </Route>
           
         </Switch>
-
+<Footer />
       </div>
       </AuthProvider>
     </Router>

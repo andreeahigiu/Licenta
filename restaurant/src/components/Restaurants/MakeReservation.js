@@ -312,6 +312,15 @@ export default function MakeReservation() {
 
       }
     }
+
+    const handleChangeSeats = (e) => {
+
+      //console.log("target", e.target)
+      if(e.target.value != ''){
+        setBooking({...booking, [e.target.name]: e.target.value})
+
+      }
+    }
     console.log("BOOKINGS:", booking)
 
     function makeReservation(e){
@@ -349,6 +358,28 @@ export default function MakeReservation() {
           <MenuItem value={3}>Trei ore</MenuItem>
           <MenuItem value={4}>Patru ore</MenuItem>
           <MenuItem value={5}>Cinci ore</MenuItem>
+        </Select>
+        </FormControl>
+
+        <FormControl className="booking-time-dropdown">
+        <InputLabel id="demo-simple-select-label" >Nr. locuri</InputLabel>
+        <Select
+         
+          labelId="seatsNr"
+          id="seatsNr"
+          name="seatsNr"
+          value={booking.seatsNr}
+          label="Nr. locuri"
+          onChange={handleChangeSeats}
+        >
+          <MenuItem value={2}>2</MenuItem>
+          <MenuItem value={3}>3</MenuItem>
+          <MenuItem value={4}>4</MenuItem>
+          <MenuItem value={5}>5</MenuItem>
+          <MenuItem value={6}>6</MenuItem>
+          <MenuItem value={7}>7</MenuItem>
+          <MenuItem value={8}>8</MenuItem>
+          
         </Select>
         </FormControl>
 

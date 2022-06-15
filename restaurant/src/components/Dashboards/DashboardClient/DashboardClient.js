@@ -119,6 +119,7 @@ export default function DashboardClient() {
     setFetchedDetails(true)
 
   }
+  console.log("fetchedDetails: ", fetchedDetails)
   
   // console.log("client details:", clientDetails)
   

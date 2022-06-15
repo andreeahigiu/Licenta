@@ -57,4 +57,5 @@ import { createFirestoreInstance, firestoreReducer } from 'redux-firestore'
 //ReactDOM.render(<Provider store = {store}> <ReactReduxFirebaseProvider {...rrfProps}> <App /> </ReactReduxFirebaseProvider></Provider> , document.getElementById('root') );
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
+
 ReactDOM.render(<Provider store = {store}>  <App /> </Provider> , document.getElementById('root') );

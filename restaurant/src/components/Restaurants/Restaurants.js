@@ -36,6 +36,7 @@ function Restaurants({updatedData}) {
     });
     
   console.log("mounted")
+
   db.collection('ProfileRestaurant')
     .get()
     .then( snapshot => {
@@ -61,7 +62,7 @@ function Restaurants({updatedData}) {
         {/* {items.map((item,index)=>{
             return <li key={index}>{item}</li>
         })} */}
-      {isLoading && <div className="is-loading"> Loading... </div>}
+       {isLoading && <div className="is-loading"> Loading... </div>}
        <RestaurantCard restaurants={restaurants} />
 
     </div>

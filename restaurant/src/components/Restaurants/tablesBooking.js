@@ -163,9 +163,78 @@ export default function TablesBooking(props) {
       
       }
 
+      function checkAllTables(){
+        // if(booking.seatsNr * 2 < item.places){
+        //   return true
+        // }
+  
+        // if(booking.seatsNr > item.places){
+        //   return true
+        // }
+        var seatsNrToCheck = undefined
+        tables.map((item,index) => { 
+          if(checkAvailabilityForHours(item)){
+            unavailableArr[index] = true
+          }
+        }
+        )
+
+        
+        if (booking.seatsNr == 2){
+          seatsNrToCheck = 2;
+        }else
+        if(booking.seatsNr == 3){
+          seatsNrToCheck = 4;
+        }else
+        if (booking.seatsNr == 4){
+          seatsNrToCheck = 4;
+        }else
+        if(booking.seatsNr == 5){
+          seatsNrToCheck = 6;
+        }else
+        if (booking.seatsNr == 6){
+          seatsNrToCheck = 6;
+        }else
+        if(booking.seatsNr == 7){
+          seatsNrToCheck = 8;
+        }else
+        if(booking.seatsNr == 8){
+          seatsNrToCheck = 8;
+        }
+
+        //making all the tables with fewer seats than desired, unavailable
+        tables.map((item,index) => { 
+          if(booking.seatsNr > item.places){
+            unavailableArr[index] = true
+          }
+        })
+
+        while(seatsNrToCheck <= 8){
+          console.log("SeatsNrToCheck:", seatsNrToCheck)
+
+          for( var index = 0; index< tables.length; index++) { 
+            var item = tables[index]
+            console.log("item in for:", item)
+
+            if(item.places == seatsNrToCheck){
+              if(unavailableArr[index] != true){
+
+                tables.map((item,index) => { 
+                  if(item.places != seatsNrToCheck){
+                    unavailableArr[index] = true
+                  }
+                })
+
+                break;
+              }
+            }
+          }
+
+          seatsNrToCheck+=2
+        }
+      }
+
     function checkAvailabilityForHours(item){
-      console.log("IN FUNCTION")
-      console.log("item.id:       ", item.id)
 
       if(tableDatePair !== undefined && tableDatePair[booking.date] !== undefined){
         if(tableDatePair[booking.date].includes(item.id)){
@@ -195,6 +264,15 @@ export default function TablesBooking(props) {
       // }
       }
 
+      // checking the seats nr.
+      // if(booking.seatsNr * 2 < item.places){
+      //   return true
+      // }
+
+      // if(booking.seatsNr > item.places){
+      //   return true
+      // }
+
       return false
     }
 
@@ -204,13 +282,14 @@ export default function TablesBooking(props) {
         console.log("THE PAIRS:", tableDatePair)
         let styleArr = styles
         if(tables){
+          checkAllTables();
           return tables.map((item,index) => {
-  (checkAvailabilityForHours(item) 
-  ? 
-  unavailableArr[index] = true
-  : 
-  console.log("Does NOT include the id", item.id) 
-  ) 
+  // (checkAvailabilityForHours(item) 
+  // ? 
+  // unavailableArr[index] = true
+  // : 
+  // console.log("Does NOT include the id", item.id) 
+  // ) 
    
 
             return(

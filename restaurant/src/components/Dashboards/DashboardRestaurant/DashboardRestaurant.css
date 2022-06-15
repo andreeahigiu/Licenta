@@ -38,9 +38,27 @@
 }
 
 .update-details-submit{
+  color:rgb(255, 255, 255)!important;
+  width: 20vw!important;;
+  background-color: rgb(184, 133, 76)!important;
+  border-color: transparent!important;
+}
+
+.upload-btn{
+  color:rgb(184, 133, 76)!important;
+  border-color: rgb(184, 133, 76)!important;
 
 }
 
+.upload-btn:hover{
+  background-color:rgba(239, 239, 239, 0.5) !important;
+}
+
+.details-wrap{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 
 /* ---------------------------------------------------------------------------------------------------------------------------- */
@@ -155,7 +173,7 @@ a:focus { #cc0; } */
 
 .lat-long{
     display: inline-flex;
-    width: 32vw;
+    width: 22vw;
 }
 
 .form-container{
@@ -163,23 +181,38 @@ a:focus { #cc0; } */
     width: 63vw;
 }
 
+.text-field{
+  width:20vw!important;
+}
+
+.box-wrap{
+  width:90vw;
+}
+
 .first-col{
     margin-right: 5vw;
-    width:30vw;
+    width:20vw;
 }
 
 .second-col{
-    width:30vw;
+    width:20vw;
 }
 
 .field{
     /* width: 30vw; */
-    width:30.5vw;
-    margin-left: 13px;
-    margin-top: 2vh;
+    width:20vw;
+    margin-left: 15px;
+    margin-top: 1.8vh;
     margin-bottom: 2vh;
 
 
+}
+
+.field-imp{
+  width:20vw!important;
+  margin-left: 15px!important;
+  margin-top: 1.8vh!important;
+  margin-bottom: 2vh!important;
 }
 
 .scene-update-btn{
@@ -192,6 +225,40 @@ a:focus { #cc0; } */
     border-radius: 10px;
 
     box-shadow: 5px 5px 5px rgb(215, 214, 211);
+}
+
+.pdf-page-control{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width:512px;
+}
+
+.pdf-pages{
+  width: 40vw!important;
+
+}
+
+.react-pdf__Page__canvas {
+  margin: 0 auto;
+  /* width: 80% !important; */
+  height: 80vh !important;
+}
+
+
+.places-field{
+  width:100%;
+  margin-top:1rem;
+  margin-bottom: 1rem;
+}
+
+.seats-specifications{
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  align-self: center;
+  margin-left: 12px;
 }
 
 #point2-1 {
@@ -392,3 +459,32 @@ a:focus { #cc0; } */
     margin-top: 58px;
     margin-left: -15px;
   }
+
+  .update-details-submit:hover{
+    background-color: rgba(239, 239, 239, 0.5) !important;
+}
+
+@media screen and (max-width: 976px) {
+  .form-container{
+  /* display: inline-flex;
+  width: 63vw; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90vw;
+}
+
+.first-col{
+  width: 40vw;
+}
+
+.scond-col{
+  width: 40vw;
+}
+
+.text-field, .field, .field-imp, .lat-long{
+  width:35vw!important;
+
+}
+
+}

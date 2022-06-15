@@ -4,8 +4,7 @@ import { setDoc } from "firebase/firestore";
 import { auth } from "../../firebase";
 
 export const updateClient = (client) => {
-    return (dispatch, getState) => {
-        const id = 'hei'
+    return (dispatch) => {
         let currentUser = auth.currentUser
 
         db.collection('ProfileCustomer').doc(currentUser.uid).update({
@@ -14,12 +13,9 @@ export const updateClient = (client) => {
         }).then( () => {
             dispatch({type: 'UPDATE_CLIENT', client})
 
-
         }).catch( (err) => {
             dispatch({type: 'UPDATE_CLIENT_ERROR', err})
         })
-
-
     }
 };
 

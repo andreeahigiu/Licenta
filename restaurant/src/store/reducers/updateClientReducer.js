@@ -1,9 +1,7 @@
 const initState = {
     clientDetails : {
-        name: "Robert Pat",
+        name: "Robert Ionescu",
         phone: '0735644931',
-
-
 
     }
 }

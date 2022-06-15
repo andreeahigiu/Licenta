@@ -18,7 +18,7 @@ console.log("detaliile rezervarilor:", clientDetails)
     function displayBookings(){
 //clientDetails.myBookings.slice(0).reverse().map((item,index) =>
 
-        if(clientDetails != undefined && clientDetails.length > 1){
+        if(clientDetails != undefined && clientDetails.myBookings.length > 1){
            return clientDetails.myBookings.slice(0).reverse().map((item,index) => { 
                 return(
                     <Card sx={{ height: "23vh" , width: "40vw", marginBottom: "5vh"}}>

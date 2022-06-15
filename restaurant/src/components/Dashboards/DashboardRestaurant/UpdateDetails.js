@@ -20,6 +20,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { Document, Page } from 'react-pdf'
 
 
 const Input = styled('input')({
@@ -43,9 +44,11 @@ class UpdateDetails extends Component {
       // phone: '',
       // menuImage: '',
       // menuURL: '',
-      waitingTime:"",
-      pricing:"",
-      cuisine:"",
+      // waitingTime:"",
+      // pricing:"",
+      // cuisine:"",
+      profileImageName:"",
+      menuName:"",
   
     }
 
@@ -57,11 +60,39 @@ class UpdateDetails extends Component {
     //this.setState({menuURL: URL.createObjectURL(this.state.menuImage)});
 
     let file = e.target.files[0];
+    console.log("THE FILE NAME", file.name)
+    this.setState({ profileImageName: file.name, })
 
     console.log("uploaded file: ",file);
 
     const storageRef = ref(storage, `/files/${file.name}`);//second param is the location in the firebase storage where we wanna save the files
     const uploadTask = uploadBytesResumable(storageRef, file)
+
+    uploadTask.on("state_changed", (snapshot) => {
+      const prog = Math.round( (snapshot.bytesTransferred / snapshot.totalBytes) *100 );
+    }, (err) => console.log(err),
+    () => {
+      getDownloadURL(uploadTask.snapshot.ref)
+      .then(url => this.setState( {profileImage: url}))
+    }
+    )
+
+  }
+
+  async handleMenuFieldChange(e) {
+  
+    // this.setState( {menuImage: e.target.files[0]}, () => { this.setState({menuImage: URL.createObjectURL(this.state.menuImage)}) } )
+    //this.setState({menuURL: URL.createObjectURL(this.state.menuImage)});
+
+    let file = e.target.files[0];
+    this.setState({ menuName: file.name, })
+
+    console.log("uploaded file: ",file);
+
+    const storageRef = ref(storage, `/PDFs/${file.name}`);//second param is the location in the firebase storage where we wanna save the files
+    const uploadTask = uploadBytesResumable(storageRef, file)
+
+    // storageRef.put(file).then(() => {})
 
     uploadTask.on("state_changed", (snapshot) => {
       const prog = Math.round( (snapshot.bytesTransferred / snapshot.totalBytes) *100 );
@@ -161,8 +192,9 @@ class UpdateDetails extends Component {
         display: 'grid',
         gridTemplateColumns: { sm: '1fr 1fr' },
         gap: 2,
-        '& .MuiTextField-root': { m: 2, width: '100%' },
+        '& .MuiTextField-root': { m: 2, width: '100%', width:'30vw'},
       }}
+      className="box-wrap"
       // noValidate
       // validate={values => {
       //   const errors = {};
@@ -178,8 +210,9 @@ class UpdateDetails extends Component {
       <div className="form-and-btn">
       <div className="form-container">
       <div className="first-col">
-      <TextField id="name" label="Nume" variant="outlined" onChange={e => this.handleChange(e)}/>
+      <TextField className="text-field" id="name" label="Nume" variant="outlined" onChange={e => this.handleChange(e)}/>
       <TextField
+       className="text-field"
           id="location"
           name="location"
           onChange={e => this.handleChange(e)}
@@ -189,6 +222,7 @@ class UpdateDetails extends Component {
         />
         <div className="lat-long"> 
               <TextField
+
           id="longitude"
           name="longitude"
           onChange={e => this.handleChange(e)}
@@ -208,6 +242,7 @@ class UpdateDetails extends Component {
         </div>
 
         <TextField
+        className="text-field"
           label="Numar telefon"
           id="phone"
           type="numeric"
@@ -218,19 +253,38 @@ class UpdateDetails extends Component {
           // }}
         />
 
-        <TextField id="email" label="Email" variant="outlined" onChange={e => this.handleChange(e)}/>
+        <TextField className="text-field" id="email" label="Email" variant="outlined" onChange={e => this.handleChange(e)}/>
 
         <TextField
+        className="text-field"
           disabled
           id="menuImageContainer"
           // onChange={e => this.handleChange(e)}
           label="Meniu"
-          value="Adaugati o imagine"
+          value={this.state.menuName}
           InputProps={{endAdornment:         
                           <label htmlFor="menuImage">
-                          <Input accept="image/*" id="menuImage" multiple type="file" onChange={e => this.handleImageFieldChange(e)}/>
+                          <Input id="menuImage" multiple type="file" onChange={e => this.handleMenuFieldChange(e)}/>
                           {/* <Input accept="image/*" id="contained-button-file" multiple type="file" onChange={e => this.handleImageFieldChange(e)}/> */}
-                          <Button variant="outlined" component="span">
+                          <Button variant="outlined" component="span" className="upload-btn">
+                            Upload
+                          </Button>
+                          </label>
+                          }}
+        />
+
+      <TextField
+        className="text-field"
+          disabled
+          id="profileImageContainer"
+          // onChange={e => this.handleChange(e)}
+          label="Imagine profil"
+          value={this.state.profileImageName}
+          InputProps={{endAdornment:         
+                          <label htmlFor="profileImage">
+                          <Input id="profileImage" multiple type="file" onChange={e => this.handleImageFieldChange(e)}/>
+                          {/* <Input accept="image/*" id="contained-button-file" multiple type="file" onChange={e => this.handleImageFieldChange(e)}/> */}
+                          <Button variant="outlined" component="span" className="upload-btn">
                             Upload
                           </Button>
                           </label>
@@ -238,6 +292,7 @@ class UpdateDetails extends Component {
         />
 
         <TextField
+        className="text-field"
           disabled
           id="galleryContainer"
           // onChange={e => this.handleChange(e)}
@@ -247,7 +302,7 @@ class UpdateDetails extends Component {
                           <label htmlFor="galleryImages">
                           <Input accept="image/*" id="galleryImages" multiple type="file" onChange={e => this.handleGalleryFieldChange(e)}/>
                           {/* <Input accept="image/*" id="contained-button-file" multiple type="file" onChange={e => this.handleImageFieldChange(e)}/> */}
-                          <Button variant="outlined" component="span">
+                          <Button variant="outlined" component="span" className="upload-btn">
                             Upload
                           </Button>
                           </label>
@@ -257,9 +312,10 @@ class UpdateDetails extends Component {
       </div>
 
       <div className="second-col">
-      <TextField id="program" label="Program" variant="outlined" onChange={e => this.handleChange(e)}/>
+      <TextField className="text-field" id="program" label="Program" variant="outlined" onChange={e => this.handleChange(e)}/>
 
       <TextField
+      className="text-field"
           id="places"
           label="Numar locuri"
           type="number"
@@ -287,6 +343,7 @@ class UpdateDetails extends Component {
         className="field"
         labelId="demo-simple-select-label"
         id="pricing"
+        defaultValue={1}
         value={this.state.pricing}
         name="pricing"
         label="Preturi"
@@ -300,12 +357,13 @@ class UpdateDetails extends Component {
       </FormControl>
 
 
-        <FormControl className="filters"> 
+        <FormControl className="field-imp"> 
         <InputLabel id="demo-simple-select-label" >Bucatarie</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="cuisine"
           name="cuisine"
+          defaultValue={1}
           value={this.state.cuisine}
           label="Bucatarie"
           onChange={e => this.handleChange(e)}
@@ -319,12 +377,13 @@ class UpdateDetails extends Component {
         </Select>
         </FormControl>
 
-        <FormControl className="filters">
+        <FormControl className="field-imp">
         <InputLabel id="demo-simple-select-label" >Timp de asteptare</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="waitingTime"
           name="waitingTime"
+          defaultValue={1}
           value={this.state.waitingTime}
           label="Timp de asteptare"
           onChange={e => this.handleChange(e)}
@@ -340,8 +399,8 @@ class UpdateDetails extends Component {
 
 
       {/* <TextField id="cuisine" label="Bucatarie" variant="outlined" onChange={e => this.handleChange(e)}/> */}
-      <TextField id="decor" label="Decor" variant="outlined" onChange={e => this.handleChange(e)}/>
-      <TextField id="description" label="Descriere restaurant" variant="outlined" onChange={e => this.handleChange(e)}/>
+      <TextField className="text-field" id="decor" label="Decor" variant="outlined" onChange={e => this.handleChange(e)}/>
+      <TextField className="text-field" id="description" label="Descriere restaurant" variant="outlined" onChange={e => this.handleChange(e)}/>
 
 
 
@@ -353,19 +412,22 @@ class UpdateDetails extends Component {
             {console.log("image: ", this.state.menuImage)}
             {console.log("image url: ", this.state.menuURL)} */}
 
-{console.log("menu img: ", this.state.menuImage)}
-        {this.state.menuImage && (
+{console.log("profile img name: ", this.state.profileImageName)}
+        {/* {this.state.menuImage && (
         <Box>
         <div>Image Preview:</div>
-        <img src={this.state.menuImage} alt="Image" height="100px" />
+        <Document file={this.state.menuImage}>
+        <Page pageNumber={1} />
+
+        </Document>
         </Box>
-        )}
+        )} */}
 
         <Button className="update-details-submit"variant="outlined" type="submit"
         sx={{
           boxShadow: 1,
           borderRadius: 2,
-          width: '100%',
+          width: '30vw',
           ml: "16px",
           mt: "6vh",
           p: 2,

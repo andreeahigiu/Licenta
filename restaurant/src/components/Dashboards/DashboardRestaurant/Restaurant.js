@@ -12,7 +12,10 @@ import { useAuth } from '../../../contexts/AuthContext';
 import { db } from '../../../firebase';
 import Carousel from 'react-material-ui-carousel'
 import './DashboardRestaurant.css'
+import { pdfjs,Document, Page } from 'react-pdf'
+import Button from '@mui/material/Button';
 
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const captionStyle = {
   fontSize: '2em',
@@ -65,6 +68,9 @@ const [currentRestaurant, setCurrentRestaurants] = useState("")
 const [restaurantDataOnce, setRestaurantDataOnce] = useState("")
 const [style, setStyle] = useState([]); 
 const [tables, setTables] = useState()
+const [numPages, setNumPages] = useState(null);
+const [pageNumber, setPageNumber] = useState(1);
+
 
 const unsub = onSnapshot(doc(db, "ProfileRestaurant", currentUser.uid), (doc) => {
   //console.log("Current data: ", doc.data());
@@ -73,6 +79,22 @@ const unsub = onSnapshot(doc(db, "ProfileRestaurant", currentUser.uid), (doc) =>
   // setStyle(doc.data().style)
   // setTables(doc.data().tables)
 });
+
+function onDocumentLoadSuccess({ numPages }) {
+  setNumPages(numPages);
+}
+
+function changePage(offset) {
+  setPageNumber(prevPageNumber => prevPageNumber + offset);
+}
+
+function previousPage() {
+  changePage(-1);
+}
+
+function nextPage() {
+  changePage(1);
+}
 // console.log("Data in state:", currentRestaurant);
 
 //let pics = currentRestaurant.gallery
@@ -154,7 +176,7 @@ function tableList(){
       //console.log("table style:", styleArr[index])
       // setStyle( styles=> [...styles, newStyle] )
       return(
-        <div id={index} className="table-btn" style={styleArr[index]} > 
+        <div key={index} id={index} className="table-btn" style={styleArr[index]} > 
         <p className="table-label"> Masa {index} </p>
         {displaySeats(index)}
         
@@ -226,41 +248,36 @@ const newStyle = {position:"relative", left: 80+"px", top:40 +"px"}
                   </ListItemText>
             </ListItem>
 
-                  {/* <ListItem> 
-                  <ListItemText>
-                    Galerie: 
-                    <Carousel
-                      data={updatedData.photos}
-                      time={2000}
-                      width="60vw"
-                      height="300px"
-                      captionStyle={captionStyle}
-                      radius="10px"
-                      slideNumber={true}
-                      slideNumberStyle={slideNumberStyle}
-                      captionPosition="bottom"
-                      automatic={true}
-                      dots={true}
-                      pauseIconColor="white"
-                      pauseIconSize="40px"
-                      slideBackgroundColor="darkgrey"
-                      slideImageFit="cover"
-                      thumbnails={true}
-                      thumbnailWidth="100px"
-                      style={{
-                        textAlign: "center",
-                        maxWidth: "850px",
-                        maxHeight: "500px",
-                        margin: "40px auto",
-                      }}
-                      />
-                  </ListItemText>
-                </ListItem> */}
-
                 <ListItem>
                   <ListItemText>
                     <p> Meniu: </p>
-                    <img className="menu-image-dash" src={currentRestaurant.menuImage} alt="Menu Image"/> 
+                    {/* <img className="menu-image-dash" src={currentRestaurant.menuImage} alt="Menu Image"/>  */}
+                    <Document file={currentRestaurant.menuImage} onLoadSuccess={onDocumentLoadSuccess}>
+                      <Page className="pdf-pages" pageNumber={pageNumber} />
+                      {/* {Array.apply(null, Array(numPages))
+                        .map((x, i)=>i+1)
+                        .map(page => <Page pageNumber={page}/>)} */}
+                    </Document>
+
+                  <div className="pdf-page-control">
+
+        <Button type="button" disabled={pageNumber <= 1} onClick={previousPage} sx={{color:"rgb(184, 133, 76)" }} >
+          Previous
+        </Button>
+        <p>
+          Pagina {pageNumber || (numPages ? 1 : "--")} din {numPages || "--"}
+        </p>
+        <Button
+          type="button"
+          disabled={pageNumber >= numPages}
+          onClick={nextPage}
+          sx={{color:"rgb(184, 133, 76)" }} 
+        >
+          Next
+        </Button>
+      </div>
+
+
                   </ListItemText>
                 </ListItem> 
                 {/* {console.log("well nopw:", currentRestaurant.menuImage)} */}

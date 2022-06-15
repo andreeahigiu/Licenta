@@ -28,8 +28,6 @@ const analytics = getAnalytics(app)
 
 export const auth = app.auth()
 
-// export const db = getFirestore(app)
-
 export const db = firebase.firestore();
 
 export const projectStorage = firebase.storage();
@@ -41,5 +39,4 @@ firebase.firestore().settings({ timestampsInSnapshots: true })
 export default app
 
 
-// export default getFirestore()
 

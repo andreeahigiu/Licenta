@@ -57,6 +57,7 @@ export default function RestaurantCard({restaurants}) {
     }
 
     function restaurantCuisine(restaurant){
+      console.log("The cuisine:", restaurant.cuisine)
       if(restaurant.cuisine == 1){
         return "Americana"
       }
@@ -131,7 +132,7 @@ export default function RestaurantCard({restaurants}) {
     </Box>
 
       <Box className="filters-container">
-      <FormControl className="filters">
+      {/* <FormControl className="filters">
         <InputLabel id="demo-simple-select-label" >Numar stele</InputLabel>
         <Select
          
@@ -148,7 +149,7 @@ export default function RestaurantCard({restaurants}) {
           <MenuItem value={4}>4 din 5</MenuItem>
           <MenuItem value={5}>5 din 5</MenuItem>
         </Select>
-        </FormControl>
+        </FormControl> */}
 
         {/* <FormControl className="filters">
 
@@ -174,11 +175,11 @@ export default function RestaurantCard({restaurants}) {
 <InputLabel id="demo-simple-select-label" >Preturi</InputLabel>
 <Select
 
-  labelId="demo-simple-select-label"
+  labelId="Preturi"
   id="prices"
   value={filters.prices}
   name="prices"
-  label="Distanta centru"
+  label="Preturi"
   onChange={handleChange}
 >
 
@@ -192,7 +193,7 @@ export default function RestaurantCard({restaurants}) {
         <FormControl className="filters"> 
         <InputLabel id="demo-simple-select-label" >Bucatarie</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
+          labelId="Bucatarie"
           id="cuisine"
           name="cuisine"
           value={filters.cuisine}
@@ -211,7 +212,7 @@ export default function RestaurantCard({restaurants}) {
         <FormControl className="filters">
         <InputLabel id="demo-simple-select-label" >Timp de asteptare</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
+          labelId="Timp de asteptare"
           id="waitingTime"
           name="waitingTime"
           value={filters.waitingTime}
@@ -264,30 +265,20 @@ export default function RestaurantCard({restaurants}) {
           else if((filters.prices !="" && filters.cuisine != "" && filters.waitingTime !="") && filters.prices == restaurant.pricing && filters.cuisine == restaurant.cuisine && filters.waitingTime == restaurant.waitingTime){
             return restaurant
           }
-
-
-
-        //   if (filters.stars == "0"){
-        //     return restaurant
-        //   }
-        //  else if (filters.stars == restaurant.stars) {
-        //    return restaurant
-        //  }
-
-       
+  
           
          }).map( (restaurant, index) => {
           {console.log("restaurant PPRICING:", restaurant.pricing)}
            return(
-        <Card key={index} sx={{ display: 'flex', width: '80vw', height: '25vh', marginLeft:'8vw', marginTop:'5vh' }}>
+        <Card key={index} className="card-container" sx={{ display: 'flex', width: '80vw', height: '25vh', marginLeft:'8vw', marginTop:'5vh' }}>
 
           <CardActionArea to={`/restaurante/${restaurant.id}`} component={Link} sx={{ display: 'flex'}} >
 
       <Box className='menu-container'>
-        <img className='menu-image' src={restaurant.menuImage ? restaurant.menuImage : restaurantImg} alt='menu image'/>
+        <img className='menu-image' src={restaurant.profileImage ? restaurant.profileImage : restaurantImg} alt='menu image'/>
       </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', width: '30vw' }}>
-        <CardContent sx={{ flex: '1 0 auto', width:'50vw'}}>
+        <CardContent sx={{ flex: '1 0 auto'}}>
           <Box className="name-stars">
             
           <Box>
@@ -299,10 +290,10 @@ export default function RestaurantCard({restaurants}) {
           </Typography>
           </Box>
 
-          <Box className="stars"> 
+          {/* <Box className="stars"> 
           <div className="rating"> 3/5 </div>
           <img  className="small-star" src={star} alt="star" />
-          </Box>
+          </Box> */}
 
           </Box>
 

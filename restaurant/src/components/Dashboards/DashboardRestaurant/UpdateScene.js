@@ -11,6 +11,7 @@ import { useAuth } from '../../../contexts/AuthContext';
 import { db } from '../../../firebase';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField';
 
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
@@ -25,6 +26,7 @@ export default function UpdateScene() {
   const [updateScene, setUpdateScene] = useState({tables: [], styles: []})
   const [empty, setEmpty] = useState(true);
   const [seats, setSeats] = useState(2)
+  const [specifications, setSpecifications] = useState("")
   
   const dispatch = useDispatch();
   const mystate = useSelector(state => state.scene)
@@ -131,6 +133,22 @@ export default function UpdateScene() {
 
     setContextMenu(null);
     setClick(false);
+  }
+
+  function handleSpecifications(e){
+    e.preventDefault();
+    setSpecifications(e.target.value)
+    console.log("specifications:", e.target.value)
+
+    let allTables=tables
+    let table = {...allTables[currentBtn]}
+    table.specifications = e.target.value;
+    tables[currentBtn] = table
+    setTables(tables)
+    // console.log("event", e)
+
+    // setContextMenu(null);
+    // setClick(false);
   }
 
 console.log("current table:", currentBtn,"seats:", seats)
@@ -273,12 +291,13 @@ async function getOneElement() {
         }
       >
         <MenuItem onClick={handleClose}>Inchide meniu si salveaza</MenuItem>
-        <MenuItem onClick={handleClose}>Adauga specificatii masa</MenuItem>
         <MenuItem onClick={handleDeleteTable}>Sterge masa</MenuItem>
+        
+        <div className="seats-specifications">
 
 
-        <FormControl  >
 
+<FormControl  >
       <InputLabel className="places-field">Nr. locuri</InputLabel>
       <Select
         className="places-field"
@@ -296,6 +315,18 @@ async function getOneElement() {
       </Select>
       </FormControl>
 
+
+
+        <TextField
+          id="outlined-multiline-static"
+          label="Specificatii masa"
+          multiline
+          rows={4}
+          defaultValue={currentBtn && tables[currentBtn].specifications}
+          onChange={e => handleSpecifications(e)}
+        />
+
+</div>
 
       </Menu>
       </div>
