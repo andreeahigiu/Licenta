@@ -26,7 +26,9 @@ export default function Login() {
 
       // setIsAuth(true)
       // localStorage.setItem("isAuth", true)
+
       history.push("/")
+      window.location.reload(false);
     } catch {
       setError("Failed to log in")
     }
@@ -58,9 +60,9 @@ export default function Login() {
               Log In
             </button>
           </form>
-          <div >
+          {/* <div >
             <Link className="forgot-password" to="/forgot-password">Forgot Password?</Link>
-          </div>
+          </div> */}
       </div>
     </>
   )

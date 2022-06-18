@@ -84,6 +84,7 @@
 }
 
 .signup-layout{
+    height:90vh;
     display:grid;
     justify-content: center;
     align-items: center;

@@ -305,11 +305,19 @@
 }
 
 .inline-icons{
+    margin-top:8vh;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
-.inline-first{
+.details-row{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* .inline-first{
     display: inline-flex;
 
     margin-top: 8vh;
@@ -320,12 +328,10 @@
 
 .inline-second{
     display: inline-flex;
-    /* margin-left: vw; */
     margin-top: 2vh;
     width:100%;
-    /* align-items: center; */
-    /* justify-content: center; */
-}
+
+} */
 
 .detail-1{
     margin-left: -0.5vw;
@@ -391,6 +397,7 @@
     flex-direction: column;
     margin-left: 33vw;
     margin-top: 8vh;
+    margin-bottom: 8vh;
 
 }
 
@@ -398,6 +405,40 @@
     margin-left: 7vw;
     margin-top:8vh;
 }
+
+.menu-display{
+    display:flex;
+    flex-direction: column;
+    margin-top: 8vh;
+    margin-bottom: 8vh;
+    height: 100vh;
+    width:100%;
+    margin-left: 33vw;
+}
+
+.menu-page-control{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width:512px;
+    margin-left: 15vw;
+  }
+  
+  .menu-pages{
+    width: 40vw!important;
+    margin-left: 7vw;
+  
+  }
+
+  .react-pdf__Page__canvas {
+    margin: 0 auto;
+    /* width: 80% !important; */
+    /* height: 80vh !important; */
+    width: 50vw;
+  }
+
+
 
 .reviews-container{
     width: 100%;

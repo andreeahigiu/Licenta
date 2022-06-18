@@ -40,15 +40,15 @@ function Restaurants({updatedData}) {
   db.collection('ProfileRestaurant')
     .get()
     .then( snapshot => {
-      const restaurants = []
+      const restaurantsArr = []
       snapshot.forEach( doc => {
         let data = doc.data()
         data.id = doc.id
-        restaurants.push(data)
+        restaurantsArr.push(data)
 
         ids.push( doc.id )
       })
-      setRestaurants(restaurants)
+      setRestaurants(restaurantsArr)
       setIds(ids)
       setIsLoading(false)
       

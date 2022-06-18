@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import UpdateDetailsClient from './UpdateDetailsClient'
 import {Component} from 'react'
@@ -40,6 +40,7 @@ import { updateClient } from '../../../store/actions/updateClientAction';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from '../../../firebase';
+import "./DashboardClient.css"
 
 const styles = theme =>  ({
   paper:{
@@ -73,19 +74,17 @@ export default function DashboardClient() {
   const [clientDetailsOnce, setClientDetailsOnce] = useState()
   const [updatedFields, setUpdatedFields] = useState()
   const [fetchedDetails, setFetchedDetails]=useState(false)
+  const [fetchedRestaurants, setFetchedRestaurants]=useState(false)
+
   const [profileImage, setProfileImage] = useState()
+  const [currentRestaurants, setCurrentRestaurants] = useState([])
+  var allBookedRestaurants = []
+  const isFirstRender = useRef(true)
+  const el = []
 
   const dispatch = useDispatch();
   // const mystate = useSelector(state => state.scene)
 
-
-  // const unsub = onSnapshot(doc(db, "ProfileCustomer", currentUser.uid), (doc) => {
-  //   //console.log("Current data: ", doc.data());
-  //   //currentUser.push(doc.data());
-  //   setClientDetails(doc.data())
-  //   // setStyle(doc.data().style)
-  //   // setTables(doc.data().tables)
-  // });
 
 
   function scrollToTop() {
@@ -99,14 +98,8 @@ export default function DashboardClient() {
 
   function handleDetailsChange(e){
     console.log("valoare modificata:", e.target)
-    // clientDetails[e.target.id]= e.target.value
     const valName= e.target.name
     clientDetails[valName] = e.target.value
-    // let updatedVal = {[e.target.name]: e.target.value}
-    // setClientDetails(oldVal => ({
-    //   ...oldVal,
-    //   updatedVal
-    // }))
     setClientDetails(clientDetails)
   }
 
@@ -115,27 +108,88 @@ export default function DashboardClient() {
     await db.collection('ProfileCustomer').doc(currentUser.uid).get()
     .then(snapshot => {setClientDetails(snapshot.data())
     })
+     setFetchedDetails(true)
+  }
+  
+  async function getCurrentRestaurant() {
+    const restaurantsArray = []
+    const el = []
+    clientDetails.myBookings.reverse().map(async (item,index) => {
+      
 
-    setFetchedDetails(true)
+    db.collection('ProfileRestaurant').doc(item.restaurantId).onSnapshot((doc) => {      
+      let data= doc.data()
+      if(data){
+        el.push(data)
+      }
+
+
+
+    })
+
+
+    // setCurrentRestaurants(el)
+
+    allBookedRestaurants.push(el)
+
+    setFetchedRestaurants(true)
+    //setFetchedDetails(true)
+
+    // setCurrentRestaurants(restaurantsArray)
+    })
+    setCurrentRestaurants(el)
 
   }
-  console.log("fetchedDetails: ", fetchedDetails)
-  
-  // console.log("client details:", clientDetails)
-  
+  console.log("The el with data:", el)
+
+
    useEffect(() => {
   
      getOneElement()
+     isFirstRender.current = false
   
   
   }, []);
 
-  function handleClick(selection) {
-    // menuSelection=selection
-    setMenuSelection(selection)
-    scrollToTop()
+  useEffect( () => {
+    //if (!isFirstRender.current)
+    if (!isFirstRender.current && clientDetails && clientDetails.myBookings) {
+      // getCurrentRestaurant()
+      // const el = []
+      // clientDetails.myBookings.reverse().map((item,index) => {
 
-}
+      for(const item of clientDetails.myBookings){
+
+      db.collection('ProfileRestaurant').doc(item.restaurantId).onSnapshot((doc) => {  
+        if(doc){
+          console.log("the DOC", doc.data())
+          let data= doc.data()
+          if(data){
+            el.push(data)
+          }
+        }    
+      })
+    // await db.collection('ProfileRestaurant').doc(item.restaurantId)
+    // .get()
+    // .then( doc => {
+    //   let data= doc.data()
+    //   el.push(data)
+    //   //setCurrentRestaurants(el)
+    //   })
+  
+      // allBookedRestaurants.push(el)
+      // setFetchedRestaurants(true)
+
+      // })
+    }
+    setCurrentRestaurants(el)
+
+    }
+  }, [clientDetails])
+
+
+  console.log("detaliile restaurantelor:", currentRestaurants)
+
 
 function saveDetails(e){
   setDisabledFields(true)
@@ -145,18 +199,9 @@ function saveDetails(e){
 }
 
   async function handleLogout(){
-    // try {
-    //     await auth.signOut()
-    //     //navigate('/')
-    //   } catch {
-    //     console.log('Failed to log out')
-    //   }
     try {
-
       await logout()
 
-      // setIsAuth(true)
-      // localStorage.setItem("isAuth", true)
       history.push("/")
     } catch {
       console.log('Failed to log out')
@@ -333,21 +378,13 @@ console.log("detaliile",clientDetails)
 </Paper>
 </div>
 
-<div className="dash-content">
- 
-  {fetchedDetails && <MyBookings clientDetails={clientDetails}/>}
+<div className="dash-content-client" id="my-bookings">
+ {console.log("fetchedRestaurants: ", fetchedRestaurants)}
+ {/* currentRestaurants && currentRestaurants.length>0 && */}
+  { fetchedDetails && <MyBookings clientDetails={clientDetails} allRestaurants={currentRestaurants}/>}
 
 
 </div>
-
-
-<Paper sx={{overflow: 'auto', maxHeight: '35vh', maxWidth: '100%', m: '10px', mt: '60px', ml: '5vw'}} className={styles.paper}>
-
-<MyReviews />
-
-
-</Paper>
-
 
 </div>
   )

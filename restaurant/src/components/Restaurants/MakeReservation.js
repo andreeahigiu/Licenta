@@ -77,17 +77,11 @@ export default function MakeReservation() {
   const [booking, setBooking] = useState({date:new Date(), tableId:"", userId:"", restaurantId:"", bookingId:"", bookedFor:1, endOfBooking:new Date()})   //rezervarea in decurs de desfasurare
   const [tableDatePair, setTableDatePair] = useState();  //stare cu key-vlue pt data rezervare-mese rezervate
 
+  const [width, setWidth] = useState(window.innerWidth); //state to store how the page is being viewed: mobile or web
   const dispatch = useDispatch();
   const mystate = useSelector(state => state.scene)
   let clickedForolor = false;
-
-  // var myArray = {id1: [100, 200], id2: 200, "tag with spaces": 300};
-  // myArray.id1.push(300);
-  // myArray["id4"] = 500;
-
-
-
-//db.collection('Bookings').doc(restaurantId).collection('BookingList').doc(booking.bookingId)
+  const isMobile = width <= 765;
 
 
   async function getOneElement() {
@@ -99,11 +93,7 @@ export default function MakeReservation() {
   }
 
   async function updateBookings(){
-    
     const currentDate = Date().toLocaleString();
-    //await (db.collection('Bookings').doc(restaurantId).collection('BookingList').doc(booking.bookingId))
-    //await deleteDoc(doc(db, "cities", "DC"));
-    //console.log("BOOKINGS LIST:", bookingList)
   }
 
 
@@ -127,18 +117,21 @@ export default function MakeReservation() {
     );
 
     for (const element of usedDates){
-      //slotTime.getTime() == element.getTime()
       if (slotTime.getTime()< workingSchedule.getTime() || slotTime.getTime() > workingSchedule2.getTime())
         return false;
     }
     return true;
   }
   
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth);
+}
 
    useEffect(() => {
 
     const currentDate = Date().toLocaleString();
      getOneElement()
+    //  console.log("currentRestaurant", currentRestaurant)
 
      booking.restaurantId=id;
      setBooking(booking)
@@ -169,7 +162,6 @@ export default function MakeReservation() {
 
         if(data.endOfBooking != undefined && data.endOfBooking != ""){
           convertedEndOfBooking = data.endOfBooking.toDate()
-          //console.log("AAAAAAAA", convertedEndOfBooking)
         }
 
         tablesIds.push(data.tableId)
@@ -182,10 +174,8 @@ export default function MakeReservation() {
           tableDate[convertedDate].push(data.tableId)
           convertedDate.setTime(convertedDate.getTime() + 0.5 * 60 * 60 * 1000)
           tableDate[convertedDate] = []
-          //console.log("Transformarea lui convertedTime", convertedDate)
         }
 
-        //console.log("ARRAYUL:", tableDate)
 
        })
        setBookingList(bookings)
@@ -197,52 +187,41 @@ export default function MakeReservation() {
        
      })
      updateBookings()
-     //console.log("datele scoase din db:", usedDates)
       window.scrollTo({
         top: 0, 
         behavior: 'smooth'
-        /* you can also use 'auto' behaviour
-           in place of 'smooth' */
+
       });
+
+      window.addEventListener('resize', handleWindowSizeChange);
+      return () => {
+          window.removeEventListener('resize', handleWindowSizeChange);
+      }
 
 
   }, []);
 
-  // useEffect(() => {
-  //   endOfBooking()
-  //   // const endOfBooking = new Date(booking.date.getTime() + booking.bookedFor * 60 * 60 * 1000);
-  //   // console.log("end of booking", endOfBooking)
-  //   // // booking.endOfBooking = endOfBooking
-  //   // // setBooking(booking)
-  //   // setBooking({...booking, endOfBooking: endOfBooking})
+  useEffect(() => {
+    console.log("currentRestaurant", currentRestaurant)
+    booking.restaurantName=currentRestaurant.name;
+    booking.restaurantLocation = currentRestaurant.location;
+    setBooking(booking)
+  }, [currentRestaurant])
 
-  // }, [booking])
+  // console.log("isMobile:", isMobile)
 
-  //console.log("PAIRS----------", tableDatePair)
-  // useEffect(() => {
-  //   // run something every time name changes
-  //   console.log("in use effect, booking",booking);
-  // }, [booking]); // <-- dependency array
-
-
-  // booking.bookingId=uuid();
-  // booking.userId=currentUser.uid;
-  // booking.date= bookedDate;
-  // booking.tableId= bookedTable;
-  // setBooking(booking);
-  
-  //console.log("datele scoase din db:", usedDates)
   function endOfBooking(){
     const endOfBooking = new Date(booking.date.getTime() + booking.bookedFor * 60 * 60 * 1000);
     console.log("end of booking", endOfBooking)
-    // booking.endOfBooking = endOfBooking
     setBooking(prevState => ({...prevState, endOfBooking: endOfBooking}))
     
   }
 
-  const handleScheduled = date => {
+  function handleBookingOnMobile(){
 
-    //setBookedDate(date);
+  }
+
+  const handleScheduled = date => {
 
     booking.bookingId=uuid();
     booking.userId=currentUser.uid;
@@ -259,18 +238,19 @@ export default function MakeReservation() {
 
 
 
-    //endOfBooking()
-
     console.log("data:", date)
     console.log("Table-Date pair:", tableDatePair)
 
-    // window.scrollTo({
-    //   top: sceneSection.current.offsetTop,
-    //   behavior: 'smooth',
-    // });
-    setContinueToScene(true)
 
-    history.push(`/restaurante/${id}/rezervare/masa`, {tableDatePair:tableDatePair, booking:booking, style:style, tables:tables})
+    // if(isMobile == true){
+    //   handleBookingOnMobile();
+    // }
+    // else{
+      setContinueToScene(true)
+
+      history.push(`/restaurante/${id}/rezervare/masa`, {tableDatePair:tableDatePair, booking:booking, style:style, tables:tables, isMobile:isMobile})
+  
+    // }
 
     }
 
@@ -306,7 +286,6 @@ export default function MakeReservation() {
 
     const handleChangeTime = (e) => {
 
-      //console.log("target", e.target)
       if(e.target.value != ''){
         setBooking({...booking, [e.target.name]: e.target.value})
 
@@ -315,7 +294,6 @@ export default function MakeReservation() {
 
     const handleChangeSeats = (e) => {
 
-      //console.log("target", e.target)
       if(e.target.value != ''){
         setBooking({...booking, [e.target.name]: e.target.value})
 
@@ -386,7 +364,6 @@ export default function MakeReservation() {
     </Box>
 
       <div className="date-time-picker">
-      {/* <Calendar onChange={setNewDate} value={date} /> */}
       <DayTimePicker 
       timeSlotSizeMinutes={30} 
       timeSlotValidator={timeSlotValidator}
@@ -394,34 +371,10 @@ export default function MakeReservation() {
       // isDone={isScheduled}
       // err={scheduleErr}
       onConfirm={handleScheduled}
-      confirmText="Alege masa"
+      confirmText={isMobile? "Rezervă o masă" : "Alege masa"}
       />;
       </div>
 
-      
-
-      {/* { continueToScene == true && (<TablesBooking tableDatePair={tableDatePair} booking={booking} style={style} tables={tables}/>)} */}
-      {/* { continueToScene == true && (<Route path={`/restaurante/${id}/rezervare/masa`} element={<TablesBooking tableDatePair={tableDatePair} booking={booking} style={style} tables={tables}/>} />)} */}
-
-      {/* <div className="booking-container" ref={sceneSection}>
-          <h2> Asezare restaurant </h2>
-            <div id="sceneBooking" className='scene-booking' >
-            {tableList()}
-            </div>
-      </div>
-
-    {confirmMsg ? 
-    <div className="confirm-msg-container"> 
-      <div> V </div>
-      <div className="confirm-msg"> Rezervare efectuata cu succes! </div>
-    </div>
-    :
-    <div className="book-btn-container">
-            <button id="bookingBtn" style={loading ? btnStyleAfter : btnStyleBefore} onClick={e => makeReservation(e)}> Rezerva acum! </button>
-            {console.log("bookingggg",booking)}
-    </div>
-
-} */}
 </div>
 
   )

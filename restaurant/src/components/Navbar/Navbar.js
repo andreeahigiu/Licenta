@@ -19,7 +19,9 @@ export default function Navbar({isAuth}) {
     var route;
     const [userType, setUserType] = useState("");
 
+
     let history = useHistory();
+
 
     useEffect(() => {
 
@@ -116,19 +118,8 @@ export default function Navbar({isAuth}) {
                         <ul className={clicked ? 'nav-menu active' : 'nav-menu' }>
                             {MenuItems.map((item, index) => {
                                 {
-                                if(item.title =="Restaurante"){
-                                    if(userType=="customer" || userType == ""){
-                                        return(
-                                            <li key={index}> 
-                                                <a className={item.cName} href={item.url}> 
-                                                {item.title}
-                                                </a> 
-                                            </li>
-                                        )
-                                    }else return
-                                }
-                                // else if(item.title =="Rezervari"){
-                                //     if(userType=="restaurant"){
+                                // if(item.title =="Restaurante"){
+                                //     if(userType=="customer" || userType == ""){
                                 //         return(
                                 //             <li key={index}> 
                                 //                 <a className={item.cName} href={item.url}> 
@@ -138,7 +129,18 @@ export default function Navbar({isAuth}) {
                                 //         )
                                 //     }else return
                                 // }
-                                else {
+                                // // else if(item.title =="Rezervari"){
+                                // //     if(userType=="restaurant"){
+                                // //         return(
+                                // //             <li key={index}> 
+                                // //                 <a className={item.cName} href={item.url}> 
+                                // //                 {item.title}
+                                // //                 </a> 
+                                // //             </li>
+                                // //         )
+                                // //     }else return
+                                // // }
+                                // else {
                                     return(
                                         <li key={index}> 
                                             <a className={item.cName} href={item.url}> 
@@ -146,7 +148,7 @@ export default function Navbar({isAuth}) {
                                             </a> 
                                         </li>
                                     )
-                                }
+                                
                             }
 
                             })} 

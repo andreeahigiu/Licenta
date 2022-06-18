@@ -16,6 +16,8 @@ import Paper from '@mui/material/Paper';
 import { Link } from '@mui/material';
 // import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
+import { pdfjs,Document, Page } from 'react-pdf'
+import Button from '@mui/material/Button';
 
 export default function RestaurantDetails(restaurantId) {
   const { id } = useParams();
@@ -25,6 +27,8 @@ export default function RestaurantDetails(restaurantId) {
   const [style, setStyle] = useState([]); 
   const [tables, setTables] = useState()
   const history = useHistory();
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
 
   const libraries = ['places']
   const mapContainerStyle = {
@@ -42,6 +46,21 @@ export default function RestaurantDetails(restaurantId) {
     libraries,
   });
 
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+  }
+  
+  function changePage(offset) {
+    setPageNumber(prevPageNumber => prevPageNumber + offset);
+  }
+  
+  function previousPage() {
+    changePage(-1);
+  }
+  
+  function nextPage() {
+    changePage(1);
+  }
 
   console.log("id restaurant:", id)
   async function getOneElement() {
@@ -252,10 +271,7 @@ function restaurantWaitingTime(restaurant){
           <div className="name-details">
             <h2> {currentRestaurant.name} </h2>
             <div> {currentRestaurant.location} </div>
-            <div> 3/5<img  className="star-icon" src={star} alt="star" /> ( <Link> 120 reviews </Link>)</div> 
-
-            
-            
+ 
           </div>
 
           <div className="dollars"> {restaurantPricing(currentRestaurant)} </div>
@@ -267,7 +283,28 @@ function restaurantWaitingTime(restaurant){
 
 
         <div className="inline-icons">
-          <div className="inline-first">
+          <div className="details-row">
+          <div className="icon-detail-first"> Program </div>
+          <div className="detail-1"> {currentRestaurant.program} </div>
+          </div>
+
+          <div className="details-row">
+          <div className="icon-detail"> Bucatarie </div>
+          <div className="detail-2"> {restaurantCuisine(currentRestaurant)} </div>
+          </div>
+
+          <div className="details-row">
+          <div className="icon-detail"> Decor </div>
+          <div className="detail-3"> {currentRestaurant.decor} </div>
+          </div>
+
+          <div className="details-row">
+          <div className="icon-detail"> Timp de asteptare </div>
+          <div className="detail-4"> {restaurantWaitingTime(currentRestaurant)}</div>
+          </div>
+
+
+          {/* <div className="inline-first">
           <div className="icon-detail-first"> Program </div>
           <div className="icon-detail"> Bucatarie </div>
           <div className="icon-detail"> Decor </div>
@@ -279,7 +316,7 @@ function restaurantWaitingTime(restaurant){
           <div className="detail-2"> {restaurantCuisine(currentRestaurant)} </div>
           <div className="detail-3"> {currentRestaurant.decor} </div>
           <div className="detail-4"> {restaurantWaitingTime(currentRestaurant)}</div>
-          </div>
+          </div> */}
         </div>
 
         <div className="description">
@@ -314,18 +351,39 @@ function restaurantWaitingTime(restaurant){
           </div>
         </div>
 
-        <div className="reviews-container">
-          <div className="reviews-1">
-          <h2> Reviews </h2>
-          <button className="review-btn">Adauga un review</button>
-          </div>
+        <div className="menu-display">
+          <h2> Meniu </h2>
+          <div className="menu-containerr">
+            
+          <Document file={currentRestaurant.menuImage} onLoadSuccess={onDocumentLoadSuccess}>
+                      <Page className="menu-pages" pageNumber={pageNumber} />
+                      {/* {Array.apply(null, Array(numPages))
+                        .map((x, i)=>i+1)
+                        .map(page => <Page pageNumber={page}/>)} */}
+          </Document>
 
+          
+          <div className="menu-page-control">
 
-          <div className="review-card"> 
-          <ReviewCard  />
-          </div>
+<Button type="button" disabled={pageNumber <= 1} onClick={previousPage} sx={{color:"rgb(184, 133, 76)" }} >
+  Previous
+</Button>
+<p>
+  Pagina {pageNumber || (numPages ? 1 : "--")} din {numPages || "--"}
+</p>
+<Button
+  type="button"
+  disabled={pageNumber >= numPages}
+  onClick={nextPage}
+  sx={{color:"rgb(184, 133, 76)" }} 
+>
+  Next
+</Button>
+</div>
+</div>
 
         </div>
+
       </div>
     </div>
   )

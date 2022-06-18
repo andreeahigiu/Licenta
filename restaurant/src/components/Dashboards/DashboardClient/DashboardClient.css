@@ -14,14 +14,18 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    width: 20rem!important;
     height: 75vh !important;
 
 }
-.dash-content{
+.dash-content-client{
     overflow: auto;
     max-height: 75vh;
     scrollbar-width: none !important;
     margin-top: 60px;
+    margin-top: 5vh;
+    margin-left: 5vw;
+
 }
 
 .edit-btn{
@@ -96,7 +100,7 @@
 }
 
 .logout-btn:hover{
- background-color: rgba(239, 239, 239, 0.5) !important;
+ background-color: hsla(0, 0%, 94%, 0.502) !important;
 }
 
 .mybookings-container{
@@ -104,26 +108,180 @@
 }
 
 
-::-webkit-scrollbar {
-    width: 20px;
+#my-bookings::-webkit-scrollbar {
+    width: 20px!important;
+    display:block!important;
   }
 
-  ::-webkit-scrollbar-track {
-    background-color: transparent;
+  #my-bookings::-webkit-scrollbar-track {
+    background-color: transparent!important;
   }
 
-  ::-webkit-scrollbar-thumb {
-    background-color: #d6dee1;
+  #my-bookings::-webkit-scrollbar-thumb {
+    background-color: #d6dee1!important;
   }
 
-  ::-webkit-scrollbar-thumb {
+  #my-bookings::-webkit-scrollbar-thumb {
     background-color: #d6dee1;
     border-radius: 20px;
   }
 
-  ::-webkit-scrollbar-thumb {
+  #my-bookings::-webkit-scrollbar-thumb {
     background-color: #d6dee1;
     border-radius: 20px;
     border: 6px solid transparent;
     background-clip: content-box;
   }
+
+
+  .profile-booking-container{
+    display: flex;
+    flex-direction: row;
+    margin-left: 2rem;
+  }
+  .icon-detail-booking{
+    display:flex;
+    flex-direction: row;
+    margin-top:1vh;
+  }
+
+  .profile-left-details{
+    width:30%;
+  }
+
+  .restaurant-title{
+    font-size: 30px;
+  }
+
+  .restaurant-location{
+    color:#939393;
+    margin-top:1vh;
+    /* font-size: 20px; */
+  }
+
+  .profile-right-details{
+    width:70%;
+    margin-top: 6vh;
+  }
+
+  .date-time-details{
+    margin-top: 5vh;
+  }
+
+.id-booking{
+    width: 100px;
+    color:#939393;
+}
+
+.id-booking-val{
+    margin-left: 10px;
+}
+
+.bookmarkClock{
+    color:#939393;
+}
+
+.bookmarkClock-val{
+    margin-left: 10px;
+}
+
+.table{
+    color:#939393;
+}
+
+.table-val{
+    margin-left: 10px;
+}
+
+.people{
+    color:#939393;
+}
+
+.people-val{
+    margin-left: 10px;
+}
+
+@media screen and (max-width: 1300px) {
+    .card-container-booking{
+        width: 50vw!important;
+        height: 40vh!important;
+    }
+
+    .profile-right-details{
+        margin-top:60px;
+        margin-left: 20px;
+    }
+
+}
+
+
+@media screen and (max-width: 1034px) {
+    .card-container-booking{
+        width: 85vw!important;
+        height: 40vh!important;
+        margin-left: 0.5rem !important;
+    }
+
+
+
+}
+
+@media screen and (max-width: 975px) {
+.paper-styles{
+    width:85vw!important;
+}
+}
+
+@media screen and (max-width: 600px) {
+.profile-booking-container{
+    flex-direction: column;
+    margin-left: 5px;
+}
+
+.profile-left-details{
+
+}
+
+.card-container-booking{
+    height: 60vh!important;
+    width: 85vw!important;
+}
+
+.profile-right-details{
+    margin-top:60px;
+    margin-left: 5px;
+    width: 75vw;
+}
+
+.restaurant-location{
+    width:200px;
+}
+
+.restaurant-title{
+    width:200px;
+}
+
+.name-loc{
+   /* / width:40vw; */
+}
+
+.date-time-details{
+    /* margin-left: 70px; */
+    margin-top: 10px;
+}
+
+
+
+
+}
+
+@media screen and (max-width: 420px) {
+    .card-container-booking{
+        width: 83vw!important;
+    }
+}
+
+
+/* .profile-booking-container{
+    flex-direction: row;
+} */

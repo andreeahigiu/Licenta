@@ -43,6 +43,7 @@ export default function TablesBooking(props) {
     let unavailableArr = []
     let clickedTables = []
     const history = useHistory()
+    var isMobile;
 
     //console.log("LOCATION", location.state)
 
@@ -54,6 +55,7 @@ export default function TablesBooking(props) {
         setStyles(location.state.style)
         setBooking(location.state.booking)
         setTableDatePair(location.state.tableDatePair)
+        isMobile = location.state.isMobile
     }, [])
 
 
@@ -278,6 +280,30 @@ export default function TablesBooking(props) {
 
   {console.log("The booking details:",booking)}
   
+    function makeBookingMobile(){
+      if(tables){
+        checkAllTables();
+        for( var index=0; index<tables.length; index++){
+          if(unavailableArr[index]!=true){
+            booking.tableId= tables[index].id;
+            booking.tableNr = index
+            dispatch(bookTable(booking)) 
+            console.log("dispatched")
+            return(
+              <div>
+                <div>Ati facut o rezervare pentru: </div>
+                <div>Data:{booking.date.toLocaleDateString()} </div>
+                <div>Ora: {booking.date.getHours() + ':' + (booking.date.getMinutes()<10?'0':'') + booking.date.getMinutes()}</div>
+                <div>Nr. pers: {booking.seatsNr}</div>
+                <div>Interval: {booking.bookedFor}</div>
+              </div>
+            )
+          }
+        }
+      }
+    }
+
+// { (location.state.booking.date.toLocaleDateString() + " - " + location.state.booking.date.getHours() + ':' + (location.state.booking.date.getMinutes()<10?'0':'') + location.state.booking.date.getMinutes()) }
     function tableList(){
         console.log("THE PAIRS:", tableDatePair)
         let styleArr = styles
@@ -337,22 +363,23 @@ var loop = function(){
 
 
 
+console.log("isMobile?", location.state.isMobile)
   return (
+
+    location.state.isMobile ? 
+    <div className="booking-container-mobile">
+      <div>
+       Mobile
+       {makeBookingMobile()}
+       </div>
+    
+    </div>
+    :
     <div>
      <div className="booking-container">
        {console.log("data", location.state.booking.date) }
         <p className="restaurant-scene-booking"> Rezerva o masa pentru: { (location.state.booking.date.toLocaleDateString() + " - " + location.state.booking.date.getHours() + ':' + (location.state.booking.date.getMinutes()<10?'0':'') + location.state.booking.date.getMinutes()) } </p>
         <div id="sceneBooking" className='scene-booking' >
-
-        {/* { ( tableDatePair[booking.date] !== undefined ? 
-                (tableDatePair[booking.date].includes(item.id) 
-                ? 
-                console.log("includes the id", item.id) 
-                : 
-                console.log("Does NOT include the id", item.id) 
-                ) 
-            : console.log("e undefined") ) }  */}
-
 
         {tableList()}
         </div>
@@ -366,12 +393,10 @@ var loop = function(){
     :
     <div className="book-btn-container">
             <button id="bookingBtn" style={loading ? btnStyleAfter : btnStyleBefore} onClick={e => makeReservation(e)}> Rezerva acum! </button>
-
     </div>
-
  } 
-
-
     </div>
+
   )
+
 }

@@ -233,10 +233,12 @@ a:focus { #cc0; } */
   align-items: center;
   justify-content: center;
   width:512px;
+
 }
 
 .pdf-pages{
   width: 40vw!important;
+
 
 }
 

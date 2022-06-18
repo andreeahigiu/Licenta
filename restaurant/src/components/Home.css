@@ -6,6 +6,11 @@
     object-fit: cover;
 }
 
+/* body{
+    overflow: hidden;
+} */
+
+
 .bell {
     position: absolute;
     width: 50px; 
