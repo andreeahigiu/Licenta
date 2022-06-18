@@ -70,3 +70,41 @@
     margin-top:7vh!important;
     margin-bottom: 7vh!important;
 }
+
+@media screen and (max-width: 1034px) {
+    .img-contact{
+        display: none;
+    }
+
+    .contact-form-container{
+        margin-top:7vh;
+        margin-left:1rem;
+    }
+
+    .first-message{
+        /* margin-top:7vh;
+        margin-left:1rem; */
+        margin-right: 1rem;
+    }
+
+    .text-field-contact{
+        width:85vw!important;
+    
+    }
+    .message-field-contact{  
+        width:85vw!important;
+    }
+
+    .find-us-email{
+        flex-direction: column;
+        margin-left: -95px;
+    }
+
+    .find-us-social{
+        flex-direction: column;
+    }
+
+    .submit-btn-contact{
+        width:85vw!important;
+    }
+}
