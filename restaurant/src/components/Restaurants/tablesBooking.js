@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import './booking.css'
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { bookTable } from '../../store/actions/bookTableAction';
 import { useLocation } from 'react-router-dom';
-import { Circle } from "react-awesome-shapes";
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
+
+import CardContent from '@mui/material/CardContent';
+import Card from '@mui/material/Card';
+import clock from '../../utils/icons/time-svgrepo-com.svg' 
+import calendar from '../../utils/icons/date-svgrepo-com.svg' 
+import bookmarkClock from '../../utils/icons/bookmark-clock.svg' 
+import table from '../../utils/icons/table-svgrepo-com.svg' 
+import people from '../../utils/icons/people-svgrepo-com.svg' 
+import menu from '../../utils/icons/menu-svgrepo-com.svg' 
 
 const btnStyleBefore = {
     borderRadius: "4px",
@@ -32,6 +40,7 @@ const btnStyleBefore = {
 
 export default function TablesBooking(props) {
 
+  const { id } = useParams();
     const location = useLocation()
     const [tables, setTables] = useState("")
     const [ styles, setStyles] = useState("")
@@ -39,7 +48,6 @@ export default function TablesBooking(props) {
     const [booking, setBooking] = useState()
     const [confirmMsg, setConfirmMsg] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [makeUnavailable, setMakeUnavailable] = useState(false)
     let unavailableArr = []
     let clickedTables = []
     const history = useHistory()
@@ -80,7 +88,8 @@ export default function TablesBooking(props) {
         }, 1000)
 
         setTimeout(() => {
-          history.push('/dashboardClient')
+          history.push(`/restaurante/${id}/rezervare/masa/confirmare`, {booking:booking})
+
         }, 2000)
 
 
@@ -91,14 +100,14 @@ export default function TablesBooking(props) {
 
       function displaySeats(index){
         let tablesCpy = structuredClone(tables)
-        if(tablesCpy[index].places == 2){
+        if(tablesCpy[index].places === 2){
           return <React.Fragment>
             <div id="point2-1"/>
             <div id="point2-2"/>
           </React.Fragment>
         }
     
-        if(tablesCpy[index].places == 4){
+        if(tablesCpy[index].places === 4){
           return   <React.Fragment>
           <div id="point4-1"/>
           <div id="point4-2"/>
@@ -107,7 +116,7 @@ export default function TablesBooking(props) {
         </React.Fragment>
         }
     
-        if(tablesCpy[index].places == 6){
+        if(tablesCpy[index].places === 6){
           return   <React.Fragment>
           <div id="point6-1"/>
           <div id="point6-2"/>
@@ -118,7 +127,7 @@ export default function TablesBooking(props) {
         </React.Fragment>
         }
     
-        if(tablesCpy[index].places == 8){
+        if(tablesCpy[index].places === 8){
           return <React.Fragment>
           <div id="point8-1"/>
           <div id="point8-2"/>
@@ -155,7 +164,7 @@ export default function TablesBooking(props) {
 
         var col=document.getElementById(index);
         col.style.background="linear-gradient(135deg,rgb(249, 211, 163),rgb(252, 193, 116))";
-        // if(clickedForolor == true){
+        // if(clickedForolor === true){
         //   col.style.backgroundColor="rgb(242, 197, 137)";
         // }else{
         //   col.style.backgroundColor="rgb(204, 117, 4)";
@@ -171,9 +180,9 @@ export default function TablesBooking(props) {
         // }
   
         // if(booking.seatsNr > item.places){
-        //   return true
+        //   return true!=
         // }
-        var seatsNrToCheck = undefined
+        var seatsNrToCheck;
         tables.map((item,index) => { 
           if(checkAvailabilityForHours(item)){
             unavailableArr[index] = true
@@ -182,25 +191,25 @@ export default function TablesBooking(props) {
         )
 
         
-        if (booking.seatsNr == 2){
+        if (booking.seatsNr === 2){
           seatsNrToCheck = 2;
         }else
-        if(booking.seatsNr == 3){
+        if(booking.seatsNr === 3){
           seatsNrToCheck = 4;
         }else
-        if (booking.seatsNr == 4){
+        if (booking.seatsNr === 4){
           seatsNrToCheck = 4;
         }else
-        if(booking.seatsNr == 5){
+        if(booking.seatsNr === 5){
           seatsNrToCheck = 6;
         }else
-        if (booking.seatsNr == 6){
+        if (booking.seatsNr === 6){
           seatsNrToCheck = 6;
         }else
-        if(booking.seatsNr == 7){
+        if(booking.seatsNr === 7){
           seatsNrToCheck = 8;
         }else
-        if(booking.seatsNr == 8){
+        if(booking.seatsNr === 8){
           seatsNrToCheck = 8;
         }
 
@@ -218,11 +227,11 @@ export default function TablesBooking(props) {
             var item = tables[index]
             console.log("item in for:", item)
 
-            if(item.places == seatsNrToCheck){
-              if(unavailableArr[index] != true){
+            if(item.places === seatsNrToCheck){
+              if(unavailableArr[index] !== true){
 
                 tables.map((item,index) => { 
-                  if(item.places != seatsNrToCheck){
+                  if(item.places !== seatsNrToCheck){
                     unavailableArr[index] = true
                   }
                 })
@@ -278,25 +287,92 @@ export default function TablesBooking(props) {
       return false
     }
 
-  {console.log("The booking details:",booking)}
   
     function makeBookingMobile(){
       if(tables){
         checkAllTables();
         for( var index=0; index<tables.length; index++){
-          if(unavailableArr[index]!=true){
+          if(unavailableArr[index]!==true){
             booking.tableId= tables[index].id;
             booking.tableNr = index
             dispatch(bookTable(booking)) 
             console.log("dispatched")
             return(
               <div>
-                <div>Ati facut o rezervare pentru: </div>
-                <div>Data:{booking.date.toLocaleDateString()} </div>
-                <div>Ora: {booking.date.getHours() + ':' + (booking.date.getMinutes()<10?'0':'') + booking.date.getMinutes()}</div>
-                <div>Nr. pers: {booking.seatsNr}</div>
-                <div>Interval: {booking.bookedFor}</div>
-              </div>
+                <div className="booking-card-message">Ati făcut o rezervare pentru:</div>
+              <Card sx={{ height: "30vh" , width: "60vw", marginBottom: "5vh", marginLeft:"1rem", marginRight:"1rem",  boxShadow: "1px 1px 8px #939393"}} className="card-container-booking">
+                   
+                    <CardContent>
+
+                      <div className="profile-booking-container">
+                        <div className="profile-left-details">
+                          <div className="name-loc">
+                          <div className="restaurant-title">
+                            {/* {console.log("curent restaurant", currentRestaurants[index])} */}
+                            {booking.restaurantName !==undefined ? booking.restaurantName : "Nume Restaurant"}
+                          </div>
+                          <div className="restaurant-location">
+                            {/* {console.log("......:", currentRestaurants[index])} */}
+                            {booking.restaurantLocation !==undefined ? booking.restaurantLocation : "Locatie Restaurant"}
+                          </div>
+                          </div>
+                          <div className="date-time-details">
+                            <div className="icon-detail-booking">
+                              <img  className="small-icon" src={calendar} alt="calendar" />
+                              <p>{booking.date.toLocaleDateString()}</p>
+                            </div>
+                            <div className="icon-detail-booking">
+                              <img  className="small-icon" src={clock} alt="clock" />
+                              <p>{ booking.date.getHours() + ':' + (booking.date.getMinutes()<10?'0':'') + booking.date.getMinutes() }</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="profile-right-details">
+                          <div className="icon-detail-booking">
+                            <img  className="small-icon" src={bookmarkClock} alt="bookmarkClock" />
+
+                              <p className="bookmarkClock">Rezervat pentru</p>
+                              <p className="bookmarkClock-val">{ booking.bookedFor + " " + "ore" } </p>
+
+                          </div>
+
+                          <div className="icon-detail-booking">
+                            <img  className="small-icon" src={table} alt="table" />
+
+                              <p className="table">Numar masa rezervata</p>
+                              <p className="table-val">{ booking.tableNr} </p>
+                           
+                          </div>
+
+                          <div className="icon-detail-booking">
+                            <img  className="small-icon" src={menu} alt="menu" />
+
+                              <p className="id-booking">Id rezervare: </p>
+                              <p className="id-booking-val">{ booking.bookingId  }</p>
+
+                          </div>
+
+                          <div className="icon-detail-booking">
+                            <img  className="small-icon" src={people} alt="people" />
+                         
+                              <p className="people">Numar persoane: </p>
+                              <p className="people-val">{ booking.seatsNr && booking.seatsNr }</p>
+                        
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  </div>
+
+              // <div>
+              //   <div>Ati facut o rezervare pentru: </div>
+              //   <div>Data:{booking.date.toLocaleDateString()} </div>
+              //   <div>Ora: {booking.date.getHours() + ':' + (booking.date.getMinutes()<10?'0':'') + booking.date.getMinutes()}</div>
+              //   <div>Nr. pers: {booking.seatsNr}</div>
+              //   <div>Interval: {booking.bookedFor}</div>
+              // </div>
             )
           }
         }
@@ -337,29 +413,29 @@ export default function TablesBooking(props) {
       }
 
 
-      var radius = 150;
-var degrees = 0;
+//       var radius = 150;
+// var degrees = 0;
 
-Math.radians = function(degrees) {
-  return degrees * Math.PI / 180;
-};
+// Math.radians = function(degrees) {
+//   return degrees * Math.PI / 180;
+// };
 
-var loop = function(){
-  if(degrees === 360) {
-    degrees = 0;    
-  } else {
-    degrees += 1;
-  }
-  var inverse = Math.radians(degrees + 90) - Math.radians(90);
+// var loop = function(){
+//   if(degrees === 360) {
+//     degrees = 0;    
+//   } else {
+//     degrees += 1;
+//   }
+//   var inverse = Math.radians(degrees + 90) - Math.radians(90);
  
-  var x = (Math.sin(inverse) * radius) - 1;
-  var y = (Math.cos(inverse) * radius) + 1;
+//   var x = (Math.sin(inverse) * radius) - 1;
+//   var y = (Math.cos(inverse) * radius) + 1;
 
-  document.getElementById("degrees").innerHTML = degrees;
-  document.getElementById("point").style.marginLeft = x + 'px';
-  document.getElementById("point").style.marginTop = -y + 'px';
-  window.requestAnimationFrame(loop);  
-}
+//   document.getElementById("degrees").innerHTML = degrees;
+//   document.getElementById("point").style.marginLeft = x + 'px';
+//   document.getElementById("point").style.marginTop = -y + 'px';
+//   window.requestAnimationFrame(loop);  
+// }
 
 
 
@@ -369,7 +445,6 @@ console.log("isMobile?", location.state.isMobile)
     location.state.isMobile ? 
     <div className="booking-container-mobile">
       <div>
-       Mobile
        {makeBookingMobile()}
        </div>
     

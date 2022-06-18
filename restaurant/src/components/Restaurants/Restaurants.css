@@ -220,7 +220,7 @@
     color: #fff;
     background-color:rgb(184, 133, 76);
     margin-left: 1vw;
-    margin-top:120px;
+    margin-top:100px;
     height: 50px;
     width: 25vw;
     /* margin-right: 5vw; */
@@ -296,7 +296,7 @@
 
 .dollar-alignment{
     display: inline-flex;
-    height: 40vh;
+    height: 325px;
 
 }
 
@@ -356,6 +356,10 @@
 
 }
 
+.icon-detail-second{
+    margin-left: 10vw;
+}
+
 .description{
     width: 100%;
     display:flex;
@@ -402,7 +406,7 @@
 }
 
 .map-css{
-    margin-left: 7vw;
+    /* margin-left: 7vw; */
     margin-top:8vh;
 }
 
@@ -421,13 +425,13 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    width:512px;
+    width:30vw;
     margin-left: 15vw;
   }
   
   .menu-pages{
     width: 40vw!important;
-    margin-left: 7vw;
+    /* margin-left: 7vw; */
   
   }
 
@@ -435,7 +439,7 @@
     margin: 0 auto;
     /* width: 80% !important; */
     /* height: 80vh !important; */
-    width: 50vw;
+    width: 60vw!important;
   }
 
 
@@ -469,6 +473,27 @@
     margin-left: 10vw;
     margin-top:8vh;
 }
+
+.inline-icons-1{
+    display: flex;
+    flex-direction: row;
+}
+
+.inline-icons-2{
+    display: flex;
+    flex-direction: row;
+}
+
+@media screen and (max-width: 900px) {
+    .restaurant-scene{
+        margin-left: 10vw;
+    }
+
+    .scene-label{
+        margin-left: 12vw;
+    }
+}
+
 
 @media screen and (max-width: 976px) {
     .filters-container{
@@ -522,4 +547,105 @@
         margin-top: 2vh!important;
     }
 
+}
+
+@media screen and (max-width: 767px) {
+
+    .inline-icons{
+        flex-direction: column;
+    }
+
+    .inline-icons-2{
+        margin-top:2rem;
+    }
+
+    .icon-detail-second{
+        margin-left: 0;
+    }
+
+    .detail-3{
+        margin-left: 0;
+    }
+
+    .carousel-and-details{
+        flex-direction: column;
+        width:90%;
+    }
+
+    .carousel-container{
+        width:85vw;
+        height:50vh;
+    }
+
+    .carousel{
+        width:85vw;
+        height:50vh;
+
+    }
+
+    .name-details{
+        width: 50vw;
+    }
+
+    /* .dollar-alignment{
+        display: flex;
+        flex-direction: column;
+    } */
+    .dollars{
+        margin-left:-2rem;
+        margin-top:0rem;
+    }
+
+    .right-details{
+        margin-top:2rem;
+        margin-left:1rem;
+        flex-direction: row;
+    }
+
+    .react-pdf__Page__canvas {
+        margin: 0 auto;
+        /* width: 80% !important; */
+        /* height: 80vh !important; */
+        width: 85vw!important;
+        height:60vh!important;
+      }
+      
+    .restaurant-scene{
+        display: none;
+    }
+
+    .description{
+        margin-left:5rem;
+    }
+
+    .contact{
+        margin-left:5rem;
+    }
+
+    .location{
+        margin-left:5rem;
+    }
+
+    .menu-display{
+        margin-left:5rem;
+    }
+
+    .map-mobile{
+        width:70vw!important;
+    }
+
+    .menu-page-control{
+        width:80vw;
+        margin-left: 1rem;
+    }
+
+    .right-details{
+        width:90%;
+        height:5vh;
+    }
+
+    .book-now{
+        margin-top: -10px;
+        margin-left: 9vw;
+    }
 }

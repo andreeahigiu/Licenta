@@ -18,8 +18,16 @@
     align-items: center;
     margin-bottom: 5vh;
 }
+.booking-card-message{
+    margin-left:1rem;
+    margin-bottom: 2rem;
+    font-size: 20px;
+    color: #939393
+}
 
-
+.final-message{
+    z-index:3;
+}
 .scene-booking{
     height:500px;
     width: 750px;
@@ -221,3 +229,14 @@ margin: 10vw;
   #bookingBtn{
       margin-bottom: 5vh;;
   }
+
+  .final-message{
+    height:100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+
+  

@@ -8,9 +8,6 @@ import Contact from './components/Contact/Contact';
 import Signup from './components/Signup/Signup';
 import Login from './components/Login/Login';
 import { AuthProvider } from './contexts/AuthContext';
-import { useState } from 'react';
-// import DashboardClient from './components/DashboardClient/DashboardClient';
-import DashboardRestaurant from './DashboardRestaurant/DashboardRestaurant';
 import PrivateRoute from './components/PrivateRoute';
 import RestaurantDetails from './components/Restaurants/RestaurantDetails';
 import DashRestaurant from './components/Dashboards/DashboardRestaurant/DashRestaurant';
@@ -19,6 +16,7 @@ import MakeReservation from './components/Restaurants/MakeReservation';
 import TablesBooking from './components/Restaurants/tablesBooking';
 import BookingsCalendar from './components/Dashboards/DashboardRestaurant/BookingsCalendar';
 import Footer from './components/Footer/Footer';
+import BookingConfirmation from './components/Restaurants/BookingConfirmation';
 
 function App() {
   // const [isAuth, setIsAuth] = useState(false);
@@ -68,8 +66,12 @@ function App() {
             <MakeReservation />
           </Route>
 
-          <Route path='/restaurante/:id/rezervare/masa'>
+          <Route exact path='/restaurante/:id/rezervare/masa'>
             <TablesBooking />
+            </Route>
+
+            <Route exact path='/restaurante/:id/rezervare/masa/confirmare'>
+            <BookingConfirmation />
             </Route>
           
         </Switch>

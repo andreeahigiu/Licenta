@@ -26,6 +26,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-top:15px;
 }
 .socials-section{
     display: flex;
@@ -43,4 +44,49 @@
     display: flex;
     align-self: center;
     color: rgb(194, 194, 194);
+}
+
+.rights{
+    grid-row-start: 2; 
+    grid-column-start: 1; 
+margin-left:6.5vw;
+
+}
+
+@media screen and (max-width: 600px) {
+    .footer-container{
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        height: 35vh;
+    }
+
+    .logo-motto-div{
+        margin-top:5vh;
+        margin-left: 1rem;
+    }
+
+    .socials-section{
+       grid-column-start: 2; 
+       align-items: baseline;
+       margin-top: 2rem;
+       margin-left: 2rem;
+    }
+
+    .explore-section{
+        align-items: baseline;
+        margin-left: 2rem;
+        margin-top: 2rem;
+        justify-content:flex-start;
+    }
+
+    .rights{
+        grid-row-start: 2; 
+        margin-top: 12vh;
+        margin-left: 5vw;
+    }
+
+    .motto-container{
+        width:40vw;
+    }
+
 }

@@ -77,7 +77,7 @@ html{
     font-size: 30px;
     margin-bottom: 5vh;
 }
-
+/* //react-pdf__Page__canvas */
 .client-account{
     display:flex;
     flex-direction: column;

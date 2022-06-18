@@ -9,7 +9,7 @@
     display: grid;
     margin-top: 5vh;
     margin-left: 5vw;
-    height: 200vh;
+    height: 300vh;
 }
 
 .menu-image-dash{
@@ -99,8 +99,10 @@
 .scene-container{
     /* height:500px; 
     width: 1000px;  */
-    height:60vh;
-    width: 60vw;
+    /* height:60vh;
+    width: 60vw; */
+    height:500px;
+    width: 750px;
     border: 0.5px solid; 
     border-color:rgb(180, 177, 177) ;
     border-radius: 10px;

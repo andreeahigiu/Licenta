@@ -95,7 +95,7 @@ export default function BookingsCalendar() {
          const filteredArray = myArray.filter((item) => {
             var newDate = new Date(item.date.seconds*1000).toLocaleDateString()
             console.log("checking the dates", newDate == newValue.toLocaleDateString())
-            return newDate == newValue.toLocaleDateString();
+            return newDate === newValue.toLocaleDateString();
          })
          console.log("The new filtered array", filteredArray)
          setFilteredBookings(filteredArray)
@@ -140,7 +140,7 @@ export default function BookingsCalendar() {
     <div className="is-loading"> Loading... </div>
     :
     filteredBookings.map((item,index) => {
-        // console.log("the date: ", index, ":", item.date.toDate())
+         //console.log("the date: ", index, ":", item.date.toDate())
         return( <BookingsCalendarCard booking={item}/> )
      })}
     

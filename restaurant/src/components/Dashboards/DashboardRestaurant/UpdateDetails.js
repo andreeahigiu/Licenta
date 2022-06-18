@@ -1,26 +1,19 @@
 import React, {Component} from 'react'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormHelperText from '@mui/material/FormHelperText';
 import Button from '@mui/material/Button';
 import './DashboardRestaurant.css'
 import { styled } from '@mui/material/styles';
 import {connect} from 'react-redux'
 import { updateRestaurant } from '../../../store/actions/updateRestaurantActions';
 // import updateRestaurant from '../../../store/actions/updateRestaurantActions';
-import { auth } from '../../../firebase';
-import { PictureAsPdfSharp } from '@mui/icons-material';
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import { projectStorage } from '../../../firebase';
-import { storage } from '../../../firebase';
-import { useAuth } from '../../../contexts/AuthContext';
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
+import { storage } from '../../../firebase';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Document, Page } from 'react-pdf'
+import Select from '@mui/material/Select';
 
 
 const Input = styled('input')({
@@ -49,6 +42,7 @@ class UpdateDetails extends Component {
       // cuisine:"",
       profileImageName:"",
       menuName:"",
+      open: false,
   
     }
 
@@ -69,7 +63,7 @@ class UpdateDetails extends Component {
     const uploadTask = uploadBytesResumable(storageRef, file)
 
     uploadTask.on("state_changed", (snapshot) => {
-      const prog = Math.round( (snapshot.bytesTransferred / snapshot.totalBytes) *100 );
+      //const prog = Math.round( (snapshot.bytesTransferred / snapshot.totalBytes) *100 );
     }, (err) => console.log(err),
     () => {
       getDownloadURL(uploadTask.snapshot.ref)
@@ -95,7 +89,7 @@ class UpdateDetails extends Component {
     // storageRef.put(file).then(() => {})
 
     uploadTask.on("state_changed", (snapshot) => {
-      const prog = Math.round( (snapshot.bytesTransferred / snapshot.totalBytes) *100 );
+      //const prog = Math.round( (snapshot.bytesTransferred / snapshot.totalBytes) *100 );
     }, (err) => console.log(err),
     () => {
       getDownloadURL(uploadTask.snapshot.ref)
@@ -123,7 +117,7 @@ class UpdateDetails extends Component {
       const uploadTask = uploadBytesResumable(storageRef, file)
 
       uploadTask.on("state_changed", (snapshot) => {
-        const prog = Math.round( (snapshot.bytesTransferred / snapshot.totalBytes) *100 );
+        //const prog = Math.round( (snapshot.bytesTransferred / snapshot.totalBytes) *100 );
       }, (err) => console.log(err),
       () => {
         getDownloadURL(uploadTask.snapshot.ref)
@@ -151,8 +145,8 @@ class UpdateDetails extends Component {
 
   handleChange(e) {
     console.log("target Val:", e.target)
-    if(e.target.value != ''){
-      if(e.target.id == undefined){
+    if(e.target.value !== ''){
+      if(e.target.id === undefined){
         this.setState({
           [e.target.name]: e.target.value
         })
@@ -171,10 +165,13 @@ class UpdateDetails extends Component {
     e.preventDefault();
     //console.log(this.state);
     this.props.updateRestaurant(this.state)
+
+    this.setState({ open: true })
+    e.target.reset()
   }
 
   render() {
-    let user = auth.currentUser.uid
+   // let user = auth.currentUser.uid
     console.log("this state:", this.state)
 
     return (
@@ -192,7 +189,7 @@ class UpdateDetails extends Component {
         display: 'grid',
         gridTemplateColumns: { sm: '1fr 1fr' },
         gap: 2,
-        '& .MuiTextField-root': { m: 2, width: '100%', width:'30vw'},
+        '& .MuiTextField-root': { m: 2, width:'30vw'},
       }}
       className="box-wrap"
       // noValidate
@@ -434,6 +431,11 @@ class UpdateDetails extends Component {
         }}>
           Actualizeaza date
         </Button>
+
+        {/* <SimpleDialog
+        open={this.state.open}
+        onClose={this.setState({ open: false, })}
+      /> */}
         </div>
 
     </Box>
@@ -448,12 +450,6 @@ const mapDispatchToProps = (dispatch) => {
     updateRestaurant: (restaurant) => dispatch(updateRestaurant(restaurant))
   }
 }
-
-const userHook = Component => props => {
-  const userhook = useAuth();
-  console.log("in function hook: ", userhook.currentUser)
-  return <Component {...props} userhook={userhook} />;
-};
 
 export default connect(null, mapDispatchToProps)(UpdateDetails);
 

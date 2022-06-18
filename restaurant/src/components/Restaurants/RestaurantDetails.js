@@ -1,46 +1,35 @@
-import React, { useRef, useState, useEffect  } from 'react'
+import React, { useState, useEffect  } from 'react'
 import { useParams } from 'react-router-dom';
-import { doc, onSnapshot, getDoc } from "firebase/firestore";
 import { useAuth } from '../../contexts/AuthContext';
 import { db } from '../../firebase';
 import { useHistory } from 'react-router-dom';
-import ReviewCard from './ReviewCard'
-import back from '../../utils/icons/back-arrow.svg' 
-import star from '../../utils/icons/star-svgrepo-com.svg' 
 import './Restaurants.css'
-//import { Firestore } from 'firebase/firestore';
 import firebase from 'firebase/compat/app';
 
 import Carousel from 'react-material-ui-carousel'
 import Paper from '@mui/material/Paper';
-import { Link } from '@mui/material';
-// import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
-import { pdfjs,Document, Page } from 'react-pdf'
+import {Document, Page } from 'react-pdf'
 import Button from '@mui/material/Button';
 
 export default function RestaurantDetails(restaurantId) {
   const { id } = useParams();
   const { currentUser } = useAuth()
   const [currentRestaurant, setCurrentRestaurant] = useState("")
-  const [restaurantDataOnce, setRestaurantDataOnce] = useState("")
   const [style, setStyle] = useState([]); 
   const [tables, setTables] = useState()
   const history = useHistory();
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
+  const [width, setWidth] = useState(window.innerWidth);
+  const isMobile = width <= 765;
 
   const libraries = ['places']
   const mapContainerStyle = {
-    width: "50vw",
-    height: "50vh",
-
+    width: "65vw",
+    height: "60vh",
   }
-  const center = {
-    lat: 47.158455,
-    lng: 27.601442,
 
-  }
   const {isLoaded, loadError} = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -62,7 +51,15 @@ export default function RestaurantDetails(restaurantId) {
     changePage(1);
   }
 
-  console.log("id restaurant:", id)
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth);
+}
+
+console.log("isMobile", isMobile)
+
+
+
+
   async function getOneElement() {
     await db.collection('ProfileRestaurant').doc(id).get()
     .then(snapshot => {setCurrentRestaurant(snapshot.data())
@@ -103,6 +100,10 @@ export default function RestaurantDetails(restaurantId) {
            in place of 'smooth' */
       });
 
+    window.addEventListener('resize', handleWindowSizeChange);
+    return () => {
+    window.removeEventListener('resize', handleWindowSizeChange);
+    }
 
   }, []);
 
@@ -115,20 +116,16 @@ export default function RestaurantDetails(restaurantId) {
   
   }
   
-  function handleClick(){
-    history.push(`/restaurante/${id}/rezervare`);
-  }
-
   function displaySeats(index){
     let tablesCpy = structuredClone(tables)
-    if(tablesCpy[index].places == 2){
+    if(tablesCpy[index].places === 2){
       return <React.Fragment>
         <div id="point2-1"/>
         <div id="point2-2"/>
       </React.Fragment>
     }
 
-    if(tablesCpy[index].places == 4){
+    if(tablesCpy[index].places === 4){
       return   <React.Fragment>
       <div id="point4-1"/>
       <div id="point4-2"/>
@@ -137,7 +134,7 @@ export default function RestaurantDetails(restaurantId) {
     </React.Fragment>
     }
 
-    if(tablesCpy[index].places == 6){
+    if(tablesCpy[index].places === 6){
       return   <React.Fragment>
       <div id="point6-1"/>
       <div id="point6-2"/>
@@ -148,7 +145,7 @@ export default function RestaurantDetails(restaurantId) {
     </React.Fragment>
     }
 
-    if(tablesCpy[index].places == 8){
+    if(tablesCpy[index].places === 8){
       return <React.Fragment>
       <div id="point8-1"/>
       <div id="point8-2"/>
@@ -186,71 +183,76 @@ export default function RestaurantDetails(restaurantId) {
         <Paper>
             {/* <h2>{props.item.caption}</h2> */}
             {/* <p>{props.item.description}</p> */}
-            <img src={props.item.image} className="carousel-images"></img>
+            <img src={props.item.image} className="carousel-images" alt="carousel"></img>
 
         </Paper>
     )
 }
 
 function makeReservation() {
-  history.push(`/restaurante/${id}/rezervare`)
+  if(currentUser){
+    history.push(`/restaurante/${id}/rezervare`)
+  }else{
+    history.push(`/login`)
+  }
+
 }
 
 function restaurantPricing(restaurant){
-  if(restaurant.pricing == 1){
+  if(restaurant.pricing === 1){
     return "$"
   }
-  if(restaurant.pricing == 2){
+  if(restaurant.pricing === 2){
     return "$$"
   }
-  if(restaurant.pricing == 3){
+  if(restaurant.pricing === 3){
     return "$$$"
   }
-  if(restaurant.pricing == 4){
+  if(restaurant.pricing === 4){
     return "$$$$"
   }
 }
 
 function restaurantCuisine(restaurant){
-  if(restaurant.cuisine == 1){
+  if(restaurant.cuisine === 1){
     return "Americana"
   }
-  if(restaurant.cuisine == 2){
+  if(restaurant.cuisine === 2){
     return "Asiatica"
   }
-  if(restaurant.cuisine == 3){
+  if(restaurant.cuisine === 3){
     return "Europeana"
   }
-  if(restaurant.cuisine == 4){
+  if(restaurant.cuisine === 4){
     return "Italiana"
   }
-  if(restaurant.cuisine == 5){
+  if(restaurant.cuisine === 5){
     return "Romaneasca"
   }
 
 }
 
 function restaurantWaitingTime(restaurant){
-  if(restaurant.waitingTime == 1){
+  if(restaurant.waitingTime === 1){
     return "15-30 min"
   }
-  if(restaurant.waitingTime == 2){
+  if(restaurant.waitingTime === 2){
     return "30-50 min"
   }
-  if(restaurant.waitingTime == 3){
+  if(restaurant.waitingTime === 3){
     return "60 min"
   }
 }
 
   return (
     <div>
-      <div className="top-part">
+      {/* <div className="top-part">
         <button className="back"> 
         <img  className="back-icon" src={back} alt="back" />
         <p className="back-text"> Înapoi </p>
         </button>
 
-      </div>
+      </div> */}
       <div className="description-container">
 
         <div className="carousel-and-details"> 
@@ -283,6 +285,8 @@ function restaurantWaitingTime(restaurant){
 
 
         <div className="inline-icons">
+
+        <div className="inline-icons-1">
           <div className="details-row">
           <div className="icon-detail-first"> Program </div>
           <div className="detail-1"> {currentRestaurant.program} </div>
@@ -292,15 +296,18 @@ function restaurantWaitingTime(restaurant){
           <div className="icon-detail"> Bucatarie </div>
           <div className="detail-2"> {restaurantCuisine(currentRestaurant)} </div>
           </div>
+          </div>
 
+          <div className="inline-icons-2">
           <div className="details-row">
-          <div className="icon-detail"> Decor </div>
+          <div className="icon-detail-second"> Decor </div>
           <div className="detail-3"> {currentRestaurant.decor} </div>
           </div>
 
           <div className="details-row">
           <div className="icon-detail"> Timp de asteptare </div>
           <div className="detail-4"> {restaurantWaitingTime(currentRestaurant)}</div>
+          </div>
           </div>
 
 
@@ -330,8 +337,8 @@ function restaurantWaitingTime(restaurant){
           <div>email: {currentRestaurant.email}</div>
         </div>
 
-        <div className="restaurant-scene">
-          <h2> Asezare restaurant </h2>
+        <div id="restaurantScene" className="restaurant-scene">
+          <h2 className="scene-label"> Asezare restaurant </h2>
             <div id="sceneContainer" className='scene-container' onClick = { e => placeDiv(e) }>
             {tableList()}
             </div>
@@ -341,7 +348,7 @@ function restaurantWaitingTime(restaurant){
           <h2> Locatie </h2>
           <div className="map-css"> 
 
-            <GoogleMap mapContainerStyle={mapContainerStyle} zoom={15} center={{ lat: Number(currentRestaurant.latitude), lng: Number(currentRestaurant.longitude) }}>
+            <GoogleMap className="map-mobile" mapContainerStyle={mapContainerStyle} zoom={15} center={{ lat: Number(currentRestaurant.latitude), lng: Number(currentRestaurant.longitude) }}>
             
             {/* {console.log("latitudine: ", currentRestaurant.latitude)} */}
 
@@ -389,17 +396,3 @@ function restaurantWaitingTime(restaurant){
   )
 }
 
-
-
-
-
-      {/* {console.log("In Component:", restaurantId)}
-      <p> Scena: </p>
-        <div id="sceneContainer" className='scene-container' onClick = { e => placeDiv(e) }> 
-
-        {tableList()}
-                    
-        </div>
-        <button onClick={ handleClick } type="button"> Rezerva acum! </button>
-        
-      <h2> Restaurant Details id: {id} </h2> */}

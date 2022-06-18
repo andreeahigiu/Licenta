@@ -6,13 +6,16 @@ export default function Footer() {
   return (
     <div className="footer-container">
         <div className="logo-motto-section">
-            <div>
-            <div>Logo</div>
+            <div className="logo-motto-div">
+            <div >Logo</div>
             <div className="motto-container"> 
               Rezervăm cele mai frumoase momente pentru tine.
             </div>
-            <div>@2022 Gustărești</div>
+
             </div> 
+        </div>
+        <div className="rights">
+            <p>@2022 Gustărești</p>
         </div>
         
         {/* <Link to=""> 
