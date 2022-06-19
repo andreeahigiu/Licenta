@@ -1,13 +1,16 @@
 import React from 'react'
 import "./Footer.css"
 import { Link } from 'react-router-dom';
+import logo from '../../utils/images/logo-white-big.png' 
 
 export default function Footer() {
   return (
     <div className="footer-container">
         <div className="logo-motto-section">
             <div className="logo-motto-div">
-            <div >Logo</div>
+            <div >
+            <img className="logo-img-footer" src={logo} alt={"logo"} />
+            </div>
             <div className="motto-container"> 
               Rezervăm cele mai frumoase momente pentru tine.
             </div>

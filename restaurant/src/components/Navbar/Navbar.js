@@ -10,6 +10,8 @@ import { db } from "../../firebase"
 import { doc, getDoc } from "firebase/firestore"
 import DashboardClient from '../DashboardClient/DashboardClient';
 import DashRestaurant from '../Dashboards/DashboardRestaurant/DashRestaurant';
+import logo from '../../utils/images/logo-white-big.png' 
+
 
 
 export default function Navbar({isAuth}) {
@@ -111,7 +113,9 @@ export default function Navbar({isAuth}) {
     return(
         
                     <nav className="NavbarItems">
-                        <h1 className="navbar-logo">Eat Out <i className="fa-solid fa-utensils"></i></h1>
+                        <div className="navbar-logo">
+                            <img className="logo-img" src={logo} alt={"logo"} />
+                        </div>
                         <div className="menu-icon" onClick={() => setClicked(!clicked)}>
                            <i className={clicked ? 'fas fa-times' : 'fas fa-bars'}> </i> 
                         </div>

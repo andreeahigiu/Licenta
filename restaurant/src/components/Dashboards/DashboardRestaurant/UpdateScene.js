@@ -32,12 +32,11 @@ export default function UpdateScene() {
   const mystate = useSelector(state => state.scene)
 
   const [sceneState, setSceneState] = useState(mystate)
-
-
   const { currentUser } = useAuth()
   const [currentRestaurant, setCurrentRestaurants] = useState("")
 
   const [contextMenu, setContextMenu] = React.useState(null);
+  const [sceneOutline, setSceneOutline] = useState(Array(18).fill(""))
 
   function handleContextMenu (event, index) {
     event.preventDefault();
@@ -160,6 +159,7 @@ async function getOneElement() {
                       console.log("heii")
                       setStyle(snapshot.data().style)
                       setTables(snapshot.data().tables)
+                      setSceneOutline(snapshot.data().sceneOutline)
   })
 }
 
@@ -177,6 +177,12 @@ async function getOneElement() {
 //   console.log("DB style", style)
 
 
+function changeOutline(e, position){
+  sceneOutline[position]= e.target.value
+  setSceneOutline(sceneOutline)
+}
+
+console.log("scene outline:", sceneOutline)
 
   function placeDiv(e){
     console.log("x si y:", e.clientX, e.clientY)
@@ -254,7 +260,7 @@ async function getOneElement() {
 
   function handleSubmit(e){
     e.preventDefault();
-    setUpdateScene({tables, style})
+    setUpdateScene({tables, style, sceneOutline})
 
     console.log("updated scene:", updateScene)
 
@@ -274,6 +280,40 @@ async function getOneElement() {
       className='scene-container'
       onClick = { e => placeDiv(e) }
       > 
+      <div className="scene-top">
+        <input id="0" defaultValue={sceneOutline[0]} className="input-style" onChange={(e) => changeOutline(e, 0)}/>
+        <input id="1" defaultValue={sceneOutline[1]} className="input-style" onChange={(e) => changeOutline(e, 1)}/>
+        <input id="2" defaultValue={sceneOutline[2]} className="input-style" onChange={(e) => changeOutline(e, 2)}/>
+        <input id="3" defaultValue={sceneOutline[3]} className="input-style" onChange={(e) => changeOutline(e, 3)}/>
+        <input id="4" defaultValue={sceneOutline[4]} className="input-style" onChange={(e) => changeOutline(e, 4)}/>
+      </div>
+
+<div className="scene-left-right"> 
+<div className="scene-left">
+        <input id="5" defaultValue={sceneOutline[5]} type="text" className="input-style-vertical" onChange={(e) => changeOutline(5)}/>
+        <input id="6" defaultValue={sceneOutline[6]} className="input-style-vertical" onChange={(e) => changeOutline(e, 6)}/>
+        <input id="7" defaultValue={sceneOutline[7]} className="input-style-vertical" onChange={(e) => changeOutline(e, 7)}/>
+        <input id="8" defaultValue={sceneOutline[8]} className="input-style-vertical" onChange={(e) => changeOutline(e, 8)}/>
+
+
+      </div>
+
+      <div className="scene-right">
+        <input id="9" defaultValue={sceneOutline[9]} className="input-style-vertical" onChange={(e) => changeOutline(e, 9)}/>
+        <input id="10" defaultValue={sceneOutline[10]} className="input-style-vertical" onChange={(e) => changeOutline(e, 10)}/>
+        <input id="11" defaultValue={sceneOutline[11]} className="input-style-vertical" onChange={(e) => changeOutline(e, 11)}/>
+        <input id="12" defaultValue={sceneOutline[12]} className="input-style-vertical" onChange={(e) => changeOutline(e, 12)}/>
+
+      </div>
+</div>
+
+      <div className="scene-bottom">
+        <input id="13" defaultValue={sceneOutline[13]} className="input-style" onChange={(e) => changeOutline(e, 13)}/>
+        <input id="14" defaultValue={sceneOutline[14]} className="input-style" onChange={(e) => changeOutline(e, 14)}/>
+        <input id="15" defaultValue={sceneOutline[15]} className="input-style" onChange={(e) => changeOutline(e, 15)}/>
+        <input id="16" defaultValue={sceneOutline[16]} className="input-style" onChange={(e) => changeOutline(e, 16)}/>
+        <input id="17" defaultValue={sceneOutline[17]} className="input-style" onChange={(e) => changeOutline(e, 17)}/>
+      </div>
 
       {/* {console.log("toate stilurile: ", style)} */}
       {tableList()}

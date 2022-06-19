@@ -74,6 +74,7 @@ const [style, setStyle] = useState([]);
 const [tables, setTables] = useState()
 const [numPages, setNumPages] = useState(null);
 const [pageNumber, setPageNumber] = useState(1);
+const [sceneOutline, setSceneOutline] = useState(Array(18).fill(""))
 
 const [ libraries ] = useState(['places']);
 const mapContainerStyle = {
@@ -122,6 +123,7 @@ async function getOneElement() {
                       console.log("heii")
                       setStyle(snapshot.data().style)
                       setTables(snapshot.data().tables)
+                      setSceneOutline(snapshot.data().sceneOutline)
   })
 }
 
@@ -350,6 +352,43 @@ const newStyle = {position:"relative", left: 80+"px", top:40 +"px"}
         <div id="restaurantScene" className="restaurant-scene-dashRestaurant">
           <h2 className="scene-label-dashRestaurant"> Asezare restaurant </h2>
             <div id="sceneContainer" className='scene-container' onClick = { e => placeDiv(e) }>
+            
+            <div className="scene-top">
+
+        <input readOnly id="0" defaultValue={sceneOutline[0]} className="input-style" />
+        <input readOnly id="1" defaultValue={sceneOutline[1]} className="input-style" />
+        <input readOnly id="2" defaultValue={sceneOutline[2]} className="input-style" />
+        <input readOnly id="3" defaultValue={sceneOutline[3]} className="input-style" />
+        <input readOnly id="4" defaultValue={sceneOutline[4]} className="input-style" />
+      </div>
+
+<div className="scene-left-right"> 
+<div className="scene-left">
+        <input readOnly id="5" defaultValue={sceneOutline[5]} type="text" className="input-style-vertical" />       
+        <input readOnly id="6" defaultValue={sceneOutline[6]} className="input-style-vertical" />
+        <input readOnly id="7" defaultValue={sceneOutline[7]} className="input-style-vertical" />
+        <input readOnly id="8" defaultValue={sceneOutline[8]} className="input-style-vertical" />
+
+
+      </div>
+
+      <div className="scene-right">
+        <input readOnly id="9" defaultValue={sceneOutline[9]} className="input-style-vertical" />
+        <input readOnly id="10" defaultValue={sceneOutline[10]} className="input-style-vertical" />
+        <input readOnly id="11" defaultValue={sceneOutline[11]} className="input-style-vertical" />
+        <input readOnly id="12" defaultValue={sceneOutline[12]} className="input-style-vertical" />
+
+      </div>
+</div>
+
+      <div className="scene-bottom">
+        <input readOnly id="13" defaultValue={sceneOutline[13]} className="input-style" />
+        <input readOnly id="14" defaultValue={sceneOutline[14]} className="input-style" />
+        <input readOnly id="15" defaultValue={sceneOutline[15]} className="input-style" />
+        <input readOnly id="16" defaultValue={sceneOutline[16]} className="input-style" />
+        <input readOnly id="17" defaultValue={sceneOutline[17]} className="input-style" />
+      </div>
+            
             {tableList()}
             </div>
         </div>

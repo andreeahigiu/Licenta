@@ -48,12 +48,13 @@ export default function TablesBooking(props) {
     const [booking, setBooking] = useState()
     const [confirmMsg, setConfirmMsg] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [sceneOutline, setSceneOutline] = useState(location.state.sceneOutline)
     let unavailableArr = []
     let clickedTables = []
     const history = useHistory()
     var isMobile;
 
-    //console.log("LOCATION", location.state)
+    console.log("OUTLINE", location.state.sceneOutline)
 
     let clickedForolor = false;
     const dispatch = useDispatch();
@@ -63,6 +64,7 @@ export default function TablesBooking(props) {
         setStyles(location.state.style)
         setBooking(location.state.booking)
         setTableDatePair(location.state.tableDatePair)
+        setSceneOutline(location.state.sceneOutline)
         isMobile = location.state.isMobile
     }, [])
 
@@ -455,6 +457,43 @@ console.log("isMobile?", location.state.isMobile)
        {console.log("data", location.state.booking.date) }
         <p className="restaurant-scene-booking"> Rezerva o masa pentru: { (location.state.booking.date.toLocaleDateString() + " - " + location.state.booking.date.getHours() + ':' + (location.state.booking.date.getMinutes()<10?'0':'') + location.state.booking.date.getMinutes()) } </p>
         <div id="sceneBooking" className='scene-booking' >
+
+        <div className="scene-top">
+
+<input readOnly id="0" defaultValue={sceneOutline[0]} className="input-style" />
+<input readOnly id="1" defaultValue={sceneOutline[1]} className="input-style" />
+<input readOnly id="2" defaultValue={sceneOutline[2]} className="input-style" />
+<input readOnly id="3" defaultValue={sceneOutline[3]} className="input-style" />
+<input readOnly id="4" defaultValue={sceneOutline[4]} className="input-style" />
+</div>
+
+<div className="scene-left-right"> 
+<div className="scene-left">
+<input readOnly id="5" defaultValue={sceneOutline[5]} type="text" className="input-style-vertical" />       
+<input readOnly id="6" defaultValue={sceneOutline[6]} className="input-style-vertical" />
+<input readOnly id="7" defaultValue={sceneOutline[7]} className="input-style-vertical" />
+<input readOnly id="8" defaultValue={sceneOutline[8]} className="input-style-vertical" />
+
+
+</div>
+
+<div className="scene-right">
+<input readOnly id="9" defaultValue={sceneOutline[9]} className="input-style-vertical" />
+<input readOnly id="10" defaultValue={sceneOutline[10]} className="input-style-vertical" />
+<input readOnly id="11" defaultValue={sceneOutline[11]} className="input-style-vertical" />
+<input readOnly id="12" defaultValue={sceneOutline[12]} className="input-style-vertical" />
+
+</div>
+</div>
+
+<div className="scene-bottom">
+<input readOnly id="13" defaultValue={sceneOutline[13]} className="input-style" />
+<input readOnly id="14" defaultValue={sceneOutline[14]} className="input-style" />
+<input readOnly id="15" defaultValue={sceneOutline[15]} className="input-style" />
+<input readOnly id="16" defaultValue={sceneOutline[16]} className="input-style" />
+<input readOnly id="17" defaultValue={sceneOutline[17]} className="input-style" />
+</div>
+
 
         {tableList()}
         </div>

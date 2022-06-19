@@ -17,6 +17,7 @@ import TablesBooking from './components/Restaurants/tablesBooking';
 import BookingsCalendar from './components/Dashboards/DashboardRestaurant/BookingsCalendar';
 import Footer from './components/Footer/Footer';
 import BookingConfirmation from './components/Restaurants/BookingConfirmation';
+import PageNotFound from './components/PgeNotFound/PageNotFound';
 
 function App() {
   // const [isAuth, setIsAuth] = useState(false);
@@ -73,7 +74,10 @@ function App() {
             <Route exact path='/restaurante/:id/rezervare/masa/confirmare'>
             <BookingConfirmation />
             </Route>
-          
+            <Route>
+              <PageNotFound/>
+            </Route>
+
         </Switch>
 <Footer />
       </div>

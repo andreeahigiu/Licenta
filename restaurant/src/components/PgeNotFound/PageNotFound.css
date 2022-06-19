@@ -1,0 +1,42 @@
+.notfound-container{
+ display: flex;
+ flex-direction: row;
+ align-items: center;
+ justify-content: center;
+ background-color: rgb(243, 243, 243);
+ height:100vh;
+}
+
+.notfound-text{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right:5vw;
+    margin-bottom: 10vh;
+}
+.notfound-img{
+    width:300px;
+    /* height:300px; */
+}
+
+.announcement{
+    font-size:50px;
+    margin-bottom: 3vh;
+}
+
+.description-problem{
+    font-size:30px;
+}
+
+@media screen and (max-width: 880px) {
+    .notfound-container{
+        flex-direction: column;
+    }
+
+    .notfound-text{
+        margin-right:0vw;
+        margin-left: 5vw;
+    }
+
+}

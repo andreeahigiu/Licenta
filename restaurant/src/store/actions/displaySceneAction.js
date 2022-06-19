@@ -8,6 +8,7 @@ import { useState } from "react";
 export const displayScene = (scene) => {
     let currentUser = auth.currentUser
     let dbdata=[]
+    console.log("---the scene contains:", scene)
 
     async function getOneElement() {
         await db.collection('AllRestaurants').doc(currentUser.uid).collection('Tables').get()

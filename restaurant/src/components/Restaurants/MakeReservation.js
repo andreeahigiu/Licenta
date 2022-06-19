@@ -79,6 +79,7 @@ export default function MakeReservation() {
 
   const [width, setWidth] = useState(window.innerWidth); //state to store how the page is being viewed: mobile or web
   const dispatch = useDispatch();
+  const [sceneOutline, setSceneOutline] = useState(Array(18).fill(""))
   const mystate = useSelector(state => state.scene)
   let clickedForolor = false;
   const isMobile = width <= 765;
@@ -89,6 +90,7 @@ export default function MakeReservation() {
     .then(snapshot => {setCurrentRestaurant(snapshot.data())
                         setStyle(snapshot.data().style)
                         setTables(snapshot.data().tables)
+                        setSceneOutline(snapshot.data().sceneOutline)
     })
   }
 
@@ -248,7 +250,7 @@ export default function MakeReservation() {
     // else{
       setContinueToScene(true)
 
-      history.push(`/restaurante/${id}/rezervare/masa`, {tableDatePair:tableDatePair, booking:booking, style:style, tables:tables, isMobile:isMobile})
+      history.push(`/restaurante/${id}/rezervare/masa`, {tableDatePair:tableDatePair, booking:booking, style:style, tables:tables, isMobile:isMobile, sceneOutline: sceneOutline})
   
     // }
 
