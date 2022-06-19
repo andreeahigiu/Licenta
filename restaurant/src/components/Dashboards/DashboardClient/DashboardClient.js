@@ -1,33 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
-import UpdateDetailsClient from './UpdateDetailsClient'
-import {Component} from 'react'
-
+import { useDispatch } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 
-import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Typography from '@mui/material/Typography';
-import ContentCut from '@mui/icons-material/ContentCut';
-import ContentCopy from '@mui/icons-material/ContentCopy';
-import ContentPaste from '@mui/icons-material/ContentPaste';
-import Cloud from '@mui/icons-material/Cloud';
+
 import { useAuth } from '../../../contexts/AuthContext';
 import { useHistory } from 'react-router-dom';
-
-import { Link } from 'react-router-dom'
-import ClientDetails from './ClientDetails';
-
-import FilledInput from '@mui/material/FilledInput';
-import FormControl from '@mui/material/FormControl';
-import FormHelperText from '@mui/material/FormHelperText';
 import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import OutlinedInput from '@mui/material/OutlinedInput';
 
 import { Avatar, Badge, IconButton, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
@@ -35,7 +14,6 @@ import Button from '@mui/material/Button';
 import { doc, onSnapshot, getDoc } from "firebase/firestore";
 import { db } from '../../../firebase';
 import MyBookings from './MyBookings';
-import MyReviews from './MyReviews';
 import { updateClient } from '../../../store/actions/updateClientAction';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
@@ -252,18 +230,18 @@ console.log("detaliile",clientDetails)
   <div className="name-surname">
 
   <div>
-    {clientDetails.name == "" ? "Prenume" : clientDetails.name}
+    {clientDetails.name ? clientDetails.name : "Prenume"}
   </div>
   <div style={{marginLeft: '0.5rem'}} >
-    {clientDetails.surname === undefined ? "Nume" : clientDetails.surname}
+    {clientDetails.surname? clientDetails.surname : "Nume" }
   </div>
   </div>
 
   <div className="phone-div">
-    {clientDetails.phone === null ? "Nr.telefon" : clientDetails.phone}
+    {clientDetails.phone ? clientDetails.phone : "Nr.telefon" }
   </div>
   <div className="email-div">
-    {clientDetails.email === undefined ? "Email" : clientDetails.email}
+    {clientDetails.email? clientDetails.email : "Email" }
   </div>
 </div>
 

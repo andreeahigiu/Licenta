@@ -71,9 +71,10 @@ if(currentRestaurants && currentRestaurants.length>0){
 
     
     function displayBookings(){
+      console.log("client's bookings: ", clientDetails)
       
 //clientDetails.myBookings.slice(0).reverse().map((item,index) =>
-        if(currentRestaurants != undefined && clientDetails != undefined && clientDetails.myBookings.length > 1){
+        if(currentRestaurants != undefined && clientDetails != undefined && clientDetails.myBookings && clientDetails.myBookings.length > 0){
           
            return clientDetails.myBookings.slice(0).reverse().map((item,index) => { 
                 return(

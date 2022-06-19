@@ -67,3 +67,77 @@
 .table-specifications{
     max-width: 18vw;
 }
+
+.booked-table-detail{
+    color:#939393;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.info-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.all-details-wrap{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width:55vw;
+}
+
+@media screen and (max-width: 976px){
+    .dash-content{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* bookings card  */
+
+
+@media screen and (max-width: 767px){
+.all-details-wrap{
+    flex-direction: column;
+}
+
+.table-top{
+    flex-direction: column;
+}
+
+.calendar-container{
+    width:90vw;
+}
+
+.entity-name{
+    width: 20vw;
+    margin-right:2rem;
+    margin-left:1rem;
+    margin-bottom: 1rem;
+}
+
+.booked-table-detail{
+    width:20vw;
+}
+
+.info-container{
+    width:35vw;
+}
+.vertical-line{
+    margin-left:1rem;
+}
+
+.table-specifications{
+    max-width: 40vw;
+    width:40vw;
+}
+
+.details-wrap-2{
+    width: 80vw;
+}
+
+.pick-date-container{
+    width:90%;
+}
+}

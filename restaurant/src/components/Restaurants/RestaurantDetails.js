@@ -24,7 +24,7 @@ export default function RestaurantDetails(restaurantId) {
   const [width, setWidth] = useState(window.innerWidth);
   const isMobile = width <= 765;
 
-  const libraries = ['places']
+  const [ libraries ] = useState(['places']);
   const mapContainerStyle = {
     width: "65vw",
     height: "60vh",

@@ -14,6 +14,10 @@ import Carousel from 'react-material-ui-carousel'
 import './DashboardRestaurant.css'
 import { pdfjs,Document, Page } from 'react-pdf'
 import Button from '@mui/material/Button';
+import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
+
+
+
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -71,6 +75,16 @@ const [tables, setTables] = useState()
 const [numPages, setNumPages] = useState(null);
 const [pageNumber, setPageNumber] = useState(1);
 
+const [ libraries ] = useState(['places']);
+const mapContainerStyle = {
+  width: "65vw",
+  height: "60vh",
+}
+
+const {isLoaded, loadError} = useLoadScript({
+  googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+  libraries,
+});
 
 const unsub = onSnapshot(doc(db, "ProfileRestaurant", currentUser.uid), (doc) => {
   //console.log("Current data: ", doc.data());
@@ -188,6 +202,52 @@ function tableList(){
 
 }
 
+function restaurantPricing(restaurant){
+  if(restaurant.pricing === 1){
+    return "$"
+  }
+  if(restaurant.pricing === 2){
+    return "$$"
+  }
+  if(restaurant.pricing === 3){
+    return "$$$"
+  }
+  if(restaurant.pricing === 4){
+    return "$$$$"
+  }
+}
+
+function restaurantCuisine(restaurant){
+  if(restaurant.cuisine === 1){
+    return "Americana"
+  }
+  if(restaurant.cuisine === 2){
+    return "Asiatica"
+  }
+  if(restaurant.cuisine === 3){
+    return "Europeana"
+  }
+  if(restaurant.cuisine === 4){
+    return "Italiana"
+  }
+  if(restaurant.cuisine === 5){
+    return "Romaneasca"
+  }
+
+}
+
+function restaurantWaitingTime(restaurant){
+  if(restaurant.waitingTime === 1){
+    return "15-30 min"
+  }
+  if(restaurant.waitingTime === 2){
+    return "30-50 min"
+  }
+  if(restaurant.waitingTime === 3){
+    return "60 min"
+  }
+}
+
 
 // let elem = document.querySelector('#sceneContainer');
 // let rect = elem.getBoundingClientRect();
@@ -196,109 +256,243 @@ const newStyle = {position:"relative", left: 80+"px", top:40 +"px"}
 //console.log("container coordinates: ",rect.top, rect.right, rect.bottom, rect.left);
 
   return (
-    <div className='restaurant-container'>
-      {/* {console.log(updatedData)} */}
+    <div>
+      {/* <div className="top-part">
+        <button className="back"> 
+        <img  className="back-icon" src={back} alt="back" />
+        <p className="back-text"> Înapoi </p>
+        </button>
 
-            <List>
-                <ListItem>
-                  <ListItemText>
-                    Nume restaurant: {currentRestaurant.name}
-                  </ListItemText>
-                </ListItem>
+      </div> */}
+      <div className="description-container-dashRestaurant">
 
-                <ListItem>
-                  <ListItemText>
-                    Locatie: {currentRestaurant.location}
-                  </ListItemText>
-                </ListItem>
-
-                <ListItem>
-                  <ListItemText>
-                    Numar locuri: {currentRestaurant.places}
-                  </ListItemText>
-                </ListItem>
-
-                <ListItem>
-                  <ListItemText>
-                    Telefon: {currentRestaurant.phone}
-                  </ListItemText>
-                </ListItem>
-{/* {console.log("gallery: ", currentRestaurant.gallery)} */}
-{/* {console.log("gallery2: ", updatedData.photos)} */}
-             {/* {currentRestaurant.gallery?.map((item, index) => (
-             <div>  
-            {index}
-             <img src={item.image}/> 
-            </div>)) }  */}
-            <ListItem
-            sx={{
-              zIndex: 0,
-            }}>
-                  <ListItemText>
-                  <p> Galerie foto: </p>
-                  <Carousel 
+        <div className="carousel-and-details-dashRestaurant "> 
+        <div className="carousel-container-dashRestaurant">  
+        <Carousel className="carousel-dashRestaurant"
                   //next={ (next, active) => console.log(`we left ${active}, and are now at ${next}`) }
                   //prev={ (prev, active) => console.log(`we left ${active}, and are now at ${prev}`) }
                   >
                   {
                     currentRestaurant.gallery?.map( (item, index) => <Gallery key={index} item={item} /> )
                   }
-                  </Carousel>
+          </Carousel>
+        </div>
 
-                  </ListItemText>
-            </ListItem>
+        <div className="right-details-dashRestaurant">  
 
-                <ListItem>
-                  <ListItemText>
-                    <p> Meniu: </p>
-                    {/* <img className="menu-image-dash" src={currentRestaurant.menuImage} alt="Menu Image"/>  */}
-                    <Document file={currentRestaurant.menuImage} onLoadSuccess={onDocumentLoadSuccess}>
-                      <Page className="pdf-pages" pageNumber={pageNumber} />
+          <div className="dollar-alignment-dashRestaurant"> 
+          <div className="name-details">
+            <h2> {currentRestaurant.name} </h2>
+            <div> {currentRestaurant.location} </div>
+ 
+          </div>
+
+          <div className="dollars-dashRestaurant"> {restaurantPricing(currentRestaurant)} </div>
+          </div>
+
+        </div>
+        </div>
+
+
+        <div className="inline-icons-dashRestaurant">
+
+        <div className="inline-icons-1">
+          <div className="details-row">
+          <div className="icon-detail-first"> Program </div>
+          <div className="detail-1"> {currentRestaurant.program} </div>
+          </div>
+
+          <div className="details-row">
+          <div className="icon-detail"> Bucatarie </div>
+          <div className="detail-2"> {restaurantCuisine(currentRestaurant)} </div>
+          </div>
+          </div>
+
+          <div className="inline-icons-2">
+          <div className="details-row">
+          <div className="icon-detail-second"> Decor </div>
+          <div className="detail-3"> {currentRestaurant.decor} </div>
+          </div>
+
+          <div className="details-row">
+          <div className="icon-detail"> Timp de asteptare </div>
+          <div className="detail-4"> {restaurantWaitingTime(currentRestaurant)}</div>
+          </div>
+          </div>
+
+
+          {/* <div className="inline-first">
+          <div className="icon-detail-first"> Program </div>
+          <div className="icon-detail"> Bucatarie </div>
+          <div className="icon-detail"> Decor </div>
+          <div className="icon-detail"> Timp de asteptare </div>
+          </div>
+
+          <div className="inline-second">
+          <div className="detail-1"> {currentRestaurant.program} </div>
+          <div className="detail-2"> {restaurantCuisine(currentRestaurant)} </div>
+          <div className="detail-3"> {currentRestaurant.decor} </div>
+          <div className="detail-4"> {restaurantWaitingTime(currentRestaurant)}</div>
+          </div> */}
+        </div>
+
+        <div className="description-dashRestaurant">
+          <h2>Descriere</h2>
+          <p className="description-p"> {currentRestaurant.description}</p>
+        </div>
+
+        <div className="contact-dashRestaurant">
+          <h2>Contact</h2>
+          <div>Nr.tel: {currentRestaurant.phone}</div>
+          <div>email: {currentRestaurant.email}</div>
+        </div>
+
+        <div id="restaurantScene" className="restaurant-scene-dashRestaurant">
+          <h2 className="scene-label-dashRestaurant"> Asezare restaurant </h2>
+            <div id="sceneContainer" className='scene-container' onClick = { e => placeDiv(e) }>
+            {tableList()}
+            </div>
+        </div>
+
+
+        <div className="menu-display-dashRestaurant">
+          <h2> Meniu </h2>
+          <div className="menu-containerr">
+            
+          <Document file={currentRestaurant.menuImage} onLoadSuccess={onDocumentLoadSuccess}>
+                      <Page className="menu-pages" pageNumber={pageNumber} />
                       {/* {Array.apply(null, Array(numPages))
                         .map((x, i)=>i+1)
                         .map(page => <Page pageNumber={page}/>)} */}
-                    </Document>
+          </Document>
 
-                  <div className="pdf-page-control">
+          
+          <div className="menu-page-control">
 
-        <Button type="button" disabled={pageNumber <= 1} onClick={previousPage} sx={{color:"rgb(184, 133, 76)" }} >
-          Previous
-        </Button>
-        <p>
-          Pagina {pageNumber || (numPages ? 1 : "--")} din {numPages || "--"}
-        </p>
-        <Button
-          type="button"
-          disabled={pageNumber >= numPages}
-          onClick={nextPage}
-          sx={{color:"rgb(184, 133, 76)" }} 
-        >
-          Next
-        </Button>
+<Button type="button" disabled={pageNumber <= 1} onClick={previousPage} sx={{color:"rgb(184, 133, 76)" }} >
+  Previous
+</Button>
+<p>
+  Pagina {pageNumber || (numPages ? 1 : "--")} din {numPages || "--"}
+</p>
+<Button
+  type="button"
+  disabled={pageNumber >= numPages}
+  onClick={nextPage}
+  sx={{color:"rgb(184, 133, 76)" }} 
+>
+  Next
+</Button>
+</div>
+</div>
+
+        </div>
+
       </div>
-
-
-                  </ListItemText>
-                </ListItem> 
-                {/* {console.log("well nopw:", currentRestaurant.menuImage)} */}
-
-                <ListItem>
-                  <ListItemText>
-                    <p> Scena: </p>
-                    <div id="sceneContainer" className='scene-container' onClick = { e => placeDiv(e) }> 
-
-                    {tableList()}
-                    {/* <div style={newStyle} className="test-div">test</div> */}
-                    
-                    </div>
-
-
-                  </ListItemText>
-                </ListItem>
-                
-            </List>
-
-            {/* <div className="test-div">test</div> */}
     </div>
+//     <div className='restaurant-container'>
+//       {/* {console.log(updatedData)} */}
+
+//             <List>
+//                 <ListItem>
+//                   <ListItemText>
+//                     Nume restaurant: {currentRestaurant.name}
+//                   </ListItemText>
+//                 </ListItem>
+
+//                 <ListItem>
+//                   <ListItemText>
+//                     Locatie: {currentRestaurant.location}
+//                   </ListItemText>
+//                 </ListItem>
+
+//                 <ListItem>
+//                   <ListItemText>
+//                     Numar locuri: {currentRestaurant.places}
+//                   </ListItemText>
+//                 </ListItem>
+
+//                 <ListItem>
+//                   <ListItemText>
+//                     Telefon: {currentRestaurant.phone}
+//                   </ListItemText>
+//                 </ListItem>
+// {/* {console.log("gallery: ", currentRestaurant.gallery)} */}
+// {/* {console.log("gallery2: ", updatedData.photos)} */}
+//              {/* {currentRestaurant.gallery?.map((item, index) => (
+//              <div>  
+//             {index}
+//              <img src={item.image}/> 
+//             </div>)) }  */}
+//             <ListItem
+//             sx={{
+//               zIndex: 0,
+//             }}>
+//                   <ListItemText>
+//                   <p> Galerie foto: </p>
+//                   <Carousel 
+//                   //next={ (next, active) => console.log(`we left ${active}, and are now at ${next}`) }
+//                   //prev={ (prev, active) => console.log(`we left ${active}, and are now at ${prev}`) }
+//                   >
+//                   {
+//                     currentRestaurant.gallery?.map( (item, index) => <Gallery key={index} item={item} /> )
+//                   }
+//                   </Carousel>
+
+//                   </ListItemText>
+//             </ListItem>
+
+//                 <ListItem>
+//                   <ListItemText>
+//                     <p> Meniu: </p>
+//                     {/* <img className="menu-image-dash" src={currentRestaurant.menuImage} alt="Menu Image"/>  */}
+//                     <Document file={currentRestaurant.menuImage} onLoadSuccess={onDocumentLoadSuccess}>
+//                       <Page className="pdf-pages" pageNumber={pageNumber} />
+//                       {/* {Array.apply(null, Array(numPages))
+//                         .map((x, i)=>i+1)
+//                         .map(page => <Page pageNumber={page}/>)} */}
+//                     </Document>
+
+//                   <div className="pdf-page-control">
+
+//         <Button type="button" disabled={pageNumber <= 1} onClick={previousPage} sx={{color:"rgb(184, 133, 76)" }} >
+//           Previous
+//         </Button>
+//         <p>
+//           Pagina {pageNumber || (numPages ? 1 : "--")} din {numPages || "--"}
+//         </p>
+//         <Button
+//           type="button"
+//           disabled={pageNumber >= numPages}
+//           onClick={nextPage}
+//           sx={{color:"rgb(184, 133, 76)" }} 
+//         >
+//           Next
+//         </Button>
+//       </div>
+
+
+//                   </ListItemText>
+//                 </ListItem> 
+//                 {/* {console.log("well nopw:", currentRestaurant.menuImage)} */}
+
+//                 <ListItem>
+//                   <ListItemText>
+//                     <p> Scena: </p>
+//                     <div id="sceneContainer" className='scene-container' onClick = { e => placeDiv(e) }> 
+
+//                     {tableList()}
+//                     {/* <div style={newStyle} className="test-div">test</div> */}
+                    
+//                     </div>
+
+
+//                   </ListItemText>
+//                 </ListItem>
+                
+//             </List>
+
+//             {/* <div className="test-div">test</div> */}
+//     </div>
   )
 }

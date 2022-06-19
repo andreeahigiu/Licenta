@@ -9,7 +9,7 @@
     display: grid;
     margin-top: 5vh;
     margin-left: 5vw;
-    height: 300vh;
+    height: auto;
 }
 
 .menu-image-dash{
@@ -28,6 +28,40 @@
     position: sticky;
 }
 
+.carousel-dashRestaurant{
+  display: flex;
+  flex-direction: column;
+ /* height: 60vh;
+ width: 55vw; */
+ height: 500px; 
+ width: 30vw;
+ align-items: center;
+ align-self: center;
+ justify-content: center;
+ /* align-self: center; */
+
+ z-index: 0;
+ /* margin-bottom: 0; */
+ margin-top:4rem;
+}
+
+.carousel-container-dashRestaurant{
+  display: flex;
+  flex-direction:row;
+  /* align-items: center;
+  justify-content: center; */
+  margin-bottom: 30px;
+  height: 600px;
+  padding-bottom: 0;
+}
+
+.description-container-dashRestaurant{
+  margin-left:0px;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin-top:0;
+}
 
 /* ---------------------------------------------- Update Details Page --------------------------------------------------------*/
 
@@ -60,11 +94,92 @@
   justify-content: center;
 }
 
+.dollar-alignment-dashRestaurant{
+  display:flex;
+  flex-direction:row;
+  }
+
+  .dollars-dashRestaurant {
+    margin-left: 10vw;
+}
+
+.carousel-and-details-dashRestaurant  {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: auto;
+  /* margin-top: 0; */
+  margin-top: -20px;
+}
+
+
+.right-details-dashRestaurant {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+  margin-top: 6rem;
+}
+
+.inline-icons-dashRestaurant{
+
+  display:flex;
+  flex-direction: row;
+
+  margin-left: 5vh;
+  margin-top:2vh;
+
+}
+
+.description-dashRestaurant{
+  margin-top:5vh;
+}
+
+.contact-dashRestaurant{
+  margin-top:5vh;
+}
+
+
+.menu-display-dashRestaurant{
+  margin-top:5vh;
+}
+.scene-label-dashRestaurant{
+margin-top:5vh;
+}
+
 
 /* ---------------------------------------------------------------------------------------------------------------------------- */
- 
+
+
+@media screen and (max-width: 1200px) {
+  .carousel-dashRestaurant{
+
+   width: 40vw;
+
+  }
+
+  .dollar-alignment-dashRestaurant{
+  flex-direction: column;
+  }
+
+  .dollars-dashRestaurant {
+    margin-left: 0vw;
+}
+.carousel-and-details-dashRestaurant  {
+  flex-direction: column;
+}
+
+.right-details-dashRestaurant {
+margin-top:1rem;
+margin-left:0;
+}
+
+}
 
 @media screen and (max-width: 976px) {
+
+  .right-details-dashRestaurant{
+    margin-left: 10vw;
+  }
     .dash-container{
         grid-template-columns: auto;
 
@@ -93,6 +208,164 @@
         margin-left: 0vw;
 
     }
+
+    /* .... */
+
+    .inline-icons-dashRestaurant{
+      margin-left: 5vw;
+      margin-top:2vh;
+      flex-direction: column;
+  
+    }
+    .carousel-and-details-dashRestaurant{
+        flex-direction: column;
+        width:90%;
+    }
+  
+    .carousel-container-dashRestaurant{
+        width:85vw;
+        height:50vh;
+    }
+  
+    .carousel-dashRestaurant{
+        width:85vw;
+        height:50vh;
+        margin-left:10vw;
+  
+    }
+  
+    .name-details{
+        width: 50vw;
+    }
+  
+    /* .dollar-alignment{
+        display: flex;
+        flex-direction: column;
+    } */
+    /* .dollars-dashRestaurant{
+        margin-left:-2rem;
+        margin-top:0rem;
+    } */
+  
+    /* .right-details-dashRestaurant{
+        margin-top:2rem;
+        margin-left:1rem;
+        flex-direction: row;
+    } */
+      
+  
+    .description-dashRestaurant{
+        margin-left:2rem;
+        margin-top:5vh;
+    }
+  
+    .contact-dashRestaurant{
+        margin-left:2rem;
+        margin-top:5vh;
+    }
+  
+  
+    .menu-display-dashRestaurant{
+        margin-left:2rem;
+        margin-top:5vh;
+    }
+    .scene-label-dashRestaurant{
+      margin-left:2rem;
+      margin-top:5vh;
+    }
+  
+}
+
+@media screen and (max-width: 900px) {
+  /* .restaurant-scene-dashRestaurant{
+      margin-left: 10vw;
+  } */
+
+  .scene-label{
+      margin-left: 12vw;
+  }
+}
+
+
+
+@media screen and (max-width: 500px) {
+
+/* 
+  .card-container{
+      width:90vw!important;
+      margin-left:1rem!important;
+      margin-top: 2vh!important;
+  } */
+
+}
+
+@media screen and (max-width: 767px) {
+  .paper-container{
+    /* margin-left:0!important; */
+    width:80%!important;
+    height:70%!important;
+    margin-top:7vh;
+  }
+
+  .inline-icons-dashRestaurant{
+    margin-left: 11vw;
+    margin-top:5vh;
+
+  }
+  .carousel-and-details-dashRestaurant{
+      flex-direction: column;
+      width:90%;
+  }
+
+  .carousel-container-dashRestaurant{
+      width:85vw;
+      height:50vh;
+  }
+
+  .carousel-dashRestaurant{
+      width:85vw;
+      height:50vh;
+      margin-left:10vw;
+
+  }
+
+  .name-details{
+      width: 50vw;
+  }
+
+  /* .dollar-alignment{
+      display: flex;
+      flex-direction: column;
+  } */
+  /* .dollars-dashRestaurant{
+      margin-left:-2rem;
+      margin-top:0rem;
+  } */
+
+  /* .right-details-dashRestaurant{
+      margin-top:2rem;
+      margin-left:1rem;
+      flex-direction: row;
+  } */
+    
+  .restaurant-scene-dashRestaurant{
+      display: none;
+  }
+
+  .description-dashRestaurant{
+      margin-left:2rem;
+  }
+
+  .contact-dashRestaurant{
+      margin-left:2rem;
+  }
+
+
+  .menu-display-dashRestaurant{
+      margin-left:2rem;
+  }
+
+
 }
 
 

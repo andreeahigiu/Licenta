@@ -97,6 +97,13 @@ export default function BookingsCalendar() {
             console.log("checking the dates", newDate == newValue.toLocaleDateString())
             return newDate === newValue.toLocaleDateString();
          })
+
+         const sortedArray= filteredArray.sort(
+          (item1, item2) => Number(new Date(item1.date.seconds*1000)) - Number(new Date(item2.date.seconds*1000))
+         )
+
+         console.log("THE SORTED ARRAY:", sortedArray)
+
          console.log("The new filtered array", filteredArray)
          setFilteredBookings(filteredArray)
 
@@ -134,7 +141,7 @@ export default function BookingsCalendar() {
               <AccessTimeIcon />
           </div>
           <div>Detalii Client</div>
-          <div>Masa Rezervata </div>
+          <div>Masa Rezervată </div>
       </div>
       {isLoading?
     <div className="is-loading"> Loading... </div>
