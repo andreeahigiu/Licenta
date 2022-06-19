@@ -90,7 +90,8 @@ export default function MakeReservation() {
     .then(snapshot => {setCurrentRestaurant(snapshot.data())
                         setStyle(snapshot.data().style)
                         setTables(snapshot.data().tables)
-                        setSceneOutline(snapshot.data().sceneOutline)
+                        if(snapshot.data().sceneOutline)
+                          {setSceneOutline(snapshot.data().sceneOutline)}
     })
   }
 

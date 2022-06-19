@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect  } from 'react'
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
-import { doc, onSnapshot, getDoc } from "firebase/firestore";
+import { doc, onSnapshot, getDoc, collection } from "firebase/firestore";
 import { db } from '../../firebase';
 import RestaurantCard from './RestaurantCard';
 import './Restaurants.css'
@@ -21,7 +21,7 @@ function Restaurants({updatedData}) {
   const [ids, setIds] = useState([])
 
 
-  const unsub = onSnapshot(doc(db, "ProfileRestaurant", "SF"), (doc) => {
+  const unsub = onSnapshot(collection(db, "ProfileRestaurant"), (doc) => {
     console.log("Current data: ", doc.data());
 });
 

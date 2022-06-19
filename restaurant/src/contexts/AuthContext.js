@@ -34,7 +34,7 @@ export function AuthProvider({ children }) {
         })
 
         return unsubscribe
-    }, [] ) //making sure with use effect that it only runs once
+    }, [] ) 
 
 
 

@@ -100,31 +100,28 @@ export default function Signup() {
         state.checkedA ? docName="ProfileRestaurant" : docName="ProfileCustomer"
         console.log("checkedA: ", state.checkedA)
         const docRef = doc(db, docName, userId )
-        const newEl = {name: "", location: "", places: null, phone: null}
+        const newEl = {name: "", email:"", phone: null}
         await setDoc(docRef, newEl)
         }
       history.push("/")
     } catch {
-      setError("Failed to create an account")
+      setError("Nu s-a putut crea contul.")
     }
-
-
     setLoading(false)
 
   }
 
+  // async function addToProfile() {
 
-  async function addToProfile() {
+  //   console.log("I am in the function", currentUser.uid)
+  //   var docName = " "
+  //   state.checkedA ? docName="ProfileRestaurant" : docName="ProfileCustomer"
+  //   console.log("checkedA: ", state.checkedA)
+  //   const docRef = doc(db, docName, currentUser.uid )
+  //   const newEl = {}
+  //   await setDoc(docRef, newEl)
 
-    console.log("I am in the function", currentUser.uid)
-    var docName = " "
-    state.checkedA ? docName="ProfileRestaurant" : docName="ProfileCustomer"
-    console.log("checkedA: ", state.checkedA)
-    const docRef = doc(db, docName, currentUser.uid )
-    const newEl = {}
-    await setDoc(docRef, newEl)
-
-  }
+  // }
 
 
   return (
@@ -187,95 +184,6 @@ export default function Signup() {
 
     </>
   )
-
-  // let history = useHistory();
-
-  // const emailRef = useRef()
-  // const passwordRef = useRef()
-  // const passwordConfirmRef = useRef()
-  // const { signup, currentUser } =  useAuth()
-  // const [error, setError] = useState('')
-  // const [loading, setLoading] = useState(false)
-  // const classes = useStyles();
-
-  // const [state, setState] = React.useState({
-  //   checkedA: false
-  // });
-
-  // const handleChange = (event) => {
-  //   setState({ ...state, [event.target.name]: event.target.checked });
-  // };
-
-  
-  // async function handleSubmit(e) {
-  //   e.preventDefault() //to prevent form from refreshing
-
-  //   if (passwordRef.current.value !== passwordConfirmRef.current.value){
-  //     return setError("The passwords do not match!")
-  //   }
-
-  //   try {
-  //     setError("")
-  //     setLoading(true) //disabling the submit button so that the user does not create multiple accounts by mistake
-  //     await signup(emailRef.current.value, passwordRef.current.value)
-  //     history.push("/")
-  //   }catch {
-  //     setError("Could not create an account")
-  //   }
-
-  //   setLoading(false)
-  // }
-
-  // return (
-  //   <div>
-  //     {/* <button onClick={() => history.goBack()}>Back</button> */}
-
-  //     {currentUser.email}
-  //     {error && <Alert variant="danger">{error}</Alert>}
-  //     <form className="form" onSubmit={handleSubmit}>
-
-  //     <div className="grid-display">
-  //       <div className="buyer-seller"> Register as {state.checkedA ? 'vanzator' : 'cumparator'}
-  //       </div>
-
-  //   <div className="switch-btn">
-  //     <Switch
-  //       classes={{
-  //         root: classes.root,
-  //         switchBase: classes.switchBase,
-  //         thumb: classes.thumb,
-  //         track: classes.track,
-  //         checked: classes.checked
-  //       }}
-  //       checked={state.checkedA}
-  //       onChange={handleChange}
-  //       name="checkedA"
-  //       inputProps={{ "aria-label": "secondary checkbox" }}
-  //     />
-  //   </div>
-
-  //     {/* <form className="form"> */}
-  //       {/* Labels and inputs for form data */}
-        // <label className="label1">
-        // <input className="input-signup" name="email" type="email" ref={emailRef} placeholder="Email"/>
-        // </label>
-
-        // <label className="label1">
-        // <input className="input-signup" name="password" type="password" ref={passwordRef} placeholder="Password"/>
-        // </label>
-
-        // <label className="label1">
-        // <input className="input-signup" name="password" type="password" ref={passwordConfirmRef} placeholder="Confirm Password"/>
-        // </label>
-
-  //       <button disabled={loading} className="signup-btn" type="submit" > Sign up </button>
-
-
-  //     </div>
-  //     </form>
-
-  //   </div>
-  //)
 }
 
 

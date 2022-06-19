@@ -137,6 +137,8 @@ background:linear-gradient(135deg,#c3c3c3,#888888);
     justify-content: center;
     align-self: center;
     padding-bottom: 20vh;
+    margin-top: 6vh;
+    margin-left: 10vw;
 }
 
 .confirm-msg{
@@ -145,6 +147,7 @@ background:linear-gradient(135deg,#c3c3c3,#888888);
     height: 50px;
     width: 25vw;
     color:rgb(184, 133, 76);
+
 
 }
 
@@ -155,7 +158,25 @@ background:linear-gradient(135deg,#c3c3c3,#888888);
 
 
 
+.scene-left-booking {
+    display: flex;
+    flex-direction: column;
+    margin-left: -1.5vw;
+    height: 80%;
+    width: 20px;
+    justify-content: space-between;
+}
 
+.scene-right-booking {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-left: auto;
+    margin-right: -1.5vw;
+    width: 20px;
+    height: 80%;
+    justify-content: space-between;
+}
 
 
 

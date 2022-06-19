@@ -54,7 +54,6 @@ export default function TablesBooking(props) {
     const history = useHistory()
     var isMobile;
 
-    console.log("OUTLINE", location.state.sceneOutline)
 
     let clickedForolor = false;
     const dispatch = useDispatch();
@@ -460,38 +459,40 @@ console.log("isMobile?", location.state.isMobile)
 
         <div className="scene-top">
 
-<input readOnly id="0" defaultValue={sceneOutline[0]} className="input-style" />
-<input readOnly id="1" defaultValue={sceneOutline[1]} className="input-style" />
-<input readOnly id="2" defaultValue={sceneOutline[2]} className="input-style" />
-<input readOnly id="3" defaultValue={sceneOutline[3]} className="input-style" />
-<input readOnly id="4" defaultValue={sceneOutline[4]} className="input-style" />
+<div className="input-style" > {sceneOutline[0]} </div>
+<div className="input-style" > {sceneOutline[1]} </div>
+<div className="input-style" > {sceneOutline[2]} </div>
+<div className="input-style" > {sceneOutline[3]} </div>
+<div className="input-style" > {sceneOutline[4]} </div>
+
 </div>
 
 <div className="scene-left-right"> 
-<div className="scene-left">
-<input readOnly id="5" defaultValue={sceneOutline[5]} type="text" className="input-style-vertical" />       
-<input readOnly id="6" defaultValue={sceneOutline[6]} className="input-style-vertical" />
-<input readOnly id="7" defaultValue={sceneOutline[7]} className="input-style-vertical" />
-<input readOnly id="8" defaultValue={sceneOutline[8]} className="input-style-vertical" />
+<div className="scene-left-booking">
+  <div className="input-style-vertical">{sceneOutline[5]}</div>
+  <div className="input-style-vertical">{sceneOutline[6]}</div>
+  <div className="input-style-vertical">{sceneOutline[7]}</div>
+  <div className="input-style-vertical">{sceneOutline[8]}</div>
+
 
 
 </div>
 
-<div className="scene-right">
-<input readOnly id="9" defaultValue={sceneOutline[9]} className="input-style-vertical" />
-<input readOnly id="10" defaultValue={sceneOutline[10]} className="input-style-vertical" />
-<input readOnly id="11" defaultValue={sceneOutline[11]} className="input-style-vertical" />
-<input readOnly id="12" defaultValue={sceneOutline[12]} className="input-style-vertical" />
+<div className="scene-right-booking">
+<div className="input-style-vertical">{sceneOutline[9]}</div>
+  <div className="input-style-vertical">{sceneOutline[10]}</div>
+  <div className="input-style-vertical">{sceneOutline[11]}</div>
+  <div className="input-style-vertical">{sceneOutline[12]}</div>
 
 </div>
 </div>
 
 <div className="scene-bottom">
-<input readOnly id="13" defaultValue={sceneOutline[13]} className="input-style" />
-<input readOnly id="14" defaultValue={sceneOutline[14]} className="input-style" />
-<input readOnly id="15" defaultValue={sceneOutline[15]} className="input-style" />
-<input readOnly id="16" defaultValue={sceneOutline[16]} className="input-style" />
-<input readOnly id="17" defaultValue={sceneOutline[17]} className="input-style" />
+<div className="input-style" > {sceneOutline[13]} </div>
+<div className="input-style" > {sceneOutline[14]} </div>
+<div className="input-style" > {sceneOutline[15]} </div>
+<div className="input-style" > {sceneOutline[16]} </div>
+<div className="input-style" > {sceneOutline[17]} </div>
 </div>
 
 
@@ -501,7 +502,6 @@ console.log("isMobile?", location.state.isMobile)
 
     {confirmMsg ? 
     <div className="confirm-msg-container"> 
-      <div> V </div>
       <div className="confirm-msg"> Rezervare efectuata cu succes! </div>
     </div>
     :

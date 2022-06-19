@@ -157,9 +157,18 @@ async function getOneElement() {
   await db.collection('ProfileRestaurant').doc(currentUser.uid).get()
   .then(snapshot => {setCurrentRestaurants(snapshot.data())
                       console.log("heii")
-                      setStyle(snapshot.data().style)
-                      setTables(snapshot.data().tables)
-                      setSceneOutline(snapshot.data().sceneOutline)
+                      if(snapshot.data().style){
+                        setStyle(snapshot.data().style)
+                      }
+
+                      if(snapshot.data().tables){
+                        setTables(snapshot.data().tables)
+                      }
+
+                      if(snapshot.data().sceneOutline){
+                        setSceneOutline(snapshot.data().sceneOutline)
+                      }
+
   })
 }
 
@@ -215,7 +224,9 @@ console.log("scene outline:", sceneOutline)
 
   }
 
-  function addTable(){
+  function addTable(e){
+    console.log("adding table?")
+    e.preventDefault()
     const newItem = { id: uuid(), places: 2, specifications:"", reserved: false }
     setTables([...tables, newItem])
     const newStyle = {position:"absolute", left:"200px", top:"200px"}
@@ -274,7 +285,7 @@ console.log("scene outline:", sceneOutline)
   return (
     
     <form className="form-styles" onSubmit={handleSubmit}>
-            <button onClick={addTable} className="scene-update-btn">+ Adauga o masa</button>
+            <button onClick={(e) => addTable(e)} className="scene-update-btn">+ Adauga o masa</button>
       <div 
       id='parent-id'
       className='scene-container'
