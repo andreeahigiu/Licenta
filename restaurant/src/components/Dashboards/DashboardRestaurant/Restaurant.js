@@ -56,17 +56,6 @@ function Gallery(props)
 
 export default function Restaurant({updatedData}) {
 
-  
-// const docRef = doc(db, "cities", "SF");
-// const docSnap = await getDoc(docRef);
-
-// if (docSnap.exists()) {
-//   console.log("Document data:", docSnap.data());
-// } else {
-//   // doc.data() will be undefined in this case
-//   console.log("No such document!");
-// }
-
 const { currentUser } = useAuth()
 const [currentRestaurant, setCurrentRestaurants] = useState("")
 const [restaurantDataOnce, setRestaurantDataOnce] = useState("")
@@ -88,11 +77,8 @@ const {isLoaded, loadError} = useLoadScript({
 });
 
 const unsub = onSnapshot(doc(db, "ProfileRestaurant", currentUser.uid), (doc) => {
-  //console.log("Current data: ", doc.data());
-  //currentRestaurant.push(doc.data());
   setCurrentRestaurants(doc.data())
-  // setStyle(doc.data().style)
-  // setTables(doc.data().tables)
+
 });
 
 function onDocumentLoadSuccess({ numPages }) {
@@ -110,17 +96,14 @@ function previousPage() {
 function nextPage() {
   changePage(1);
 }
-// console.log("Data in state:", currentRestaurant);
 
-//let pics = currentRestaurant.gallery
-//console.log("gallery:", pics)
 
 //--------------------------------scene display----------------------------------//
 
 async function getOneElement() {
   await db.collection('ProfileRestaurant').doc(currentUser.uid).get()
   .then(snapshot => {setRestaurantDataOnce(snapshot.data())
-                      console.log("heii")
+                      console.log("heii", snapshot.data())
                       setStyle(snapshot.data().style)
                       setTables(snapshot.data().tables)
                       if(snapshot.data().sceneOutline){
@@ -188,11 +171,9 @@ function displaySeats(index){
 
 function tableList(){
   let styleArr = style
-  //console.log("Style array", styleArr)
   if(tables){
     return tables.map((item,index) => {
-      //console.log("table style:", styleArr[index])
-      // setStyle( styles=> [...styles, newStyle] )
+
       return(
         <div key={index} id={index} className="table-btn" style={styleArr[index]} > 
         <p className="table-label"> Masa {index} </p>
@@ -202,8 +183,6 @@ function tableList(){
       )
     })
   }
-
-
 }
 
 function restaurantPricing(restaurant){
@@ -253,23 +232,14 @@ function restaurantWaitingTime(restaurant){
 }
 
 
-// let elem = document.querySelector('#sceneContainer');
-// let rect = elem.getBoundingClientRect();
 const newStyle = {position:"relative", left: 80+"px", top:40 +"px"}
-//console.log("newstyle:", newStyle)
-//console.log("container coordinates: ",rect.top, rect.right, rect.bottom, rect.left);
+
 
   return (
     <div>
-      {/* <div className="top-part">
-        <button className="back"> 
-        <img  className="back-icon" src={back} alt="back" />
-        <p className="back-text"> Înapoi </p>
-        </button>
-
-      </div> */}
       <div className="description-container-dashRestaurant">
 
+{currentRestaurant.gallery ? 
         <div className="carousel-and-details-dashRestaurant "> 
         <div className="carousel-container-dashRestaurant">  
         <Carousel className="carousel-dashRestaurant"
@@ -286,7 +256,7 @@ const newStyle = {position:"relative", left: 80+"px", top:40 +"px"}
 
           <div className="dollar-alignment-dashRestaurant"> 
           <div className="name-details">
-            <h2> {currentRestaurant.name} </h2>
+            <h2 className="restaurant-name"> {currentRestaurant.name} </h2>
             <div> {currentRestaurant.location} </div>
  
           </div>
@@ -296,7 +266,9 @@ const newStyle = {position:"relative", left: 80+"px", top:40 +"px"}
 
         </div>
         </div>
-
+          : 
+          <h2> Galerie </h2>
+        }
 
         <div className="inline-icons-dashRestaurant">
 
@@ -325,19 +297,6 @@ const newStyle = {position:"relative", left: 80+"px", top:40 +"px"}
           </div>
 
 
-          {/* <div className="inline-first">
-          <div className="icon-detail-first"> Program </div>
-          <div className="icon-detail"> Bucatarie </div>
-          <div className="icon-detail"> Decor </div>
-          <div className="icon-detail"> Timp de asteptare </div>
-          </div>
-
-          <div className="inline-second">
-          <div className="detail-1"> {currentRestaurant.program} </div>
-          <div className="detail-2"> {restaurantCuisine(currentRestaurant)} </div>
-          <div className="detail-3"> {currentRestaurant.decor} </div>
-          <div className="detail-4"> {restaurantWaitingTime(currentRestaurant)}</div>
-          </div> */}
         </div>
 
         <div className="description-dashRestaurant">
@@ -402,9 +361,7 @@ const newStyle = {position:"relative", left: 80+"px", top:40 +"px"}
             
           <Document file={currentRestaurant.menuImage} onLoadSuccess={onDocumentLoadSuccess}>
                       <Page className="menu-pages" pageNumber={pageNumber} />
-                      {/* {Array.apply(null, Array(numPages))
-                        .map((x, i)=>i+1)
-                        .map(page => <Page pageNumber={page}/>)} */}
+
           </Document>
 
           
@@ -431,109 +388,6 @@ const newStyle = {position:"relative", left: 80+"px", top:40 +"px"}
 
       </div>
     </div>
-//     <div className='restaurant-container'>
-//       {/* {console.log(updatedData)} */}
 
-//             <List>
-//                 <ListItem>
-//                   <ListItemText>
-//                     Nume restaurant: {currentRestaurant.name}
-//                   </ListItemText>
-//                 </ListItem>
-
-//                 <ListItem>
-//                   <ListItemText>
-//                     Locatie: {currentRestaurant.location}
-//                   </ListItemText>
-//                 </ListItem>
-
-//                 <ListItem>
-//                   <ListItemText>
-//                     Numar locuri: {currentRestaurant.places}
-//                   </ListItemText>
-//                 </ListItem>
-
-//                 <ListItem>
-//                   <ListItemText>
-//                     Telefon: {currentRestaurant.phone}
-//                   </ListItemText>
-//                 </ListItem>
-// {/* {console.log("gallery: ", currentRestaurant.gallery)} */}
-// {/* {console.log("gallery2: ", updatedData.photos)} */}
-//              {/* {currentRestaurant.gallery?.map((item, index) => (
-//              <div>  
-//             {index}
-//              <img src={item.image}/> 
-//             </div>)) }  */}
-//             <ListItem
-//             sx={{
-//               zIndex: 0,
-//             }}>
-//                   <ListItemText>
-//                   <p> Galerie foto: </p>
-//                   <Carousel 
-//                   //next={ (next, active) => console.log(`we left ${active}, and are now at ${next}`) }
-//                   //prev={ (prev, active) => console.log(`we left ${active}, and are now at ${prev}`) }
-//                   >
-//                   {
-//                     currentRestaurant.gallery?.map( (item, index) => <Gallery key={index} item={item} /> )
-//                   }
-//                   </Carousel>
-
-//                   </ListItemText>
-//             </ListItem>
-
-//                 <ListItem>
-//                   <ListItemText>
-//                     <p> Meniu: </p>
-//                     {/* <img className="menu-image-dash" src={currentRestaurant.menuImage} alt="Menu Image"/>  */}
-//                     <Document file={currentRestaurant.menuImage} onLoadSuccess={onDocumentLoadSuccess}>
-//                       <Page className="pdf-pages" pageNumber={pageNumber} />
-//                       {/* {Array.apply(null, Array(numPages))
-//                         .map((x, i)=>i+1)
-//                         .map(page => <Page pageNumber={page}/>)} */}
-//                     </Document>
-
-//                   <div className="pdf-page-control">
-
-//         <Button type="button" disabled={pageNumber <= 1} onClick={previousPage} sx={{color:"rgb(184, 133, 76)" }} >
-//           Previous
-//         </Button>
-//         <p>
-//           Pagina {pageNumber || (numPages ? 1 : "--")} din {numPages || "--"}
-//         </p>
-//         <Button
-//           type="button"
-//           disabled={pageNumber >= numPages}
-//           onClick={nextPage}
-//           sx={{color:"rgb(184, 133, 76)" }} 
-//         >
-//           Next
-//         </Button>
-//       </div>
-
-
-//                   </ListItemText>
-//                 </ListItem> 
-//                 {/* {console.log("well nopw:", currentRestaurant.menuImage)} */}
-
-//                 <ListItem>
-//                   <ListItemText>
-//                     <p> Scena: </p>
-//                     <div id="sceneContainer" className='scene-container' onClick = { e => placeDiv(e) }> 
-
-//                     {tableList()}
-//                     {/* <div style={newStyle} className="test-div">test</div> */}
-                    
-//                     </div>
-
-
-//                   </ListItemText>
-//                 </ListItem>
-                
-//             </List>
-
-//             {/* <div className="test-div">test</div> */}
-//     </div>
   )
 }

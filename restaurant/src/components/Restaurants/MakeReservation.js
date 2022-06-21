@@ -67,6 +67,8 @@ export default function MakeReservation() {
   
   const[usedDates, setUsedDates] = useState("");
   const [continueToScene, setContinueToScene] = useState(false)
+  const [isScheduling, setIsScheduling] = useState(false);
+  const [isScheduled, setIsScheduled] = useState(false);
 
 
   const [bookedTables, setBookedTables] = useState([]); //stare cu toate id-urile meselor din tabelul de rezervari
@@ -74,7 +76,7 @@ export default function MakeReservation() {
 
 
   const sceneSection = useRef(null);
-  const [booking, setBooking] = useState({date:new Date(), tableId:"", userId:"", restaurantId:"", bookingId:"", bookedFor:1, endOfBooking:new Date()})   //rezervarea in decurs de desfasurare
+  const [booking, setBooking] = useState({date:new Date(), tableId:"", userId:"", restaurantId:"", bookingId:"", bookedFor:1, seatsNr:2, endOfBooking:new Date()})   //rezervarea in decurs de desfasurare
   const [tableDatePair, setTableDatePair] = useState();  //stare cu key-vlue pt data rezervare-mese rezervate
 
   const [width, setWidth] = useState(window.innerWidth); //state to store how the page is being viewed: mobile or web
@@ -102,11 +104,13 @@ export default function MakeReservation() {
 
 
   function timeSlotValidator(slotTime) {
+    var openingHour= currentRestaurant.program.substr(0, currentRestaurant.program.indexOf('-')); 
+    var closingHour= currentRestaurant.program.split('-')[1]; 
     const workingSchedule = new Date(
       slotTime.getFullYear(),
       slotTime.getMonth(),
       slotTime.getDate(),
-      8,
+      openingHour,
       0,
       0
     );
@@ -115,12 +119,13 @@ export default function MakeReservation() {
       slotTime.getFullYear(),
       slotTime.getMonth(),
       slotTime.getDate(),
-      23,
+      closingHour,
       0
     );
 
-    for (const element of usedDates){
-      if (slotTime.getTime()< workingSchedule.getTime() || slotTime.getTime() > workingSchedule2.getTime())
+    console.log("program:", openingHour)
+    console.log("close:", closingHour)
+      if (slotTime.getTime()< workingSchedule.getTime() || slotTime.getTime() > workingSchedule2.getTime()){
         return false;
     }
     return true;
@@ -134,7 +139,6 @@ export default function MakeReservation() {
 
     const currentDate = Date().toLocaleString();
      getOneElement()
-    //  console.log("currentRestaurant", currentRestaurant)
 
      booking.restaurantId=id;
      setBooking(booking)
@@ -211,7 +215,6 @@ export default function MakeReservation() {
     setBooking(booking)
   }, [currentRestaurant])
 
-  // console.log("isMobile:", isMobile)
 
   function endOfBooking(){
     const endOfBooking = new Date(booking.date.getTime() + booking.bookedFor * 60 * 60 * 1000);
@@ -220,12 +223,11 @@ export default function MakeReservation() {
     
   }
 
-  function handleBookingOnMobile(){
 
-  }
 
   const handleScheduled = date => {
 
+    setIsScheduling(true)
     booking.bookingId=uuid();
     booking.userId=currentUser.uid;
     booking.date= date;
@@ -244,48 +246,17 @@ export default function MakeReservation() {
     console.log("data:", date)
     console.log("Table-Date pair:", tableDatePair)
 
-
-    // if(isMobile == true){
-    //   handleBookingOnMobile();
-    // }
-    // else{
+      setIsScheduled(true)
+      setIsScheduling(false)
       setContinueToScene(true)
 
       history.push(`/restaurante/${id}/rezervare/masa`, {tableDatePair:tableDatePair, booking:booking, style:style, tables:tables, isMobile:isMobile, sceneOutline: sceneOutline})
   
-    // }
+
 
     }
 
-    // function selectTable(selectedTable, index){
-    //   clickedForolor = !clickedForolor;
-    //   console.log("Masa aleasa:", selectedTable)
-    //   // setBookedTable(selectedTable.id)
-    //   booking.tableId= selectedTable.id;
-    //   setBooking(booking);
-    //   var col=document.getElementById(index);
-    //   if(clickedForolor == true){
-    //     col.style.backgroundColor="rgb(242, 197, 137)";
-    //   }else{
-    //     col.style.backgroundColor="rgb(204, 117, 4)";
-    //   }
-    
-    // }
-     
-    // //tableDatePair[booking.date] !== undefined
-    // function tableList(){
-    //   let styleArr = style
-    //   if(tables){
-    //     return tables.map((item,index) => {
-    //       return(
-    //         <div id={index} className="table-btn-booking" style={styleArr[index]} onClick={ () => selectTable(item, index) }> 
-    //         Masa noua{index} 
-    //         </div>
-    //       )
-    //     })
-    //   }
-  
-    // }
+
 
     const handleChangeTime = (e) => {
 
@@ -302,7 +273,7 @@ export default function MakeReservation() {
 
       }
     }
-    console.log("BOOKINGS:", booking)
+
 
     function makeReservation(e){
       e.preventDefault();
@@ -321,8 +292,8 @@ export default function MakeReservation() {
   return (
     <div>
       <Box className="booking-time-container">
-        <p className="booking-time-p">Selectati pentru cate ore doriti sa faceti reervarea!</p>
-        <p className="booking-time-p">Atentie! O masa este rezervata implicit pentru o ora, daca nu selectati o alta durata!</p>
+        <p className="booking-time-p1">Selectați pentru câte ore și câte persoane doriți să faceți rezervarea!</p>
+        <p className="booking-time-p2">Selecția implicită este pentru 2 persoane, timp de o oră!</p>
       <FormControl className="booking-time-dropdown">
         <InputLabel id="demo-simple-select-label" >Durata rezervare</InputLabel>
         <Select
@@ -370,8 +341,8 @@ export default function MakeReservation() {
       <DayTimePicker 
       timeSlotSizeMinutes={30} 
       timeSlotValidator={timeSlotValidator}
-      // isLoading={isScheduling}
-      // isDone={isScheduled}
+      isLoading={isScheduling}
+      isDone={isScheduled}
       // err={scheduleErr}
       onConfirm={handleScheduled}
       confirmText={isMobile? "Rezervă o masă" : "Alege masa"}

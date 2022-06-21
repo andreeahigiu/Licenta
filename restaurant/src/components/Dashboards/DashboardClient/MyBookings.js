@@ -16,18 +16,13 @@ import star from '../../../utils/icons/bookmark-svgrepo-com.svg'
 
 import { doc, onSnapshot, getDoc } from "firebase/firestore";
 import { db } from '../../../firebase';
-
-
 import "./DashboardClient.css"
 
-
-// <img  className="small-icon" src={clock} alt="clock" />
 
 export default function MyBookings(props) {
 
     const [ clientDetails, setClientDetails] = useState(props.clientDetails)
     const [currentRestaurants, setCurrentRestaurants] = useState(props.allRestaurants)
-    //const [currentRestaurants, setCurrentRestaurants] = useState("")
     const [trialState, setTrialState] = useState(false)
 
 console.log("THE RESTAURANTS:", currentRestaurants)
@@ -38,9 +33,7 @@ if(currentRestaurants && currentRestaurants.length>0){
 }else{
   console.log("nueok", currentRestaurants)
 }
-    // useEffect(() => {
-    //   getCurrentRestaurant()
-    // })
+
 
     async function getCurrentRestaurant() {
     const restaurantsArray = []
@@ -48,13 +41,7 @@ if(currentRestaurants && currentRestaurants.length>0){
     let arr = [];
     clientDetails.myBookings.slice(0).reverse().map(async (item,index) => {
       
-    // db.collection('ProfileRestaurant').doc(item.restaurantId)
-    // .get()
-    // .then( doc => {
-    //   let data= doc.data()
-    //   el.push(data)
-    //   setCurrentRestaurants(el)
-    //   })
+
 
     db.collection('ProfileRestaurant').doc(item.restaurantId).onSnapshot((doc) => {
       arr.push(doc.data())
@@ -63,17 +50,15 @@ if(currentRestaurants && currentRestaurants.length>0){
     setCurrentRestaurants(arr)
     })
 
-    // setCurrentRestaurants(el)
 
     }
 
-      //console.log("-----stare cu restaurante", currentRestaurants)
+
 
     
     function displayBookings(){
       console.log("client's bookings: ", clientDetails)
       
-//clientDetails.myBookings.slice(0).reverse().map((item,index) =>
         if(currentRestaurants != undefined && clientDetails != undefined && clientDetails.myBookings && clientDetails.myBookings.length > 0){
           
            return clientDetails.myBookings.slice(0).reverse().map((item,index) => { 

@@ -105,7 +105,7 @@ export default function Signup() {
         }
       history.push("/")
     } catch {
-      setError("Nu s-a putut crea contul.")
+      setError("Nu s-a putut crea contul. Parola trebuie să aibă minimum 6 caractere!")
     }
     setLoading(false)
 

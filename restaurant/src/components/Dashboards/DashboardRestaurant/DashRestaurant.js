@@ -107,15 +107,15 @@ class DashRestaurant extends Component {
         </MenuItem>
 
         <MenuItem sx={{mt: 4}} onClick={  () => this.handleClick("rezervari") } >
-          <ListItemText>Rezervari </ListItemText>
+          <ListItemText>Rezervări </ListItemText>
         </MenuItem>
 
         <MenuItem sx={{mt: 4}} onClick={  () => this.handleClick("details")}>
-          <ListItemText>Update Details</ListItemText>
+          <ListItemText>Actualizare detalii</ListItemText>
         </MenuItem>
 
-        <MenuItem  sx={{mt: 4}} onClick={  () => this.handleClick("scene") }>
-          <ListItemText>Update Scene</ListItemText>
+        <MenuItem className="edit-scene-menu-item" sx={{mt: 4}} onClick={  () => this.handleClick("scene") }>
+          <ListItemText>Actualizare scenă</ListItemText>
         </MenuItem>
 
       {/* <MenuItem  sx={{mt: 4}} onClick={  () => this.handleLogout() }>

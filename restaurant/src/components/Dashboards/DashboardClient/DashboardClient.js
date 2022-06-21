@@ -130,11 +130,8 @@ export default function DashboardClient() {
   }, []);
 
   useEffect( () => {
-    //if (!isFirstRender.current)
+
     if (!isFirstRender.current && clientDetails && clientDetails.myBookings) {
-      // getCurrentRestaurant()
-      // const el = []
-      // clientDetails.myBookings.reverse().map((item,index) => {
 
       for(const item of clientDetails.myBookings){
 
@@ -147,18 +144,6 @@ export default function DashboardClient() {
           }
         }    
       })
-    // await db.collection('ProfileRestaurant').doc(item.restaurantId)
-    // .get()
-    // .then( doc => {
-    //   let data= doc.data()
-    //   el.push(data)
-    //   //setCurrentRestaurants(el)
-    //   })
-  
-      // allBookedRestaurants.push(el)
-      // setFetchedRestaurants(true)
-
-      // })
     }
     setCurrentRestaurants(el)
 

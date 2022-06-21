@@ -65,30 +65,17 @@ export default function BookingsCalendar() {
          window.scrollTo({
            top: 0, 
            behavior: 'smooth'
-           /* you can also use 'auto' behaviour
-              in place of 'smooth' */
+
          });
 
    
    
      }, []);
 
-    //  useEffect(() => {
-    //      console.log("check all bookings", allBookings)
-    //     if(allBookings != ""){
-    //     var myArray = structuredClone(allBookings)
-    //     // console.log("My Array:", myArray)
-    //     (myArray && myArray.filter(function(booking){
-    //         return booking // keep numbers divisible by 2
-    //       }));
-    //     // setFilteredBookings(myArray)
-    //      }
 
-    //  }, [pickedDate])
 
      function filterDates(newValue){
-        //  console.log("new Val", newValue.toDateString())
-        //  console.log("new VAL IN TIMESTAMP", firebase.firestore.Timestamp.fromDate(newValue.toDateString()))
+
          setPickedDate(newValue)
          var myArray = structuredClone(allBookings)
          console.log("My Array:", myArray)

@@ -8,6 +8,9 @@
     margin-left:4vw;
 }
 
+.restaurant-name{
+    font-size: 35px;
+}
 
 .paper-styles{
     display: flex;

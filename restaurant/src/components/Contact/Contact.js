@@ -90,7 +90,7 @@ export default function Contact() {
             <TextField size="small" className="text-field-contact" name="email" id="email" label="Email" variant="outlined" onChange={(e) =>handleChange(e)}/>
 
             </div>
-            <div clasName="contact-subject">
+            <div className="contact-subject">
             <TextField size="small" className="text-field-contact" name="subject" id="subject" label="Subiect" variant="outlined" onChange={(e) =>handleChange(e)}/>
             </div>
             <div className="contact-message">

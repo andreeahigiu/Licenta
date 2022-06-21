@@ -352,6 +352,10 @@ margin-left:0;
       display: none;
   }
 
+  .edit-scene-menu-item{
+    display: none!important;
+  }
+
   .description-dashRestaurant{
       margin-left:2rem;
   }

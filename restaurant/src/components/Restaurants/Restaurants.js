@@ -21,9 +21,9 @@ function Restaurants({updatedData}) {
   const [ids, setIds] = useState([])
 
 
-  const unsub = onSnapshot(collection(db, "ProfileRestaurant"), (doc) => {
-    console.log("Current data: ", doc.data());
-});
+//   const unsub = onSnapshot(collection(db, "ProfileRestaurant"), (doc) => {
+//     console.log("Current data: ", doc.data());
+// });
 
 
 

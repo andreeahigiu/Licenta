@@ -93,10 +93,6 @@ export default function TablesBooking(props) {
 
         }, 2000)
 
-
-  
-        // document.getElementById("bookingBtn").innerHTML = "Rezervare efectuata cu succes!";
-        //setLoading(false)
       }
 
       function displaySeats(index){
@@ -143,19 +139,10 @@ export default function TablesBooking(props) {
       }
       
 
-      // const hasBeenClickedBefore = (currentValue) => document.getElementById(currentValue).style.background="linear-gradient(135deg,#f7b55f,#cc7504)";
-      // clickedTables.every(hasBeenClickedBefore)
-
-      // var col=document.getElementById(index);
-      // col.style.background="linear-gradient(135deg,rgb(249, 211, 163),rgb(252, 193, 116))";
-
-
     function selectTable(selectedTable, index){
         clickedForolor = !clickedForolor;
-        //clickedTables.push(index)
 
         console.log("Masa aleasa:", selectedTable)
-        // setBookedTable(selectedTable.id)
         booking.tableId= selectedTable.id;
         booking.tableNr = index
         setBooking(booking);
@@ -165,24 +152,13 @@ export default function TablesBooking(props) {
 
         var col=document.getElementById(index);
         col.style.background="linear-gradient(135deg,rgb(249, 211, 163),rgb(252, 193, 116))";
-        // if(clickedForolor === true){
-        //   col.style.backgroundColor="rgb(242, 197, 137)";
-        // }else{
-        //   col.style.backgroundColor="rgb(204, 117, 4)";
-        // }
 
         clickedTables.push(index)
       
       }
 
       function checkAllTables(){
-        // if(booking.seatsNr * 2 < item.places){
-        //   return true
-        // }
-  
-        // if(booking.seatsNr > item.places){
-        //   return true!=
-        // }
+
         var seatsNrToCheck;
         tables.map((item,index) => { 
           if(checkAvailabilityForHours(item)){
@@ -257,33 +233,19 @@ export default function TablesBooking(props) {
 
       let dateIterator=structuredClone( booking.date);
       const bookingEnd=booking.endOfBooking
-      // console.log("dateIterator:", booking.date)
-      // console.log("eng of booking:", booking.endOfBooking)
+
 
       while(dateIterator.getTime() < bookingEnd.getTime()){
 
         if(tableDatePair !== undefined && tableDatePair[dateIterator] !== undefined){
           if(tableDatePair[dateIterator].includes(item.id)){
-            console.log(" INCLUDED ")
             return true
           }
         }
 
       dateIterator.setTime(dateIterator.getTime() + 0.5 * 60 * 60 * 1000)
-      //console.log(".....................The date that is being checked", dateIterator)
-      // if(tableDatePair[dateIterator] == undefined){
-      //   tableDatePair[dateIterator] = []
-      // }
+
       }
-
-      // checking the seats nr.
-      // if(booking.seatsNr * 2 < item.places){
-      //   return true
-      // }
-
-      // if(booking.seatsNr > item.places){
-      //   return true
-      // }
 
       return false
     }
@@ -309,11 +271,9 @@ export default function TablesBooking(props) {
                         <div className="profile-left-details">
                           <div className="name-loc">
                           <div className="restaurant-title">
-                            {/* {console.log("curent restaurant", currentRestaurants[index])} */}
                             {booking.restaurantName !==undefined ? booking.restaurantName : "Nume Restaurant"}
                           </div>
                           <div className="restaurant-location">
-                            {/* {console.log("......:", currentRestaurants[index])} */}
                             {booking.restaurantLocation !==undefined ? booking.restaurantLocation : "Locatie Restaurant"}
                           </div>
                           </div>
@@ -367,32 +327,19 @@ export default function TablesBooking(props) {
                   </Card>
                   </div>
 
-              // <div>
-              //   <div>Ati facut o rezervare pentru: </div>
-              //   <div>Data:{booking.date.toLocaleDateString()} </div>
-              //   <div>Ora: {booking.date.getHours() + ':' + (booking.date.getMinutes()<10?'0':'') + booking.date.getMinutes()}</div>
-              //   <div>Nr. pers: {booking.seatsNr}</div>
-              //   <div>Interval: {booking.bookedFor}</div>
-              // </div>
             )
           }
         }
       }
     }
 
-// { (location.state.booking.date.toLocaleDateString() + " - " + location.state.booking.date.getHours() + ':' + (location.state.booking.date.getMinutes()<10?'0':'') + location.state.booking.date.getMinutes()) }
     function tableList(){
         console.log("THE PAIRS:", tableDatePair)
         let styleArr = styles
         if(tables){
           checkAllTables();
           return tables.map((item,index) => {
-  // (checkAvailabilityForHours(item) 
-  // ? 
-  // unavailableArr[index] = true
-  // : 
-  // console.log("Does NOT include the id", item.id) 
-  // ) 
+
    
 
             return(
@@ -412,31 +359,6 @@ export default function TablesBooking(props) {
         }
     
       }
-
-
-//       var radius = 150;
-// var degrees = 0;
-
-// Math.radians = function(degrees) {
-//   return degrees * Math.PI / 180;
-// };
-
-// var loop = function(){
-//   if(degrees === 360) {
-//     degrees = 0;    
-//   } else {
-//     degrees += 1;
-//   }
-//   var inverse = Math.radians(degrees + 90) - Math.radians(90);
- 
-//   var x = (Math.sin(inverse) * radius) - 1;
-//   var y = (Math.cos(inverse) * radius) + 1;
-
-//   document.getElementById("degrees").innerHTML = degrees;
-//   document.getElementById("point").style.marginLeft = x + 'px';
-//   document.getElementById("point").style.marginTop = -y + 'px';
-//   window.requestAnimationFrame(loop);  
-// }
 
 
 

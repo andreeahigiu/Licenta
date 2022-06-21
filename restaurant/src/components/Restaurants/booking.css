@@ -8,6 +8,24 @@
     margin-bottom: 5vh;
 }
 
+.booking-time-p1{
+    color:rgb(184, 133, 76);
+    align-self: center;
+    margin-top: 2vh;
+    font-size: 25px;
+    width:35%;
+    margin-left:5vw;
+}
+
+.booking-time-p2{
+    color:#939393;
+    align-self: center;
+    margin-top: 2vh;
+    font-size: 20px;
+    width:35%;
+    margin-left:5vw;
+}
+
 .booking-container-mobile{
     width: 100%;
     height: 100vh;
@@ -71,7 +89,7 @@
 
 .booking-time-dropdown{
     align-self: center;
-    width: 20vw;
+    width: 25vw;
     margin-top: 5vh !important;
 }
 
@@ -259,5 +277,20 @@ margin: 10vw;
     flex-direction: column;
   }
 
+  @media screen and (max-width:1300px){
+    .booking-time-dropdown{
+        width:40vw;
+    }
+  }
 
+
+  @media screen and (max-width:765px){
+    .booking-time-dropdown{
+        width:70vw;
+    }
+
+    .booking-time-p1, .booking-time-p2{
+        width:70vw;
+    }
+  }
   
