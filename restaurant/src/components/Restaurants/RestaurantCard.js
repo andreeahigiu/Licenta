@@ -132,43 +132,6 @@ export default function RestaurantCard({restaurants}) {
     </Box>
 
       <Box className="filters-container">
-      {/* <FormControl className="filters">
-        <InputLabel id="demo-simple-select-label" >Numar stele</InputLabel>
-        <Select
-         
-          labelId="stars"
-          id="stars"
-          name="stars"
-          value={filters.stars}
-          label="Numar stele"
-          onChange={e => handleChange(e)}
-        >
-          <MenuItem value={1}>1 din 5</MenuItem>
-          <MenuItem value={2}>2 din 5</MenuItem>
-          <MenuItem value={3}>3 din 5</MenuItem>
-          <MenuItem value={4}>4 din 5</MenuItem>
-          <MenuItem value={5}>5 din 5</MenuItem>
-        </Select>
-        </FormControl> */}
-
-        {/* <FormControl className="filters">
-
-        <InputLabel id="demo-simple-select-label" >Distanta centru</InputLabel>
-        <Select
-
-          labelId="demo-simple-select-label"
-          id="distance"
-          value={filters.distance}
-          name="distance"
-          label="Distanta centru"
-          onChange={handleChange}
-        >
-          <MenuItem value={0}>Nicio selectie</MenuItem>
-          <MenuItem value={1}>Central</MenuItem>
-          <MenuItem value={2}>1-3 km fata de centru</MenuItem>
-          <MenuItem value={3}>3-5 km fata de centru</MenuItem>
-        </Select>
-        </FormControl> */}
 
 <FormControl className="filters">
 
@@ -290,10 +253,6 @@ export default function RestaurantCard({restaurants}) {
           </Typography>
           </Box>
 
-          {/* <Box className="stars"> 
-          <div className="rating"> 3/5 </div>
-          <img  className="small-star" src={star} alt="star" />
-          </Box> */}
 
           </Box>
 

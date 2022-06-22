@@ -661,3 +661,17 @@
         margin-left: 9vw;
     }
 }
+
+@media screen and (max-width: 800px) {
+    /* .descrieri{
+        display: flex;
+        flex-direction: column;
+    }
+    .vertical-bar{
+        display: none;
+    } */
+
+    .descrieri{
+        display: none;
+    }
+}

@@ -14,7 +14,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
+import { doc, getDoc } from "firebase/firestore";
+import { auth } from '../../../firebase';
+import { db } from '../../../firebase';
 
 const Input = styled('input')({
   display: 'none',
@@ -43,16 +45,33 @@ class UpdateDetails extends Component {
       profileImageName:"",
       menuName:"",
       open: false,
+      currentRestaurant: [],
+      galleryImagesNames: [],
   
     }
 
 }
 
+componentDidMount(){
+  this.fetchMessages()
+}
+
+fetchMessages = () => {
+  const query = db.collection('ProfileRestaurant').doc(auth.currentUser.uid);
+  query.onSnapshot((doc) => {
+      const currentRestaurantObj = {}
+      currentRestaurantObj.data = doc.data()
+      currentRestaurantObj.id = doc.id
+      this.setState({
+        ...this.state,
+        currentRestaurant: [currentRestaurantObj, ...this.state.currentRestaurant]
+      })
+
+  })
+}
+
   async handleImageFieldChange(e) {
   
-    // this.setState( {menuImage: e.target.files[0]}, () => { this.setState({menuImage: URL.createObjectURL(this.state.menuImage)}) } )
-    //this.setState({menuURL: URL.createObjectURL(this.state.menuImage)});
-
     let file = e.target.files[0];
     console.log("THE FILE NAME", file.name)
     this.setState({ profileImageName: file.name, })
@@ -63,7 +82,6 @@ class UpdateDetails extends Component {
     const uploadTask = uploadBytesResumable(storageRef, file)
 
     uploadTask.on("state_changed", (snapshot) => {
-      //const prog = Math.round( (snapshot.bytesTransferred / snapshot.totalBytes) *100 );
     }, (err) => console.log(err),
     () => {
       getDownloadURL(uploadTask.snapshot.ref)
@@ -75,9 +93,6 @@ class UpdateDetails extends Component {
 
   async handleMenuFieldChange(e) {
   
-    // this.setState( {menuImage: e.target.files[0]}, () => { this.setState({menuImage: URL.createObjectURL(this.state.menuImage)}) } )
-    //this.setState({menuURL: URL.createObjectURL(this.state.menuImage)});
-
     let file = e.target.files[0];
     this.setState({ menuName: file.name, })
 
@@ -86,10 +101,8 @@ class UpdateDetails extends Component {
     const storageRef = ref(storage, `/PDFs/${file.name}`);//second param is the location in the firebase storage where we wanna save the files
     const uploadTask = uploadBytesResumable(storageRef, file)
 
-    // storageRef.put(file).then(() => {})
 
     uploadTask.on("state_changed", (snapshot) => {
-      //const prog = Math.round( (snapshot.bytesTransferred / snapshot.totalBytes) *100 );
     }, (err) => console.log(err),
     () => {
       getDownloadURL(uploadTask.snapshot.ref)
@@ -100,24 +113,17 @@ class UpdateDetails extends Component {
   }
 
   handleGalleryFieldChange(e) {
-    // Loop through files
     const files = e.target.files
     let galleryImages =[]
     for (let i = 0; i < files.length; i++) {
       let file = files.item(i);
       console.log("in handle function", file)
 
-      // let picObj = {"image": URL.createObjectURL(file)}
-      // console.log("galleryy: ", picObj)
-
-      // galleryImages.push(picObj)
-
-
-      const storageRef = ref(storage, `/files/${file.name}`);//second param is the location in the firebase storage where we wanna save the files
+      const storageRef = ref(storage, `/files/${file.name}`);
       const uploadTask = uploadBytesResumable(storageRef, file)
 
       uploadTask.on("state_changed", (snapshot) => {
-        //const prog = Math.round( (snapshot.bytesTransferred / snapshot.totalBytes) *100 );
+
       }, (err) => console.log(err),
       () => {
         getDownloadURL(uploadTask.snapshot.ref)
@@ -129,17 +135,8 @@ class UpdateDetails extends Component {
       )
     
     }
-
     console.log("array: ", galleryImages);
     this.setState({"gallery": galleryImages})
-    // console.log("Images1: ", e.target.files)
-    // console.log("Images2: ", e.target.files[e.target.files.length])
-    // this.setState( {menuImage: e.target.files[0]}, () => { this.setState({menuImage: URL.createObjectURL(this.state.menuImage)}) } )
-    //this.setState({menuURL: URL.createObjectURL(this.state.menuImage)});
-
-
-
-    
 
   }
 
@@ -163,7 +160,6 @@ class UpdateDetails extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    //console.log(this.state);
     this.props.updateRestaurant(this.state)
 
     this.setState({ open: true })
@@ -171,9 +167,7 @@ class UpdateDetails extends Component {
   }
 
   render() {
-   // let user = auth.currentUser.uid
     console.log("this state:", this.state)
-
     return (
       <div className="deails-wrap">
         {/* {console.log("props:", this.props.updatedData)} */}
@@ -182,9 +176,7 @@ class UpdateDetails extends Component {
       <Box
       onSubmit={this.handleSubmit}
       component="form"
-      // sx={{
-      //   '& .MuiTextField-root': { m: 2, width: '25ch' },
-      // }}
+ 
       sx={{
         display: 'grid',
         gridTemplateColumns: { sm: '1fr 1fr' },
@@ -192,15 +184,7 @@ class UpdateDetails extends Component {
         '& .MuiTextField-root': { m: 2, width:'30vw'},
       }}
       className="box-wrap"
-      // noValidate
-      // validate={values => {
-      //   const errors = {};
-      //   if (values.location) {
-      //     errors.latitude = "Required";
-      //     errors.longitude = "Required";
-      //   }
 
-      // }}
 
       autoComplete="off"
     >
@@ -215,7 +199,6 @@ class UpdateDetails extends Component {
           onChange={e => this.handleChange(e)}
           label="Adresa"
           defaultValue=""
-          // helperText="Mentionati adresa completa"
         />
         <div className="lat-long"> 
               <TextField
@@ -398,6 +381,24 @@ class UpdateDetails extends Component {
       {/* <TextField id="cuisine" label="Bucatarie" variant="outlined" onChange={e => this.handleChange(e)}/> */}
       <TextField className="text-field" id="decor" label="Decor" variant="outlined" onChange={e => this.handleChange(e)}/>
       <TextField className="text-field" id="description" label="Descriere restaurant" variant="outlined" onChange={e => this.handleChange(e)}/>
+
+{console.log("gallery", this.state.gallery)}
+<div>
+{ 
+  this.state.gallery ?
+    this.state.gallery.forEach((image) => {
+      return(
+        <div>
+          {image.caption}
+        </div>
+      )
+    })
+    :
+    ""
+}
+
+
+</div>
 
 
 
