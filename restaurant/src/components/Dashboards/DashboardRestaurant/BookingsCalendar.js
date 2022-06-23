@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import BookingsCalendarCard from './BookingsCalendarCard'
-import { doc, onSnapshot, getDoc  } from 'firebase/firestore';
 import { db } from '../../../firebase';
 import { useAuth } from '../../../contexts/AuthContext';
 import './BookingsCalendar.css'
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TextField from '@mui/material/TextField';
-import firebase from 'firebase/compat/app';
 
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -21,27 +19,9 @@ export default function BookingsCalendar() {
     const [filteredBookings, setFilteredBookings] = useState("")
 
 
-    // const unsub = onSnapshot(doc(db, "ProfileRestaurant", currentUser.uid), (doc) => {
-    //     //console.log("Current data: ", doc.data());
-    //     //currentRestaurant.push(doc.data());
-    //     setCurrentRestaurants(doc.data())
-    //     // setStyle(doc.data().style)
-    //     // setTables(doc.data().tables)
-    //   });
-
-    //   async function getOneElement() {
-    //     await db.collection('ProfileRestaurant').doc(id).get()
-    //     .then(snapshot => {setCurrentRestaurant(snapshot.data())
-    //                         console.log("heii")
-    //                         setStyle(snapshot.data().style)
-    //                         setTables(snapshot.data().tables)
-    //     })
-    //   }
-
       
       useEffect(() => {
   
-        // getOneElement()
 
         db.collection('Bookings').doc(currentUser.uid).collection('BookingList')
         .get()
@@ -89,15 +69,10 @@ export default function BookingsCalendar() {
           (item1, item2) => Number(new Date(item1.date.seconds*1000)) - Number(new Date(item2.date.seconds*1000))
          )
 
-         console.log("THE SORTED ARRAY:", sortedArray)
-
-         console.log("The new filtered array", filteredArray)
          setFilteredBookings(filteredArray)
 
      }
    
-     console.log("all the bookings:", allBookings)
-     console.log("Filtered Bookings", filteredBookings)
     
 
   return (
@@ -134,11 +109,9 @@ export default function BookingsCalendar() {
     <div className="is-loading"> Loading... </div>
     :
     filteredBookings.map((item,index) => {
-         //console.log("the date: ", index, ":", item.date.toDate())
         return( <BookingsCalendarCard booking={item}/> )
      })}
     
-    {/* .sort((a, b) => (a.date.seconds*1000).toDate() - (b.date.seconds*1000).toDate()) */}
     
 
     </div>

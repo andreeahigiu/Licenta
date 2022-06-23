@@ -17,7 +17,7 @@ export default function BookingConfirmation(props) {
   return (
     <div className="final-message" >
         <div>
-    <div className="booking-card-message">Ati făcut o rezervare pentru:</div>
+    <div className="booking-card-message">Ați făcut o rezervare pentru:</div>
   <Card sx={{ height: "30vh" , width: "60vw", marginBottom: "5vh", marginLeft:"1rem", marginRight:"1rem",  boxShadow: "1px 1px 8px #939393"}} className="card-container-booking">
        
         <CardContent>
@@ -26,11 +26,9 @@ export default function BookingConfirmation(props) {
             <div className="profile-left-details">
               <div className="name-loc">
               <div className="restaurant-title">
-                {/* {console.log("curent restaurant", currentRestaurants[index])} */}
                 {booking.restaurantName !==undefined ? booking.restaurantName : "Nume Restaurant"}
               </div>
               <div className="restaurant-location">
-                {/* {console.log("......:", currentRestaurants[index])} */}
                 {booking.restaurantLocation !==undefined ? booking.restaurantLocation : "Locatie Restaurant"}
               </div>
               </div>
@@ -58,7 +56,7 @@ export default function BookingConfirmation(props) {
               <div className="icon-detail-booking">
                 <img  className="small-icon" src={table} alt="table" />
 
-                  <p className="table">Numar masa rezervata</p>
+                  <p className="table">Număr masă rezervată</p>
                   <p className="table-val">{ booking.tableNr} </p>
                
               </div>
@@ -74,7 +72,7 @@ export default function BookingConfirmation(props) {
               <div className="icon-detail-booking">
                 <img  className="small-icon" src={people} alt="people" />
              
-                  <p className="people">Numar persoane: </p>
+                  <p className="people">Număr persoane: </p>
                   <p className="people-val">{ booking.seatsNr && booking.seatsNr }</p>
             
               </div>

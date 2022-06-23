@@ -104,24 +104,13 @@ export default function Signup() {
         await setDoc(docRef, newEl)
         }
       history.push("/")
+      window.location.reload(false);
     } catch {
       setError("Nu s-a putut crea contul. Parola trebuie să aibă minimum 6 caractere!")
     }
     setLoading(false)
 
   }
-
-  // async function addToProfile() {
-
-  //   console.log("I am in the function", currentUser.uid)
-  //   var docName = " "
-  //   state.checkedA ? docName="ProfileRestaurant" : docName="ProfileCustomer"
-  //   console.log("checkedA: ", state.checkedA)
-  //   const docRef = doc(db, docName, currentUser.uid )
-  //   const newEl = {}
-  //   await setDoc(docRef, newEl)
-
-  // }
 
 
   return (

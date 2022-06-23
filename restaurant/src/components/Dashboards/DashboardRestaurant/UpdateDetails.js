@@ -28,20 +28,9 @@ class UpdateDetails extends Component {
 
   constructor(props) {
     super(props);
-    //const updatedData = props;
-    //console.log("data in UpdateDetails:", updatedData)
 
 
     this.state = {
-      // name: '',
-      // location: '',
-      // places: '',
-      // phone: '',
-      // menuImage: '',
-      // menuURL: '',
-      // waitingTime:"",
-      // pricing:"",
-      // cuisine:"",
       profileImageName:"",
       menuName:"",
       open: false,
@@ -135,13 +124,11 @@ fetchMessages = () => {
       )
     
     }
-    console.log("array: ", galleryImages);
     this.setState({"gallery": galleryImages})
 
   }
 
   handleChange(e) {
-    console.log("target Val:", e.target)
     if(e.target.value !== ''){
       if(e.target.id === undefined){
         this.setState({
@@ -167,11 +154,8 @@ fetchMessages = () => {
   }
 
   render() {
-    console.log("this state:", this.state)
     return (
       <div className="deails-wrap">
-        {/* {console.log("props:", this.props.updatedData)} */}
-        {    console.log("pics in state:", this.state.gallery)}
       <div className="update-details-title">Modificare detalii</div>
       <Box
       onSubmit={this.handleSubmit}
@@ -216,7 +200,6 @@ fetchMessages = () => {
           onChange={e => this.handleChange(e)}
           label="Latitudine"
           required={this.state.location ? true : false}
-          // {... this.state.location ? required=true : required=false }
           defaultValue=""
         />
         </div>
@@ -228,9 +211,6 @@ fetchMessages = () => {
           type="numeric"
           onChange={e => this.handleChange(e)}
           
-          // InputProps={{
-          //   startAdornment: <InputAdornment position="start">+(40)</InputAdornment>,
-          // }}
         />
 
         <TextField className="text-field" id="email" label="Email" variant="outlined" onChange={e => this.handleChange(e)}/>
@@ -239,13 +219,11 @@ fetchMessages = () => {
         className="text-field"
           disabled
           id="menuImageContainer"
-          // onChange={e => this.handleChange(e)}
           label="Meniu"
           value={this.state.menuName}
           InputProps={{endAdornment:         
                           <label htmlFor="menuImage">
                           <Input id="menuImage" multiple type="file" onChange={e => this.handleMenuFieldChange(e)}/>
-                          {/* <Input accept="image/*" id="contained-button-file" multiple type="file" onChange={e => this.handleImageFieldChange(e)}/> */}
                           <Button variant="outlined" component="span" className="upload-btn">
                             Upload
                           </Button>
@@ -257,13 +235,11 @@ fetchMessages = () => {
         className="text-field"
           disabled
           id="profileImageContainer"
-          // onChange={e => this.handleChange(e)}
           label="Imagine profil"
           value={this.state.profileImageName}
           InputProps={{endAdornment:         
                           <label htmlFor="profileImage">
                           <Input id="profileImage" multiple type="file" onChange={e => this.handleImageFieldChange(e)}/>
-                          {/* <Input accept="image/*" id="contained-button-file" multiple type="file" onChange={e => this.handleImageFieldChange(e)}/> */}
                           <Button variant="outlined" component="span" className="upload-btn">
                             Upload
                           </Button>
@@ -275,13 +251,11 @@ fetchMessages = () => {
         className="text-field"
           disabled
           id="galleryContainer"
-          // onChange={e => this.handleChange(e)}
           label="Galerie"
           value="Adaugati imaginile dorite"
           InputProps={{endAdornment:         
                           <label htmlFor="galleryImages">
                           <Input accept="image/*" id="galleryImages" multiple type="file" onChange={e => this.handleGalleryFieldChange(e)}/>
-                          {/* <Input accept="image/*" id="contained-button-file" multiple type="file" onChange={e => this.handleImageFieldChange(e)}/> */}
                           <Button variant="outlined" component="span" className="upload-btn">
                             Upload
                           </Button>
@@ -305,15 +279,6 @@ fetchMessages = () => {
           }}
         />
 
-      {/* <TextField
-          id="waitingTime"
-          label="Timp mediu de asteptare"
-          type="number"
-          onChange={e => this.handleChange(e)}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        /> */}
 
 
       <FormControl  >
@@ -376,13 +341,9 @@ fetchMessages = () => {
         </FormControl>
 
 
-
-
-      {/* <TextField id="cuisine" label="Bucatarie" variant="outlined" onChange={e => this.handleChange(e)}/> */}
       <TextField className="text-field" id="decor" label="Decor" variant="outlined" onChange={e => this.handleChange(e)}/>
       <TextField className="text-field" id="description" label="Descriere restaurant" variant="outlined" onChange={e => this.handleChange(e)}/>
 
-{console.log("gallery", this.state.gallery)}
 <div>
 { 
   this.state.gallery ?
@@ -397,29 +358,11 @@ fetchMessages = () => {
     ""
 }
 
-
 </div>
 
-
-
-
-
       </div>
       </div>
-{/* 
-            {console.log("image: ", this.state.menuImage)}
-            {console.log("image url: ", this.state.menuURL)} */}
 
-{console.log("profile img name: ", this.state.profileImageName)}
-        {/* {this.state.menuImage && (
-        <Box>
-        <div>Image Preview:</div>
-        <Document file={this.state.menuImage}>
-        <Page pageNumber={1} />
-
-        </Document>
-        </Box>
-        )} */}
 
         <Button className="update-details-submit"variant="outlined" type="submit"
         sx={{
@@ -433,10 +376,6 @@ fetchMessages = () => {
           Actualizeaza date
         </Button>
 
-        {/* <SimpleDialog
-        open={this.state.open}
-        onClose={this.setState({ open: false, })}
-      /> */}
         </div>
 
     </Box>
@@ -445,7 +384,7 @@ fetchMessages = () => {
     )
   }
 }
-//onChange={e => this.setState({menuImage: e.target.files[0]})}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     updateRestaurant: (restaurant) => dispatch(updateRestaurant(restaurant))

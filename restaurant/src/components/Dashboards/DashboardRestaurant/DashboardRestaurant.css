@@ -433,10 +433,17 @@ margin-left:0;
   justify-content: space-between;
 
 }
-input:focus { 
+
+.input-style:focus { 
   outline: none !important;
   border:0.5px solid #ea9c3d;
 }
+
+.input-style-vertical:focus { 
+  outline: none !important;
+  border:0.5px solid #ea9c3d;
+}
+
 .scene-left-right{
   display:flex;
   flex-direction: row;

@@ -21,9 +21,6 @@ export default function Footer() {
             <p>@2022 Gustărești</p>
         </div>
         
-        {/* <Link to=""> 
-                         <button className="signup_nav" > Log In </button>
-                         </Link>  */}
         <div className="explore-section"> 
         <div>
             <h3>Explorează</h3>
@@ -55,7 +52,7 @@ export default function Footer() {
 
         <div className="socials-section">
         <div>
-            <h3>Ne poti gasi pe: </h3>
+            <h3>Ne poți găsi pe: </h3>
             <div> 
             <Link
             className="link-style"

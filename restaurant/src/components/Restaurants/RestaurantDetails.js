@@ -77,7 +77,6 @@ console.log("isMobile", isMobile)
   //actualizez rezervarile; le sterg din daza de date pe acelea ale caror data si ora sunt mai vechi decat data si ora curenta 
   function updateBookings(){
     const currentDate = firebase.firestore.Timestamp.fromDate(new Date());
-    console.log("data curenta:", currentDate)
 
     db.collection('Bookings').doc(id).collection('BookingList').where("date","<", currentDate)
     .get()
@@ -101,8 +100,6 @@ console.log("isMobile", isMobile)
       window.scrollTo({
         top: 0, 
         behavior: 'smooth'
-        /* you can also use 'auto' behaviour
-           in place of 'smooth' */
       });
 
     window.addEventListener('resize', handleWindowSizeChange);
@@ -166,11 +163,8 @@ console.log("isMobile", isMobile)
   
   function tableList(){
     let styleArr = style
-    //console.log("Style array", styleArr)
     if(tables){
       return tables.map((item,index) => {
-        //console.log("table style:", styleArr[index])
-        // setStyle( styles=> [...styles, newStyle] )
         return(
           <div key={index} id={index} className="table-btn" style={styleArr[index]} > 
           Masa {index} 
@@ -186,8 +180,6 @@ console.log("isMobile", isMobile)
 {
     return (
         <Paper>
-            {/* <h2>{props.item.caption}</h2> */}
-            {/* <p>{props.item.description}</p> */}
             <img src={props.item.image} className="carousel-images" alt="carousel"></img>
 
         </Paper>
@@ -251,20 +243,11 @@ function restaurantWaitingTime(restaurant){
 
   return (
     <div>
-      {/* <div className="top-part">
-        <button className="back"> 
-        <img  className="back-icon" src={back} alt="back" />
-        <p className="back-text"> Înapoi </p>
-        </button>
-
-      </div> */}
       <div className="description-container">
 
         <div className="carousel-and-details"> 
         <div className="carousel-container">  
         <Carousel className="carousel"
-                  //next={ (next, active) => console.log(`we left ${active}, and are now at ${next}`) }
-                  //prev={ (prev, active) => console.log(`we left ${active}, and are now at ${prev}`) }
                   >
                   {
                     currentRestaurant.gallery?.map( (item, index) => <Gallery key={index} item={item} /> )
@@ -298,7 +281,7 @@ function restaurantWaitingTime(restaurant){
           </div>
 
           <div className="details-row">
-          <div className="icon-detail"> Bucatarie </div>
+          <div className="icon-detail"> Bucătărie </div>
           <div className="detail-2"> {restaurantCuisine(currentRestaurant)} </div>
           </div>
           </div>
@@ -310,25 +293,11 @@ function restaurantWaitingTime(restaurant){
           </div>
 
           <div className="details-row">
-          <div className="icon-detail"> Timp de asteptare </div>
+          <div className="icon-detail"> Timp de așteptare </div>
           <div className="detail-4"> {restaurantWaitingTime(currentRestaurant)}</div>
           </div>
           </div>
 
-
-          {/* <div className="inline-first">
-          <div className="icon-detail-first"> Program </div>
-          <div className="icon-detail"> Bucatarie </div>
-          <div className="icon-detail"> Decor </div>
-          <div className="icon-detail"> Timp de asteptare </div>
-          </div>
-
-          <div className="inline-second">
-          <div className="detail-1"> {currentRestaurant.program} </div>
-          <div className="detail-2"> {restaurantCuisine(currentRestaurant)} </div>
-          <div className="detail-3"> {currentRestaurant.decor} </div>
-          <div className="detail-4"> {restaurantWaitingTime(currentRestaurant)}</div>
-          </div> */}
         </div>
 
         <div className="description">
@@ -388,13 +357,11 @@ function restaurantWaitingTime(restaurant){
         </div>
 
         <div className="location">
-          <h2> Locatie </h2>
+          <h2> Locație </h2>
           <div className="map-css"> 
 
             <GoogleMap className="map-mobile" mapContainerStyle={mapContainerStyle} zoom={15} center={{ lat: Number(currentRestaurant.latitude), lng: Number(currentRestaurant.longitude) }}>
-            
-            {/* {console.log("latitudine: ", currentRestaurant.latitude)} */}
-
+        
             <Marker  position={{ lat: Number(currentRestaurant.latitude), lng: Number(currentRestaurant.longitude)}} />
 
             </GoogleMap>
@@ -407,16 +374,14 @@ function restaurantWaitingTime(restaurant){
             
           <Document file={currentRestaurant.menuImage} onLoadSuccess={onDocumentLoadSuccess}>
                       <Page className="menu-pages" pageNumber={pageNumber} />
-                      {/* {Array.apply(null, Array(numPages))
-                        .map((x, i)=>i+1)
-                        .map(page => <Page pageNumber={page}/>)} */}
+
           </Document>
 
           
           <div className="menu-page-control">
 
 <Button type="button" disabled={pageNumber <= 1} onClick={previousPage} sx={{color:"rgb(184, 133, 76)" }} >
-  Previous
+  Înapoi
 </Button>
 <p>
   Pagina {pageNumber || (numPages ? 1 : "--")} din {numPages || "--"}
@@ -427,7 +392,7 @@ function restaurantWaitingTime(restaurant){
   onClick={nextPage}
   sx={{color:"rgb(184, 133, 76)" }} 
 >
-  Next
+  Următorul
 </Button>
 </div>
 </div>

@@ -10,21 +10,20 @@ export const displayScene = (scene) => {
     let dbdata=[]
     console.log("---the scene contains:", scene)
 
-    async function getOneElement() {
-        await db.collection('AllRestaurants').doc(currentUser.uid).collection('Tables').get()
-        .then(function(snapshot) {
-            if (snapshot.docs.length > 0) {
-                snapshot.docs.forEach(doc => {
-                    // doc is a DocumentSnapshot with actual data
-                    const data = doc.data().id;
-                    dbdata.push(data)
+    // async function getOneElement() {
+    //     await db.collection('AllRestaurants').doc(currentUser.uid).collection('Tables').get()
+    //     .then(function(snapshot) {
+    //         if (snapshot.docs.length > 0) {
+    //             snapshot.docs.forEach(doc => {
+    //                 const data = doc.data().id;
+    //                 dbdata.push(data)
                     
-                })
-            }}
+    //             })
+    //         }}
             
-            )
-            return dbdata
-      }
+    //         )
+    //         return dbdata
+    //   }
     
     return (dispatch, getState) => {
 

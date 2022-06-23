@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
 
 import Paper from '@mui/material/Paper';
 
@@ -11,7 +10,6 @@ import Input from '@mui/material/Input';
 import { Avatar, Badge, IconButton, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
-import { doc, onSnapshot, getDoc } from "firebase/firestore";
 import { db } from '../../../firebase';
 import MyBookings from './MyBookings';
 import { updateClient } from '../../../store/actions/updateClientAction';
@@ -20,59 +18,20 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/
 import { storage } from '../../../firebase';
 import "./DashboardClient.css"
 
-const styles = theme =>  ({
-  paper:{
-      display:'flex',
-      boxShadow: '4px 4px 4px rgba(0, 0, 0, 0.25)',
-      borderRadius:'25px',
-      alignItems:'center',
-      textAlign: 'center',
-      verticalAlign: 'middle',
-      align: 'middle',
-      alignItems: 'center',
-      justifyContent: 'center',
-      position: 'sticky',
-      top: '140px',
-
-    },
-  menuItem:{
-      paddingTop : '100px',
-  },
-});
 
 
 export default function DashboardClient() {
 
   const {logout, currentUser} = useAuth();
   const history = useHistory()
-  const [menuSelection, setMenuSelection] = useState("client")
   const [disabledFields, setDisabledFields] = useState(true)
-  // const { currentUser } = useAuth()
   const [clientDetails, setClientDetails] = useState({name: "prenume", surname:"nume", phone:"07xxxx", email:"customer@email.com", profileImage: ''})
-  const [clientDetailsOnce, setClientDetailsOnce] = useState()
-  const [updatedFields, setUpdatedFields] = useState()
   const [fetchedDetails, setFetchedDetails]=useState(false)
-  const [fetchedRestaurants, setFetchedRestaurants]=useState(false)
-
-  const [profileImage, setProfileImage] = useState()
   const [currentRestaurants, setCurrentRestaurants] = useState([])
-  var allBookedRestaurants = []
   const isFirstRender = useRef(true)
   const el = []
-
   const dispatch = useDispatch();
-  // const mystate = useSelector(state => state.scene)
 
-
-
-  function scrollToTop() {
-    window.scrollTo({
-      top: 0, 
-      behavior: 'smooth'
-      /* you can also use 'auto' behaviour
-         in place of 'smooth' */
-    });
-  };
 
   function handleDetailsChange(e){
     console.log("valoare modificata:", e.target)
@@ -88,44 +47,12 @@ export default function DashboardClient() {
     })
      setFetchedDetails(true)
   }
-  
-  async function getCurrentRestaurant() {
-    const restaurantsArray = []
-    const el = []
-    clientDetails.myBookings.reverse().map(async (item,index) => {
-      
-
-    db.collection('ProfileRestaurant').doc(item.restaurantId).onSnapshot((doc) => {      
-      let data= doc.data()
-      if(data){
-        el.push(data)
-      }
-
-
-
-    })
-
-
-    // setCurrentRestaurants(el)
-
-    allBookedRestaurants.push(el)
-
-    setFetchedRestaurants(true)
-    //setFetchedDetails(true)
-
-    // setCurrentRestaurants(restaurantsArray)
-    })
-    setCurrentRestaurants(el)
-
-  }
-  console.log("The el with data:", el)
 
 
    useEffect(() => {
   
      getOneElement()
      isFirstRender.current = false
-  
   
   }, []);
 
@@ -150,8 +77,6 @@ export default function DashboardClient() {
     }
   }, [clientDetails])
 
-
-  console.log("detaliile restaurantelor:", currentRestaurants)
 
 
 function saveDetails(e){
@@ -342,8 +267,6 @@ console.log("detaliile",clientDetails)
 </div>
 
 <div className="dash-content-client" id="my-bookings">
- {console.log("fetchedRestaurants: ", fetchedRestaurants)}
- {/* currentRestaurants && currentRestaurants.length>0 && */}
   { fetchedDetails && <MyBookings clientDetails={clientDetails} allRestaurants={currentRestaurants}/>}
 
 

@@ -33,7 +33,7 @@ export default function About() {
         
         <div className="see-how-it-works">    
         <a href="#bottom" style={{ textDecoration:"none"}}>
-          <p className="how-it-works-text">Vezi cum functioneaza</p>
+          <p className="how-it-works-text">Vezi cum funcționează</p>
           
           <div className="down-arrow" onClick={gotoBottomSection}>
             <KeyboardDoubleArrowDownIcon/>

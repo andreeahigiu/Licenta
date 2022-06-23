@@ -4,26 +4,16 @@ import UpdateScene from './UpdateScene';
 import Restaurant from './Restaurant';
 import { withStyles } from '@material-ui/core/styles';
 
-import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Typography from '@mui/material/Typography';
-import ContentCut from '@mui/icons-material/ContentCut';
-import ContentCopy from '@mui/icons-material/ContentCopy';
-import ContentPaste from '@mui/icons-material/ContentPaste';
-import Cloud from '@mui/icons-material/Cloud';
 import './DashboardRestaurant.css' 
 import { connect } from 'react-redux';
-import { useAuth } from '../../../contexts/AuthContext';
 import { auth } from '../../../firebase';
-import { Link } from 'react-router-dom'
 import Button from '@mui/material/Button';
 import LogoutIcon from '@mui/icons-material/Logout';
 import BookingsCalendar from './BookingsCalendar';
-import { Book } from '@mui/icons-material';
 
 
 
@@ -65,8 +55,6 @@ class DashRestaurant extends Component {
       window.scrollTo({
         top: 0, 
         behavior: 'smooth'
-        /* you can also use 'auto' behaviour
-           in place of 'smooth' */
       });
     };
 
@@ -79,7 +67,6 @@ class DashRestaurant extends Component {
     async handleLogout(){
         try {
             await auth.signOut()
-            //navigate('/')
           } catch {
             console.log('Failed to log out')
           }
@@ -91,7 +78,6 @@ class DashRestaurant extends Component {
 
         const { updatedData } = this.props;
         console.log("datele actualizate:", updatedData);
-        //console.log("Here are the props: " , this.props.state);
         let user = auth.currentUser.uid
         console.log("user: ", user)
         console.log("data:", updatedData);
@@ -118,14 +104,6 @@ class DashRestaurant extends Component {
           <ListItemText>Actualizare scenă</ListItemText>
         </MenuItem>
 
-      {/* <MenuItem  sx={{mt: 4}} onClick={  () => this.handleLogout() }>
-      <Link to={'/'}>
-      <ListItemText>
-        <LogoutIcon style={{ color: "rgb(55, 40, 22)"}}/> 
-          Logout
-      </ListItemText>
-      </Link>
-        </MenuItem> */}
 
       <MenuItem sx={{mt: 8}}>
         <Button className="logout-btn" onClick={() => this.handleLogout()} style={{ color: "rgb(55, 40, 22)", '&:hover': {

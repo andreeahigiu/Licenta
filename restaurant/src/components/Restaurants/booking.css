@@ -8,6 +8,16 @@
     margin-bottom: 5vh;
 }
 
+.no-table-available{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    color:#939393;
+    height:70vh;
+    margin-left: 5vw;
+}
+
 .booking-time-p1{
     color:rgb(184, 133, 76);
     align-self: center;

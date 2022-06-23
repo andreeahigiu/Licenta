@@ -1,58 +1,19 @@
 import React, { useRef, useState, useEffect  } from 'react'
 import { useParams } from 'react-router-dom';
-import { doc, onSnapshot, getDoc, deleteDoc } from "firebase/firestore";
 import { useAuth } from '../../contexts/AuthContext';
 import { db } from '../../firebase';
 import { useHistory } from 'react-router-dom';
-import back from '../../utils/icons/back-arrow.svg' 
 import './booking.css'
 import { useSelector, useDispatch } from 'react-redux';
 import { bookTable } from '../../store/actions/bookTableAction';
 import 'react-calendar/dist/Calendar.css';
 import DayTimePicker from '@mooncake-dev/react-day-time-picker';
 import {v4 as uuid} from "uuid";
-// import ClockLoader from "react-spinners/ClockLoader";
-import { css } from "@emotion/react";
-import TablesBooking from './tablesBooking';
-
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Route } from 'react-router-dom';
-
-
-const override = css`
-  display: block;
-  margin: 0 auto;
-  border-color: red;
-`;
-
-const btnStyleBefore = {
-  borderRadius: "4px",
-  outline: "none",
-  border:"none",
-  cursor:"pointer",
-  color: "#fff",
-  backgroundColor: "rgb(184, 133, 76)",
-  height: "50px",
-  width: "25vw",
-  alignSelf:"center",
-};
-
-const btnStyleAfter = {
-  borderRadius: "4px",
-  outline:"none",
-  border:"none",
-  cursor:"pointer",
-  color: "#fff",
-  backgroundColor: "rgb(194, 192, 189)",
-  height: "50px",
-  width: "25vw",
-  alignSelf:"center",
-};
-
 
 export default function MakeReservation() {
 
@@ -83,7 +44,6 @@ export default function MakeReservation() {
   const dispatch = useDispatch();
   const [sceneOutline, setSceneOutline] = useState(Array(18).fill(""))
   const mystate = useSelector(state => state.scene)
-  let clickedForolor = false;
   const isMobile = width <= 765;
 
 
@@ -96,11 +56,6 @@ export default function MakeReservation() {
                           {setSceneOutline(snapshot.data().sceneOutline)}
     })
   }
-
-  async function updateBookings(){
-    const currentDate = Date().toLocaleString();
-  }
-
 
 
   function timeSlotValidator(slotTime) {
@@ -193,7 +148,6 @@ export default function MakeReservation() {
 
        
      })
-     updateBookings()
       window.scrollTo({
         top: 0, 
         behavior: 'smooth'
@@ -216,15 +170,6 @@ export default function MakeReservation() {
   }, [currentRestaurant])
 
 
-  function endOfBooking(){
-    const endOfBooking = new Date(booking.date.getTime() + booking.bookedFor * 60 * 60 * 1000);
-    console.log("end of booking", endOfBooking)
-    setBooking(prevState => ({...prevState, endOfBooking: endOfBooking}))
-    
-  }
-
-
-
   const handleScheduled = date => {
 
     setIsScheduling(true)
@@ -237,14 +182,8 @@ export default function MakeReservation() {
     booking.endOfBooking= endOfBooking;
     setBooking(booking);
 
-
-    console.log("end of booking", endOfBooking)
     const newBooking = { bookingId: uuid(), userId:currentUser.uid, date: date, endOfBooking: endOfBooking}
 
-
-
-    console.log("data:", date)
-    console.log("Table-Date pair:", tableDatePair)
 
       setIsScheduled(true)
       setIsScheduling(false)
@@ -252,10 +191,7 @@ export default function MakeReservation() {
 
       history.push(`/restaurante/${id}/rezervare/masa`, {tableDatePair:tableDatePair, booking:booking, style:style, tables:tables, isMobile:isMobile, sceneOutline: sceneOutline})
   
-
-
     }
-
 
 
     const handleChangeTime = (e) => {
@@ -275,27 +211,13 @@ export default function MakeReservation() {
     }
 
 
-    function makeReservation(e){
-      e.preventDefault();
-      setLoading(true);
-  
-      dispatch(bookTable(booking)) 
-      console.log("dispatched")
-
-      setTimeout(() => {
-        setLoading(false)
-        setConfirmMsg(true)
-      }, 2000)
-
-    }
-
   return (
     <div>
       <Box className="booking-time-container">
         <p className="booking-time-p1">Selectați pentru câte ore și câte persoane doriți să faceți rezervarea!</p>
         <p className="booking-time-p2">Selecția implicită este pentru 2 persoane, timp de o oră!</p>
       <FormControl className="booking-time-dropdown">
-        <InputLabel id="demo-simple-select-label" >Durata rezervare</InputLabel>
+        <InputLabel id="demo-simple-select-label" >Durată rezervare</InputLabel>
         <Select
          
           labelId="bookedFor"

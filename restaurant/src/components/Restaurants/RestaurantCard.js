@@ -19,10 +19,7 @@ import { Link } from 'react-router-dom';
 import chefHat from '../../utils/icons/Path 120.svg' 
 import clock from '../../utils/icons/clock-svgrepo-com.svg' 
 import money from '../../utils/icons/Group 57.svg' 
-import star from '../../utils/icons/star-svgrepo-com.svg' 
-import glass from '../../utils/icons/magnifying-glass.svg' 
 import restaurantImg from '../../utils/images/restaurant.jpg' 
-import { Form } from 'react-bootstrap';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 
 
@@ -37,10 +34,7 @@ export default function RestaurantCard({restaurants}) {
 
     const handleChange = (e) => {
 
-      //console.log("target", e.target)
       if(e.target.value != ''){
-        // fieldName = e.target.name
-        // filters.fieldName = e.target.value
         setFilters({...filters, [e.target.name]: e.target.value})
       }
     }
@@ -58,43 +52,37 @@ export default function RestaurantCard({restaurants}) {
 
     function restaurantCuisine(restaurant){
       console.log("The cuisine:", restaurant.cuisine)
-      if(restaurant.cuisine == 1){
+      if(restaurant.cuisine === 1){
         return "Americana"
       }
-      if(restaurant.cuisine == 2){
+      if(restaurant.cuisine === 2){
         return "Asiatica"
       }
-      if(restaurant.cuisine == 3){
+      if(restaurant.cuisine === 3){
         return "Europeana"
       }
-      if(restaurant.cuisine == 4){
+      if(restaurant.cuisine === 4){
         return "Italiana"
       }
-      if(restaurant.cuisine == 5){
+      if(restaurant.cuisine === 5){
         return "Romaneasca"
       }
 
     }
 
     function restaurantPricing(restaurant){
-      if(restaurant.pricing == 1){
+      if(restaurant.pricing === 1){
         return "$"
       }
-      if(restaurant.pricing == 2){
+      if(restaurant.pricing === 2){
         return "$$"
       }
-      if(restaurant.pricing == 3){
+      if(restaurant.pricing === 3){
         return "$$$"
       }
-      if(restaurant.pricing == 4){
+      if(restaurant.pricing === 4){
         return "$$$$"
       }
-    }
-
-    function searchResult(){
-      console.log("Search button let's go:");
-      // searchBtn=search
-      // setSearchBtn(searchBtn)
     }
 
     function clearFilters(){
@@ -125,10 +113,6 @@ export default function RestaurantCard({restaurants}) {
           
         />
 
-        {/* <img className="search-img" src={glass} alt="glass"/>  */}
-        {/* <button className="search-btn" type="submit" > Cauta acum!</button> */}
-
-
     </Box>
 
       <Box className="filters-container">
@@ -154,7 +138,7 @@ export default function RestaurantCard({restaurants}) {
 </FormControl>
 
         <FormControl className="filters"> 
-        <InputLabel id="demo-simple-select-label" >Bucatarie</InputLabel>
+        <InputLabel id="demo-simple-select-label" >Bucătărie</InputLabel>
         <Select
           labelId="Bucatarie"
           id="cuisine"
@@ -164,16 +148,16 @@ export default function RestaurantCard({restaurants}) {
           onChange={handleChange}
         >
 
-          <MenuItem value={1}>Americana</MenuItem>
-          <MenuItem value={2}>Asiatica</MenuItem>
-          <MenuItem value={3}>Europeana</MenuItem>
-          <MenuItem value={4}>Italiana</MenuItem>
-          <MenuItem value={5}>Romaneasca</MenuItem>
+          <MenuItem value={1}>Americană</MenuItem>
+          <MenuItem value={2}>Asiatică</MenuItem>
+          <MenuItem value={3}>Europeană</MenuItem>
+          <MenuItem value={4}>Italiană</MenuItem>
+          <MenuItem value={5}>Românească</MenuItem>
         </Select>
         </FormControl>
 
         <FormControl className="filters">
-        <InputLabel id="demo-simple-select-label" >Timp de asteptare</InputLabel>
+        <InputLabel id="demo-simple-select-label" >Timp de așteptare</InputLabel>
         <Select
           labelId="Timp de asteptare"
           id="waitingTime"
@@ -192,7 +176,7 @@ export default function RestaurantCard({restaurants}) {
         <Button variant="outlined" onClick={clearFilters} className="del-filters-btn" >
           <div className="content-del-btn">
           <DeleteSweepIcon style={{ color: "#B8854C", height: '1em' }} />
-           Sterge filtre
+           Șterge filtre
            </div>
         </Button>
 
@@ -201,37 +185,36 @@ export default function RestaurantCard({restaurants}) {
       { 
         
          restaurants && restaurants.filter((restaurant)=> {
-           if (search == "" && (filters.prices == "" && filters.cuisine == "" && filters.stars == "" && filters.waitingTime == "")){
+           if (search === "" && (filters.prices === "" && filters.cuisine === "" && filters.stars === "" && filters.waitingTime === "")){
              return restaurant
            }
           else if (search != "" && restaurant.name.toLowerCase().includes(search.toLowerCase())) {
             return restaurant
           }
-          else if((filters.prices =="" && filters.cuisine != "" && filters.waitingTime=="")  && filters.cuisine == restaurant.cuisine ){
+          else if((filters.prices ==="" && filters.cuisine != "" && filters.waitingTime==="")  && filters.cuisine === restaurant.cuisine ){
             return restaurant
           }
-          else if((filters.prices !="" && filters.cuisine == "" && filters.waitingTime=="" )  && filters.prices == restaurant.pricing ){
+          else if((filters.prices !="" && filters.cuisine === "" && filters.waitingTime==="" )  && filters.prices === restaurant.pricing ){
             return restaurant
           }
-          else if((filters.prices =="" && filters.cuisine == "" && filters.waitingTime !="")  && filters.waitingTime == restaurant.waitingTime ){
+          else if((filters.prices ==="" && filters.cuisine === "" && filters.waitingTime !="")  && filters.waitingTime === restaurant.waitingTime ){
             return restaurant
           }
-          else if((filters.prices !="" && filters.cuisine != "" && filters.waitingTime=="")  && filters.prices == restaurant.pricing && filters.cuisine == restaurant.cuisine ){
+          else if((filters.prices !="" && filters.cuisine != "" && filters.waitingTime==="")  && filters.prices === restaurant.pricing && filters.cuisine === restaurant.cuisine ){
             return restaurant
           }
-          else if((filters.prices =="" && filters.cuisine != "" && filters.waitingTime !="") && filters.cuisine == restaurant.cuisine && filters.waitingTime == restaurant.waitingTime){
+          else if((filters.prices ==="" && filters.cuisine != "" && filters.waitingTime !="") && filters.cuisine === restaurant.cuisine && filters.waitingTime === restaurant.waitingTime){
             return restaurant
           }
-          else if((filters.prices !="" && filters.cuisine == "" && filters.waitingTime !="") && filters.prices == restaurant.pricing && filters.waitingTime == restaurant.waitingTime){
+          else if((filters.prices !="" && filters.cuisine === "" && filters.waitingTime !="") && filters.prices === restaurant.pricing && filters.waitingTime === restaurant.waitingTime){
             return restaurant
           }
-          else if((filters.prices !="" && filters.cuisine != "" && filters.waitingTime !="") && filters.prices == restaurant.pricing && filters.cuisine == restaurant.cuisine && filters.waitingTime == restaurant.waitingTime){
+          else if((filters.prices !="" && filters.cuisine != "" && filters.waitingTime !="") && filters.prices === restaurant.pricing && filters.cuisine === restaurant.cuisine && filters.waitingTime === restaurant.waitingTime){
             return restaurant
           }
   
           
          }).map( (restaurant, index) => {
-          {console.log("restaurant PPRICING:", restaurant.pricing)}
            return(
         <Card key={index} className="card-container" sx={{ display: 'flex', width: '80vw', height: '25vh', marginLeft:'8vw', marginTop:'5vh' }}>
 

@@ -60,9 +60,6 @@ export default function Login() {
               Log In
             </button>
           </form>
-          {/* <div >
-            <Link className="forgot-password" to="/forgot-password">Forgot Password?</Link>
-          </div> */}
       </div>
     </>
   )

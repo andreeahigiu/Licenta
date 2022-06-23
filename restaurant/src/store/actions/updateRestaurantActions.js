@@ -16,7 +16,7 @@ export const updateRestaurant = (restaurant) => {
             dispatch({type: 'UPDATE_RESTAURANT', restaurant})
 
 
-            //todo
+            //
             if(restaurant.places){
                 db.collection('AllRestaurants').doc(currentUser.uid).collection('Tables').add({ 
                     places: restaurant.places,

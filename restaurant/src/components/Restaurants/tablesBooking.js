@@ -72,13 +72,6 @@ export default function TablesBooking(props) {
     function makeReservation(e){
         e.preventDefault();
         setLoading(true);
-  
-        // booking.bookingId=uuid();
-        // booking.userId=currentUser.uid;
-        // booking.date= bookedDate;
-        // booking.tableId= bookedTable;
-        // setBooking(booking);
-  
     
         dispatch(bookTable(booking)) 
         console.log("dispatched")
@@ -254,12 +247,14 @@ export default function TablesBooking(props) {
     function makeBookingMobile(){
       if(tables){
         checkAllTables();
+        if(unavailableArr.every( (val) => val === true ) ){
+          return(<div className="no-table-available"> <p>Nu există nicio masă disponibilă pentru selecția dumneavoastră! </p> </div>)
+        }
         for( var index=0; index<tables.length; index++){
           if(unavailableArr[index]!==true){
             booking.tableId= tables[index].id;
             booking.tableNr = index
             dispatch(bookTable(booking)) 
-            console.log("dispatched")
             return(
               <div>
                 <div className="booking-card-message">Ati făcut o rezervare pentru:</div>

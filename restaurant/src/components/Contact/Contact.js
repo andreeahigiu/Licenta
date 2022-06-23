@@ -39,7 +39,7 @@ export default function Contact() {
         <div className="contact-form-container">
           <div className="first-message">Nu ezita să ne scrii dacă ai nelămuriri!</div>
           <div className="find-us-email"> 
-            <p className="find-us">Ne poti gasi la adresa: </p>
+            <p className="find-us">Ne poți găsi la adresa: </p>
             <Link
             className="contact-link-style"
             to='#'
@@ -52,7 +52,7 @@ export default function Contact() {
             </Link>
           </div>
           <div className="find-us-social">
-            <p className="find-us">Sau pe retelele de socializare:</p>
+            <p className="find-us">Sau pe rețelele de socializare:</p>
             <div className="socials">
             <Link
             className="contact-link-style"

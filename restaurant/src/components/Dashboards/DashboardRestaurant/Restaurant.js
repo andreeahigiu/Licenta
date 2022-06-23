@@ -1,12 +1,6 @@
 import React, { useRef, useState, useEffect  } from 'react'
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-// import { Carousel } from 'react-carousel-minimal';
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
 import { doc, onSnapshot, getDoc } from "firebase/firestore";
 import { useAuth } from '../../../contexts/AuthContext';
 import { db } from '../../../firebase';
@@ -51,8 +45,6 @@ function Gallery(props)
         </Paper>
     )
 }
-
-
 
 export default function Restaurant({updatedData}) {
 
@@ -243,8 +235,6 @@ const newStyle = {position:"relative", left: 80+"px", top:40 +"px"}
         <div className="carousel-and-details-dashRestaurant "> 
         <div className="carousel-container-dashRestaurant">  
         <Carousel className="carousel-dashRestaurant"
-                  //next={ (next, active) => console.log(`we left ${active}, and are now at ${next}`) }
-                  //prev={ (prev, active) => console.log(`we left ${active}, and are now at ${prev}`) }
                   >
                   {
                     currentRestaurant.gallery?.map( (item, index) => <Gallery key={index} item={item} /> )
@@ -279,7 +269,7 @@ const newStyle = {position:"relative", left: 80+"px", top:40 +"px"}
           </div>
 
           <div className="details-row">
-          <div className="icon-detail"> Bucatarie </div>
+          <div className="icon-detail"> Bucătărie </div>
           <div className="detail-2"> {restaurantCuisine(currentRestaurant)} </div>
           </div>
           </div>
@@ -291,7 +281,7 @@ const newStyle = {position:"relative", left: 80+"px", top:40 +"px"}
           </div>
 
           <div className="details-row">
-          <div className="icon-detail"> Timp de asteptare </div>
+          <div className="icon-detail"> Timp de așteptare </div>
           <div className="detail-4"> {restaurantWaitingTime(currentRestaurant)}</div>
           </div>
           </div>
@@ -368,7 +358,7 @@ const newStyle = {position:"relative", left: 80+"px", top:40 +"px"}
           <div className="menu-page-control">
 
 <Button type="button" disabled={pageNumber <= 1} onClick={previousPage} sx={{color:"rgb(184, 133, 76)" }} >
-  Previous
+  Înapoi
 </Button>
 <p>
   Pagina {pageNumber || (numPages ? 1 : "--")} din {numPages || "--"}
@@ -379,7 +369,7 @@ const newStyle = {position:"relative", left: 80+"px", top:40 +"px"}
   onClick={nextPage}
   sx={{color:"rgb(184, 133, 76)" }} 
 >
-  Next
+  Următorul
 </Button>
 </div>
 </div>

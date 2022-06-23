@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { doc, onSnapshot, getDoc } from "firebase/firestore";
 import { db } from '../../../firebase';
 import './BookingsCalendar.css'
 
@@ -19,17 +18,11 @@ export default function BookingsCalendarCard(props) {
       .then(snapshot => {setTableDetails(snapshot.data())
       })
 
-      
-
     })
 
 
-
-  
-
   return (
     <div className="booking-calendar-container">
-      {/* {console.log("props.booking:",bookingDate)} */}
       <div className="show-time">{ ( bookingDate.getHours() + ':' + ((bookingDate.getMinutes()<10?'0':'') + (bookingDate.getMinutes())) ) }</div>
       <div className="vertical-line"/>
 
@@ -53,11 +46,11 @@ export default function BookingsCalendarCard(props) {
             </div>
 
             <div className="info-container">
-              <div className="booked-table-detail">Rezervata pentru: </div>
+              <div className="booked-table-detail">Rezervată pentru: </div>
               <div>  {thisBooking.bookedFor + " " + "ore"}</div>
             </div>
               <div> 
-                  <div className="booked-table-detail">Specificatii: </div> 
+                  <div className="booked-table-detail">Specificații: </div> 
                   <p className="table-specifications">{tableDetails.specifications ? tableDetails.specifications : "nespecificat"}</p>
                   
               </div>

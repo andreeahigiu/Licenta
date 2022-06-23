@@ -16,7 +16,6 @@ import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Button } from 'bootstrap';
 
 export default function UpdateScene() {
   const [style, setStyle] = useState([]); 
@@ -46,9 +45,7 @@ export default function UpdateScene() {
             mouseX: event.clientX + 2,
             mouseY: event.clientY - 6,
           }
-        : // repeated contextmenu when it is already open closes it with Chrome 84 on Ubuntu
-          // Other native context menus might behave different.
-          // With this behavior we prevent contextmenu from the backdrop to re-locale existing context menus.
+        : 
           null,
     );
     setCurrentBtn(index)
@@ -68,14 +65,8 @@ export default function UpdateScene() {
     setTables(tables);
     setStyle(style);
 
-
-
     setClick(false);
   };
-
-  function handleSeats(){
-    tables[currentBtn].places = seats;
-  }
 
   function displaySeats(index){
     let tablesCpy = structuredClone(tables)
@@ -128,7 +119,6 @@ export default function UpdateScene() {
     table.places = e.target.value;
     tables[currentBtn] = table
     setTables(tables)
-    // console.log("event", e)
 
     setContextMenu(null);
     setClick(false);
@@ -137,26 +127,19 @@ export default function UpdateScene() {
   function handleSpecifications(e){
     e.preventDefault();
     setSpecifications(e.target.value)
-    console.log("specifications:", e.target.value)
 
     let allTables=tables
     let table = {...allTables[currentBtn]}
     table.specifications = e.target.value;
     tables[currentBtn] = table
     setTables(tables)
-    // console.log("event", e)
-
-    // setContextMenu(null);
-    // setClick(false);
   }
 
-console.log("current table:", currentBtn,"seats:", seats)
 
 
 async function getOneElement() {
   await db.collection('ProfileRestaurant').doc(currentUser.uid).get()
   .then(snapshot => {setCurrentRestaurants(snapshot.data())
-                      console.log("heii")
                       if(snapshot.data().style){
                         setStyle(snapshot.data().style)
                       }
@@ -172,18 +155,11 @@ async function getOneElement() {
   })
 }
 
-
  useEffect(() => {
 
    getOneElement()
-   console.log("currentRestaurant:", currentRestaurant)
 
 }, []);
-
-
-// console.log("reading restaurant ", currentRestaurant)
-//   console.log("DB tables", tables)
-//   console.log("DB style", style)
 
 
 function changeOutline(e, position){
@@ -195,15 +171,9 @@ console.log("scene outline:", sceneOutline)
 
   function placeDiv(e){
     console.log("x si y:", e.clientX, e.clientY)
-    // const newStyle = 
-    //    setCoordinates(e.target.screenX,
-    //                   e.target.screenY);
-    // setStyle(newStyle);
+
     var parentCoord = document.getElementById('parent-id').getBoundingClientRect()
     
-    //document.getElementsById("hello").style.color = 'red';
-
-    //console.log("x,y parinte:", parentCoord.left, parentCoord.top)
     if(clicked == true){
 
       let tableStyles = style
@@ -216,34 +186,23 @@ console.log("scene outline:", sceneOutline)
       tableStyles[currentBtn] = table
       setStyle(tableStyles)
 
-      //const newStyle = {position:'absolute', left:e.clientX-20 + 'px', top:e.clientY-20 + 'px'}
-      //setStyle( styles=> [...styles, newStyle] )
-      //console.log("clicked")
       setClick(false)
     }
 
   }
 
   function addTable(e){
-    console.log("adding table?")
     e.preventDefault()
     const newItem = { id: uuid(), places: 2, specifications:"", reserved: false }
     setTables([...tables, newItem])
     const newStyle = {position:"absolute", left:"200px", top:"200px"}
     setStyle([...style, newStyle])
-    
-    //setStyle(style => [...style, newStyle])
-    
-    //setEmpty(false)
-    // setStyle(styles => [...styles, newStyle])
-    //setStyle({position:"absolute", left:"600px", top:"400px"})
-    console.log("STYLE:", style)
+
   }
 
   function dealWithBtn(index, e){
     setCurrentBtn(index)
     setClick(true)
-
 
   }
 
@@ -251,16 +210,13 @@ console.log("scene outline:", sceneOutline)
     let styleArr = style
     if(tables){
       return tables.map((item,index) => {
-        //console.log("table style:", styleArr[index])
-        // setStyle( styles=> [...styles, newStyle] )
-        console.log("Index", index, "Item:", item)
+
         return(
 
           <button id={index} className="table-btn" style={styleArr[index]} onClick={ (e) => dealWithBtn(index, e)} onContextMenu={ (e) => handleContextMenu(e, index)}> 
-          <p className="table-label"> Masa noua{index} </p>
+          <p className="table-label"> Masă nouă{index} </p>
           {displaySeats(index)}
 
-          
           </button>
         )
       })
@@ -273,13 +229,9 @@ console.log("scene outline:", sceneOutline)
     e.preventDefault();
     setUpdateScene({tables, style, sceneOutline})
 
-    console.log("updated scene:", updateScene)
-
     dispatch(displayScene(updateScene));
-    console.log("test")
 
   }
-
 
 
   return (
@@ -326,11 +278,8 @@ console.log("scene outline:", sceneOutline)
         <input id="17" defaultValue={sceneOutline[17]} className="input-style" onChange={(e) => changeOutline(e, 17)}/>
       </div>
 
-      {/* {console.log("toate stilurile: ", style)} */}
       {tableList()}
 
-      { console.log("buttonclicked?---------", clicked) }
-      {/* <button id="table-btn" style={style} onClick={ () => setClick(true)} > Masa1 </button> */}
       <Menu
         open={contextMenu !== null}
         onClose={handleClose}
@@ -341,8 +290,8 @@ console.log("scene outline:", sceneOutline)
             : undefined
         }
       >
-        <MenuItem onClick={handleClose}>Inchide meniu si salveaza</MenuItem>
-        <MenuItem onClick={handleDeleteTable}>Sterge masa</MenuItem>
+        <MenuItem onClick={handleClose}>Închide meniu și salvează</MenuItem>
+        <MenuItem onClick={handleDeleteTable}>Șterge masa</MenuItem>
         
         <div className="seats-specifications">
 
@@ -382,22 +331,8 @@ console.log("scene outline:", sceneOutline)
       </Menu>
       </div>
 
-      {/* <Button className="update-details-submit"variant="outlined" type="submit"
-        sx={{
-          boxShadow: 1,
-          borderRadius: 2,
-          width: '100%',
-          ml: "16px",
-          mt: "6vh",
-          p: 2,
-          color: "",
+      <button type="submit" className="scene-update-btn"> Actualizează </button>
 
-        }}>
-          Actualizeaza
-        </Button> */}
-
-      <button type="submit" className="scene-update-btn"> Actualizeaza </button>
-      {/* <div className="test-div">test</div> */}
       </form>
 
   )

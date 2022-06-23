@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { ContentCutOutlined } from '@mui/icons-material';
 import clock from '../../../utils/icons/time-svgrepo-com.svg' 
 import calendar from '../../../utils/icons/date-svgrepo-com.svg' 
 import bookmarkClock from '../../../utils/icons/bookmark-clock.svg' 
 import table from '../../../utils/icons/table-svgrepo-com.svg' 
 import people from '../../../utils/icons/people-svgrepo-com.svg' 
 import menu from '../../../utils/icons/menu-svgrepo-com.svg' 
-import star from '../../../utils/icons/bookmark-svgrepo-com.svg' 
-
-import { doc, onSnapshot, getDoc } from "firebase/firestore";
-import { db } from '../../../firebase';
 import "./DashboardClient.css"
 
 
@@ -23,39 +15,8 @@ export default function MyBookings(props) {
 
     const [ clientDetails, setClientDetails] = useState(props.clientDetails)
     const [currentRestaurants, setCurrentRestaurants] = useState(props.allRestaurants)
-    const [trialState, setTrialState] = useState(false)
-
-console.log("THE RESTAURANTS:", currentRestaurants)
-console.log("THE RESTAURANTs 2:", currentRestaurants[0])
-
-if(currentRestaurants && currentRestaurants.length>0){
-  console.log("eok")
-}else{
-  console.log("nueok", currentRestaurants)
-}
 
 
-    async function getCurrentRestaurant() {
-    const restaurantsArray = []
-    const el = []
-    let arr = [];
-    clientDetails.myBookings.slice(0).reverse().map(async (item,index) => {
-      
-
-
-    db.collection('ProfileRestaurant').doc(item.restaurantId).onSnapshot((doc) => {
-      arr.push(doc.data())
-
-    })
-    setCurrentRestaurants(arr)
-    })
-
-
-    }
-
-
-
-    
     function displayBookings(){
       console.log("client's bookings: ", clientDetails)
       
@@ -102,7 +63,7 @@ if(currentRestaurants && currentRestaurants.length>0){
                           <div className="icon-detail-booking">
                             <img  className="small-icon" src={table} alt="table" />
 
-                              <p className="table">Numar masa rezervata</p>
+                              <p className="table">Număr masă rezervată</p>
                               <p className="table-val">{ item.tableNr} </p>
                            
                           </div>
@@ -118,36 +79,14 @@ if(currentRestaurants && currentRestaurants.length>0){
                           <div className="icon-detail-booking">
                             <img  className="small-icon" src={people} alt="people" />
                          
-                              <p className="people">Numar persoane: </p>
+                              <p className="people">Număr persoane: </p>
                               <p className="people-val">{ item.seatsNr && item.seatsNr }</p>
                         
                           </div>
                         </div>
                       </div>
-                      {/* <Typography gutterBottom variant="h5" component="div">
-                      Rezervare din data: {item.date.toDate().toLocaleDateString()}
-                      </Typography>
-                      <Typography variant="body1" color="text.secondary">
-                      Ora: { item.date.toDate().getHours() + ':' + (item.date.toDate().getMinutes()<10?'0':'') + item.date.toDate().getMinutes() }
-                      </Typography>
-                      <Typography variant="body1" color="text.secondary">
-                      Rezervata pentru: { item.bookedFor + " " + "ore" } 
-                      </Typography>
-                      <Typography variant="body1" color="text.secondary">
-                      Nr. masa rezervata: { item.tableNr} 
-                      </Typography>
-                      <Typography variant="body1" color="text.secondary">
-                      Id rezervare: { item.bookingId  } 
-                      </Typography>
-                      <Typography variant="body1" color="text.secondary">
-                      Id masa rezervata: { item.tableId  } 
-                      </Typography> */}
 
                     </CardContent>
-                    {/* <CardActions>
-                      <Button size="small">Share</Button>
-                      <Button size="small">Learn More</Button>
-                    </CardActions> */}
                   </Card>
               
                 )
@@ -157,14 +96,10 @@ if(currentRestaurants && currentRestaurants.length>0){
                 <Card sx={{ height: "23vh" , width: "40vw", marginBottom: "5vh"}}>
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">
-                      Nu aveti nicio rezervare
+                      Nu aveți nicio rezervare
                       </Typography>
 
                     </CardContent>
-                    {/* <CardActions>
-                      <Button size="small">Share</Button>
-                      <Button size="small">Learn More</Button>
-                    </CardActions> */}
                   </Card>
               )
             }
@@ -175,7 +110,7 @@ if(currentRestaurants && currentRestaurants.length>0){
   return (
       <div className="mybookings-container"> 
 
-    {currentRestaurants == undefined ? setTrialState(true) : ""}
+
     {displayBookings()}
    
     </div>
